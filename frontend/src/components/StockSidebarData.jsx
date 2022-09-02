@@ -15,17 +15,17 @@ export const StockSidebarData = [
     {
         title: "Shop",
         icon: <FaShoppingCart />,
-        link: "#"
+        link: "/stockManagement"
     },
     {
         title: "Create Stocks",
         icon: <FaPlusCircle />,
-        link: "/"
+        link: "/createStocks"
     },
     {
         title: "Request Stocks",
         icon: <FaRegCalendarPlus />,
-        link: "/"
+        link: "/reqStocks"
     },
 //     {
 //         title: "Profile",
