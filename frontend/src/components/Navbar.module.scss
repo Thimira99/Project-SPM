@@ -1,0 +1,61 @@
+.topBar {
+    background-color: #424A9B;
+    height: 50px;
+    display: flex;
+
+    h1 {
+        margin-top: 0.5rem;
+        margin-left: 5px;
+        font-size: x-large;
+        color: antiquewhite;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+        span {
+            font-weight: normal;
+        }
+
+    }
+
+    .logout {
+        margin-left: auto;
+        margin-right: 1rem;
+        margin-top: 0.5rem;
+    }
+}
+
+.mainSidebar {
+    margin: 0;
+    color: aliceblue;
+    height: 100vh;
+    width: 200px;
+    background-color: #424A9B;
+
+    .sidebar {
+        display: flex;
+        width: auto;
+
+        li {
+            margin-top: 1rem;
+            width: 300px;
+            margin-bottom: 1rem;
+        }
+    }
+
+    .sidebar :hover {
+        background-color: rgb(49, 50, 50);
+    }
+
+    .mainRow {
+        display: flex;
+
+        .icon {
+            margin-top: 5px;
+            margin-right: 8px;
+        }
+
+        .title {
+            margin-top: 7px;
+        }
+    }
+
+}
