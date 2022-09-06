@@ -5,6 +5,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './login/Login';
 import Dashboard from './pages/dashboard/Dashboard';
 import CreateEmployee from './pages/createEmployee/CreateEmployee';
+import stockManagement from './pages/StockManagement/stockManagement';
+import createStocks from './pages/StockManagement/createStocks';
+import requestStocks from './pages/StockManagement/requestStocks';
+import createRequestStocks from './pages/StockManagement/createRequestStocks';
+
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import TopBar from './components/Topbar';
 
@@ -22,12 +27,16 @@ function App() {
               <Route path='/mainPage' component={Dashboard} />
               <Route path='/createEmployee' component={CreateEmployee} />
 
+              <Route path='/stockManagement' component={stockManagement} />
+              <Route path='/reqStocks' component={requestStocks} />
+              <Route path='/createStocks' component={createStocks} />
+              <Route path='/createRequests' component={createRequestStocks} />
+
               <Route path='/login' component={Login} />
               <Redirect from='/' to='/login' />
             </Switch>
           </div>
         </div>
-
       </Router>
 
     </>
