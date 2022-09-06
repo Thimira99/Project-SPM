@@ -1,15 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Navbar from '../../components/Navbar';
-import TopBar from '../../components/Topbar';
-import CreateEmployeeStyles from './CreateEmployee.module.scss';
 
 function CreateEmployee() {
     return (
         <>
-            <TopBar />
-            <div className={CreateEmployeeStyles.main}>
-                <Navbar />
+            <Navbar />
+
+            <div>
                 <h1>Create Employee</h1>
+                <button className='btn btn-primary'>
+                    Hello
+                </button>
+                <a href='/testPage'>TEST</a>
             </div>
         </>
     )

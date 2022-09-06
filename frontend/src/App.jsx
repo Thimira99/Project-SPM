@@ -1,25 +1,33 @@
-import appStyles from './App.scss';
+import './App.scss';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import Navbar from './components/Navbar.jsx';
 import Login from './login/Login';
 import Dashboard from './pages/dashboard/Dashboard';
 import CreateEmployee from './pages/createEmployee/CreateEmployee';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
+import TopBar from './components/Topbar';
+
+
 
 function App() {
   return (
     <>
       <Router>
-        <Switch>
-          <Route path='/login' component={Login} />
-          <Route path='/mainPage' component={Dashboard} />
-          <Route path='/createEmployee' component={CreateEmployee} />
+        <TopBar />
 
+        <div className='main-wrapper'>
+          <div className='main-body'>
+            <Switch>
+              <Route path='/mainPage' component={Dashboard} />
+              <Route path='/createEmployee' component={CreateEmployee} />
 
-          <Redirect from='/' to='/login' component={Login} />
-        </Switch>
+              <Route path='/login' component={Login} />
+              <Redirect from='/' to='/login' />
+            </Switch>
+          </div>
+        </div>
+
       </Router>
 
     </>

@@ -1,4 +1,8 @@
-body {
-    margin: 0;
+.main-body {
+    display: flex;
+    flex-basis: 30% 70%;
 }
 
+.navbar {
+    padding: 0 !important;
+}

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import { FaHome } from "react-icons/fa";
 import { FaUserPlus } from "react-icons/fa";
@@ -10,7 +10,7 @@ export const sidebarData = [
     {
         title: "Dashboard",
         icon: <FaHome />,
-        link: "/dashboard"
+        link: "/mainPage"
     },
     {
         title: "Create Employee",
@@ -20,7 +20,7 @@ export const sidebarData = [
     {
         title: "View Employee",
         icon: <FaUsers />,
-        link: "/dashboard"
+        link: "/viewEmployee"
     },
     {
         title: "My Notes",

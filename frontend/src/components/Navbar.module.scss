@@ -24,15 +24,14 @@
 }
 
 .mainSidebar {
-    margin: 0;
+
     color: aliceblue;
-    height: 100vh;
+    min-height: 100vh;
     width: 200px;
     background-color: #424A9B;
 
     .sidebar {
         display: flex;
-        width: auto;
 
         li {
             margin-top: 1rem;

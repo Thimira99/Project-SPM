@@ -1,17 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Navbar from '../../components/Navbar';
-import TopBar from '../../components/Topbar';
 
 import dashboardStyles from './Dashboard.module.scss';
 
 function Dashboard() {
     return (
         <>
-            <TopBar />
-            <div className={dashboardStyles.main}>
-                <Navbar />
+            <Navbar />
+            <div>
                 <h1>Dashboard</h1>
+                <div className={dashboardStyles.main}>
+                    <input type="text" placeholder='Enter' />
+                </div>
             </div>
+
         </>
     )
 }
