@@ -13,7 +13,22 @@ class createShop extends Component {
         this.state = {
 
         }
+
+        this.onAllShopSubmit = this.onAllShopSubmit.bind(this);
     }
+
+    onAllShopSubmit(){
+
+        this.props.history.push('/allShops');
+
+    }
+
+    componentDidMount(){
+
+    }
+
+
+
     render() {
         return (
             <>
@@ -26,7 +41,7 @@ class createShop extends Component {
 
                         <Col>
 
-                            <Button style={{ "width": "110px", "fontWeight": "600" }}>ALL SHOPS</Button>
+                            <Button style={{ "width": "110px", "fontWeight": "600" }} onClick={this.onAllShopSubmit}>ALL SHOPS</Button>
 
 
                         </Col>
@@ -213,6 +228,107 @@ class createShop extends Component {
 
                                     </Col>
 
+
+
+                                </Row>
+
+                                <Row>
+                                    <Col xs={2}>
+
+                                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                                            <Form.Label><span style={{ "fontFamily": "sans-serif" }}>NIC Number</span><span style={{ "color": "#fe0017" }}>*</span></Form.Label>
+                                            <Form.Control type="text" value={this.state.holderName} onChange={this.changHolderName} name="holderName" />
+
+                                        </Form.Group>
+
+                                    </Col>
+
+                                    <Col xs={3} style={{ "marginLeft": "100px" }}>
+
+
+                                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                                            <Form.Label><span style={{ "fontFamily": "sans-serif" }}>Email Address</span><span style={{ "color": "#fe0017" }}>*</span></Form.Label>
+                                            <Form.Control type="text" value={this.state.phoneNumber} onChange={this.changPhonenumber} name="phoneNumber" />
+                                            {!this.state.holdertype && <p style={{ "color": "#fe0017", "font-size": "small" }}>Please enter valide email. </p>}
+
+
+                                        </Form.Group>
+
+
+
+
+                                    </Col>
+
+                                    <Col style={{ "marginLeft": "50px" }}>
+
+
+                                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                                            <Form.Label><span style={{ "fontFamily": "sans-serif" }}>Email Address</span><span style={{ "color": "#fe0017" }}>*</span></Form.Label>
+                                            <Form.Control type="text" value={this.state.phoneNumber} onChange={this.changPhonenumber} name="phoneNumber" />
+                                            {!this.state.holdertype && <p style={{ "color": "#fe0017", "font-size": "small" }}>Please enter valide email. </p>}
+
+
+                                        </Form.Group>
+
+
+
+
+                                    </Col>
+
+
+
+                                </Row>
+
+                            </div>
+
+                            <h5 style={{ "marginTop": "15px" }}><BsRecord2Fill style={{ "fontSize": "40px", "marginLeft": "-30px" }} /> Product Details</h5>
+
+                            <div className={AccountCSS.form}>
+
+                                <Row>
+
+                                    <Col xs={4}>
+
+
+                                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                                            <Form.Label><span style={{ "fontFamily": "sans-serif" }}>Email Address</span><span style={{ "color": "#fe0017" }}>*</span></Form.Label>
+                                            <Form.Control type="text" value={this.state.phoneNumber} onChange={this.changPhonenumber} name="phoneNumber" />
+                                            {!this.state.holdertype && <p style={{ "color": "#fe0017", "font-size": "small" }}>Please enter valide email. </p>}
+
+
+                                        </Form.Group>
+
+
+
+
+                                    </Col>
+
+
+                                    <Col xs={1} style={{ "marginLeft": "100px" }}>
+
+
+                                        <Form.Group className="mb-3" controlId="formBasicEmail">
+                                            <Form.Label><span style={{ "fontFamily": "sans-serif" }}>QTY</span><span style={{ "color": "#fe0017" }}>*</span></Form.Label>
+                                            <Form.Control type="text" value={this.state.phoneNumber} onChange={this.changPhonenumber} name="phoneNumber" />
+
+
+
+                                        </Form.Group>
+
+
+
+
+                                    </Col>
+
+                                    <Col>
+
+                                        <div className={AccountCSS.productContainer}>
+
+
+                                        </div>
+
+
+                                    </Col>
 
 
                                 </Row>

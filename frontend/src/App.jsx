@@ -11,6 +11,7 @@ import requestStocks from './pages/StockManagement/requestStocks';
 import createRequestStocks from './pages/StockManagement/createRequestStocks';
 import dashboard from './pages/SalesManeger/Dashboard/dashboard';
 import createShop from './pages/SalesManeger/Shops/CreateShop/createShop';
+import allShops from './pages/SalesManeger/Shops/AllShops/allShops';
 
 
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
@@ -38,6 +39,7 @@ function App() {
               {/* sales Person Link */}
               <Route path='/salesPerson' component={dashboard} />
               <Route path='/createShop' component={createShop} />
+              <Route path='/allShops' component={allShops} />
 
 
               <Route path='/login' component={Login} />
