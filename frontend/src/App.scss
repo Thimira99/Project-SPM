@@ -1,6 +1,8 @@
 .main-body {
     display: flex;
     flex-basis: 30% 70%;
+    background-color: rgba(234, 234, 246, 1);
+    contain: layout;
 }
 
 .navbar {
