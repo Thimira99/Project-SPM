@@ -4,8 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "./node_modules/.bin/concurrently \"./node_modules/.bin/nodemon\" \"npm run frontend\"",
-    "server": "nodemon server.js",
+    "start": "nodemon server.js",
     "frontend": "npm run start --prefix ../frontend",
     "dev": "concurrently \"npm run server\" \"npm run frontend\""
   },
@@ -20,6 +19,11 @@
     "dotenv": "^16.0.2",
     "express": "^4.18.1",
     "mongoose": "^6.5.4",
-    "nodemon": "^2.0.19"
+    "nodemon": "^2.0.19",
+    "bcryptjs": "^2.4.3",
+    "joi": "^17.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "nodemailer": "^6.7.8",
+    "shortid": "^2.2.16"
   }
 }
