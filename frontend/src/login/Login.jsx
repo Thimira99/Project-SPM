@@ -10,6 +10,11 @@ function Login() {
                     Main Page
                 </Link>
             </button>
+            <button className='btn btn-primary ' style={{ height: "40px" }}>
+                <Link to='/salesPerson' style={{ color: "white" }}>
+                    Sales Person
+                </Link>
+            </button>
         </>
     )
 }
