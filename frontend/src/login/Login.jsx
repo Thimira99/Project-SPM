@@ -15,6 +15,11 @@ function Login() {
                     Sales Person
                 </Link>
             </button>
+            <button className='btn btn-primary ' style={{ height: "40px" }}>
+                <Link to='/stockManagement' style={{ color: "white" }}>
+                    Stock Manager
+                </Link>
+            </button>
         </>
     )
 }

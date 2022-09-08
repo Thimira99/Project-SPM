@@ -2,7 +2,7 @@ const express= require('express');
 const { createStocks, getStocks, updateStocks, deleteStocks, createReqStocks, getReqStocks, updateReqStocks, deleteReqStocks } = require('../controllers/stockController');
 const router = express.Router()
 
-const Stocks = require('../models/stock')
+const Stocks = require('../models/Stock Management/stock')
 
 //create stocks
 router.post("/stocks/create",createStocks)

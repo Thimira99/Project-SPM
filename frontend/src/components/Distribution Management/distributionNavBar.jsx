@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import navbarStyles from './Navbar.module.scss';
+import navbarStyles from '../Navbar.module.scss';
 
 import { StockSidebarData } from './StockSidebarData';
 
