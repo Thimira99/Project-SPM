@@ -55,16 +55,23 @@ formValidation = () =>{
     const errorDate = {};
     const errorRegPrice ={};
 
-    if(!product_id.match(/^[A-Z]{4,}[0-9]{3,}$/)){
-        errorId["idInput"] = "Product Id should contain at least 4 uppercase letters and at least 3 numbers"
+    if(!product_id.match(/^[S][H][K][0-9]{3,}$/)){
+        errorId["idInput"] = "Product Id should contain 'S','H','K' uppercase letters and at least 3 numbers"
+        isValid=false;
     }
 
     if(!product_id){
         errorId["idEmpty"]="Product Id Field is EMPTY!"
+        isValid=false;
     }
 
     if(!product_type.match(/^[a-z A-Z]*$/)){
       errorType["productTypeInput"] = "Product Type must contain characters only!";
+        isValid=false;
+    }
+
+    if(!product_type){
+        errorType["productTypeInput"]="Product type Field is EMPTY!"
         isValid=false;
     }
   
@@ -160,6 +167,10 @@ retrieveReqStocks(){
         }
     });
 }
+onCancel(){
+    window.location.reload();
+}
+
     render(){
         const {errorId}= this.state;
         const{errorType}=this.state;
@@ -216,7 +227,7 @@ retrieveReqStocks(){
                                     }}
                                     />
                                     {Object.keys(errorId).map((key)=>{
-                                    return <div style={{color:'red'}} key={key}>{errorId[key]}</div>
+                                    return <div style={{color:'red',marginLeft:'30px'}} key={key}>{errorId[key]}</div>
                             })}
                             </div>
                             </div>
@@ -273,7 +284,7 @@ retrieveReqStocks(){
                                     }}
                                     />
                                     {Object.keys(errorType).map((key)=>{
-                                    return <div style={{color:'red'}} key={key}>{errorType[key]}</div>
+                                    return <div style={{color:'red',marginLeft:'30px'}} key={key}>{errorType[key]}</div>
                             })}
                             </div>
                             </div>
@@ -325,7 +336,7 @@ retrieveReqStocks(){
                                     }}
                                     />
                                     {Object.keys(errorReqDate).map((key)=>{
-                                    return <div style={{color:'red'}} key={key}>{errorReqDate[key]}</div>
+                                    return <div style={{color:'red',marginLeft:'30px'}} key={key}>{errorReqDate[key]}</div>
                             })}
                             </div>
                             </div>
@@ -380,7 +391,7 @@ retrieveReqStocks(){
                                     }}
                                     />
                                     {Object.keys(errorDate).map((key)=>{
-                                    return <div style={{color:'red'}} key={key}>{errorDate[key]}</div>
+                                    return <div style={{color:'red',marginLeft:'30px'}} key={key}>{errorDate[key]}</div>
                             })}
                             </div>
                             </div>

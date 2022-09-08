@@ -8,7 +8,7 @@ import { MDBDataTable } from 'mdbreact';
 import { FcCheckmark, FcCancel, FcOk, FcInspection, FcOvertime, FcProcess, FcPicture ,FcFullTrash,FcViewDetails } from "react-icons/fc";
 import { FaEdit } from "react-icons/fa";
 import axios from 'axios';
-
+import stockManagementStyles from './stockManagement.module.scss'
 class allShops extends Component {
 
     constructor(props) {
@@ -214,19 +214,7 @@ delete(id){
 
 
                     <Row>
-
-                        <Col>
-
-                            <Button style={{ "width": "160px", "fontWeight": "600" , "height":"fitContent"}} onClick={this.onAllStocksSubmit}>ALL SHOPS</Button>
-
-
-                        </Col>
-
-                        <Col>
-
-                            {/* <Button style={{ "width": "160px", "fontWeight": "600" }}>CREATE</Button> */}
-                                <Button><a href="/createStocks" style={{textDecoration:'none', color:'white'}}>Add</a></Button>
-                        </Col>
+                    <h3 style={{color: "#287BD4"}}>STOCK REVIEW</h3>
                     </Row>
 
 
