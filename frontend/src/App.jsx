@@ -13,7 +13,8 @@ import dashboard from './pages/SalesManeger/Dashboard/dashboard';
 import createShop from './pages/SalesManeger/Shops/CreateShop/createShop';
 import allShops from './pages/SalesManeger/Shops/AllShops/allShops';
 
-
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import TopBar from './components/Topbar';
 
@@ -45,6 +46,10 @@ function App() {
               <Route path='/login' component={Login} />
               <Redirect from='/' to='/login' />
             </Switch>
+
+            <ToastContainer position="top-center"
+              autoClose={2000}
+              hideProgressBar={false} />
           </div>
         </div>
       </Router>
