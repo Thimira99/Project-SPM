@@ -108,7 +108,7 @@ class viewEmployee extends Component {
 
                 <div className={AccountCSS.container}>
 
-                    <h1 style={{ marginLeft: "30rem" }}>View Employees</h1>
+                    <h1 style={{ marginLeft: "32rem" }}>View Employees</h1>
                     <MDBDataTable
 
 
