@@ -20,6 +20,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import TopBar from './components/Topbar';
+import UpdateUser from './pages/admin/UpdateAdmin/updateUser';
+import ViewEmployee from './pages/admin/ViewEmployee/viewEmployee';
+import AddNotes from './pages/admin/Notes/addNotes';
+import CreateNotes from './pages/admin/Notes/createNotes';
 
 
 
@@ -34,6 +38,10 @@ function App() {
             <Switch>
               <Route path='/mainPage' component={Dashboard} />
               <Route path='/createEmployee' component={CreateEmployee} />
+              <Route path='/updateEmployee' component={UpdateUser} />
+              <Route path='/viewEmployee' component={ViewEmployee} />
+              <Route path='/notes' component={AddNotes} />
+              <Route path='/createNotes' component={CreateNotes} />
 
               <Route path='/stockManagement' component={stockManagement} />
               <Route path='/reqStocks' component={requestStocks} />
@@ -45,10 +53,12 @@ function App() {
               <Route path='/createShop' component={createShop} />
               <Route path='/allShops' component={allShops} />
 
+ 
                {/* Product Manager Link */}
                <Route path='/productManager' component={ProductManagerDashboard} />
                <Route path='/supplierList' component={SupplierList} />
                <Route path='/addSupplier' component={AddSupplier} />
+ 
 
               <Route path='/login' component={Login} />
               <Redirect from='/' to='/login' />

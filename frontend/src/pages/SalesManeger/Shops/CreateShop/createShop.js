@@ -17,13 +17,13 @@ class createShop extends Component {
         this.onAllShopSubmit = this.onAllShopSubmit.bind(this);
     }
 
-    onAllShopSubmit(){
+    onAllShopSubmit() {
 
         this.props.history.push('/allShops');
 
     }
 
-    componentDidMount(){
+    componentDidMount() {
 
     }
 
@@ -330,8 +330,52 @@ class createShop extends Component {
 
                                     </Col>
 
+                                    <Col>
+                                        <Button style={{ "width": "110px", "fontWeight": "600", "height": "fit-content", "marginLeft": "5px", "backgroundColor": "rgba(40, 123, 212, 1)", "marginTop": "-350px" }} onClick={this.onAllShopSubmit}>ADD</Button>
+
+                                    </Col>
+
+
 
                                 </Row>
+
+                                <Row>
+
+                                    <Col>
+
+                                    </Col>
+
+                                    <Col>
+
+                              
+                                        <div style={{ "marginLeft": "430px", "marginTop": "60px", "flex": "none" }}>
+
+                                        <Row>
+                                         
+
+                                                <Col xs={2}>
+
+                                                    <Button style={{ "width": "110px", "fontWeight": "600" }} onClick={this.onAllShopSubmit}>ALL SHOPS</Button>
+
+
+                                                </Col>
+
+                                                <Col style={{"marginLeft":"100px"}}>
+
+                                                    <Button style={{ "width": "110px", "fontWeight": "600" }}>CREATE</Button>
+
+                                                </Col>
+                                         
+
+                                                </Row>
+                                        </div>
+
+                                       
+                                    </Col>
+
+                                </Row>
+
+
 
                             </div>
 
