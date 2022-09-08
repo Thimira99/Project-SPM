@@ -48,15 +48,11 @@ function App() {
               <Route path='/createShop' component={createShop} />
               <Route path='/allShops' component={allShops} />
 
-<<<<<<< HEAD
+              {/* Product Manager Link */}
+              {/* <Route path='/supplierList' component={SupplierList} /> */}
               {/* Product Manager Link */}
               <Route path='/productManager' component={ProductManagerDashboard} />
-              {/* <Route path='/supplierList' component={SupplierList} /> */}
-=======
-               {/* Product Manager Link */}
-               <Route path='/productManager' component={ProductManagerDashboard} />
-               <Route path='/supplierList' component={SupplierList} />
->>>>>>> 19bf8446e213f7af4c9696c76ee1187af38b2b0a
+              <Route path='/supplierList' component={SupplierList} />
 
               <Route path='/login' component={Login} />
               <Redirect from='/' to='/login' />
