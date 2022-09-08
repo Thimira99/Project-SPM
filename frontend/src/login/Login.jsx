@@ -29,7 +29,7 @@ function Login() {
             email,
             password
         };
-
+        console.log("dataaa",data)
         //login post
         axios.post("http://localhost:8000/login", data).then((res) => {
 
@@ -55,6 +55,8 @@ function Login() {
                     history.push("/mainPage");
                 } else if (accountType === "Sales Rep") {
                     history.push("/salesPerson");
+                }else if (accountType === "Stock Manager") {
+                    history.push("/stockManagement");
                 }
             }
         }).catch(err => {

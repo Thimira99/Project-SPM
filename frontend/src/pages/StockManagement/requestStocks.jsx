@@ -213,27 +213,18 @@ delete(id){
                 <div style={{ "marginLeft": "40px", "marginTop": "30px", "flex": "none" }}>
 
 
+                    
                     <Row>
-
-                        <Col>
-
-                            <Button style={{ "width": "160px", "fontWeight": "600" , "height":"fitContent"}} onClick={this.onAllStocksSubmit}>ALL SHOPS</Button>
-
-
-                        </Col>
-
-                        <Col>
-
-                            {/* <Button style={{ "width": "160px", "fontWeight": "600" }}>CREATE</Button> */}
-                                <Button><a href="/createRequests" style={{textDecoration:'none', color:'white'}}>Add</a></Button>
-                        </Col>
-                    </Row>
+                    <h3 style={{color: "#287BD4"}}>REQUISITIONS</h3>
+                   </Row>
 
 
                 </div>
                 <Row>
 
-                    <div className={AccountCSS.container}>
+                    <div className={AccountCSS.container} style={{
+                      marginLeft:'-180px'
+                    }}>
 
 
                         <MDBDataTable

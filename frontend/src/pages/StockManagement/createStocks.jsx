@@ -195,7 +195,7 @@ onCancel(){
                     marginTop:'60px',
                     marginLeft:'-420px',
                     width:'900px',
-                    height:'550px',
+                    height:'fitContent',
                     border:'none'
                 }}>
                     
@@ -229,7 +229,7 @@ onCancel(){
                                     style={{marginLeft:'20px'}}
                                     />
                                     {Object.keys(errorId).map((key)=>{
-                                    return <div style={{color:'red'}} key={key}>{errorId[key]}</div>
+                                    return <div style={{color:'red',marginLeft:'20px',}} key={key}>{errorId[key]}</div>
                             })}
                             </div>
                             </div>
@@ -289,7 +289,7 @@ onCancel(){
                                     }}
                                     />
                                     {Object.keys(errorType).map((key)=>{
-                                    return <div style={{color:'red'}} key={key}>{errorType[key]}</div>
+                                    return <div style={{color:'red',marginLeft:'20px',}} key={key}>{errorType[key]}</div>
                             })}
                                 
                             </div>
@@ -338,7 +338,7 @@ onCancel(){
                                     }}
                                     />
                                     {Object.keys(errorName).map((key)=>{
-                                    return <div style={{color:'red'}} key={key}>{errorName[key]}</div>
+                                    return <div style={{color:'red',marginLeft:'20px',}} key={key}>{errorName[key]}</div>
                             })}
                             </div>
                             </div>
