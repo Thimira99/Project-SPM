@@ -25,7 +25,7 @@ export const sidebarData = [
     {
         title: "My Notes",
         icon: <FaStickyNote />,
-        link: "/dashboard"
+        link: "/notes"
     },
     {
         title: "Profile",

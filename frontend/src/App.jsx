@@ -21,6 +21,8 @@ import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-d
 import TopBar from './components/Topbar';
 import UpdateUser from './pages/admin/UpdateAdmin/updateUser';
 import ViewEmployee from './pages/admin/ViewEmployee/viewEmployee';
+import AddNotes from './pages/admin/Notes/addNotes';
+import CreateNotes from './pages/admin/Notes/createNotes';
 
 
 
@@ -37,6 +39,8 @@ function App() {
               <Route path='/createEmployee' component={CreateEmployee} />
               <Route path='/updateEmployee' component={UpdateUser} />
               <Route path='/viewEmployee' component={ViewEmployee} />
+              <Route path='/notes' component={AddNotes} />
+              <Route path='/createNotes' component={CreateNotes} />
 
               <Route path='/stockManagement' component={stockManagement} />
               <Route path='/reqStocks' component={requestStocks} />
