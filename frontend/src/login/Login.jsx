@@ -49,12 +49,12 @@ function Login() {
             console.log(status, accountType);
 
             if (status === false) {
-                history.push('/updateUser');
+                history.push('/updateEmployee');
             } else {
                 if (accountType === 'admin') {
                     history.push("/mainPage");
-                } else {
-                    history.push("/getUsers");
+                } else if (accountType === "Sales Rep") {
+                    history.push("/salesPerson");
                 }
             }
         }).catch(err => {

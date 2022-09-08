@@ -17,6 +17,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import TopBar from './components/Topbar';
+import UpdateUser from './pages/admin/UpdateAdmin/updateUser';
 
 
 
@@ -31,6 +32,7 @@ function App() {
             <Switch>
               <Route path='/mainPage' component={Dashboard} />
               <Route path='/createEmployee' component={CreateEmployee} />
+              <Route path='/updateEmployee' component={UpdateUser} />
 
               <Route path='/stockManagement' component={stockManagement} />
               <Route path='/reqStocks' component={requestStocks} />
