@@ -88,6 +88,14 @@ function Login() {
                 <Link to='/salesPerson' style={{ color: "white" }}>
                     Sales Person
                 </Link>
+
+            </button>
+            <button className='btn btn-primary ' style={{ height: "40px" }}>
+                <Link to='/stockManagement' style={{ color: "white" }}>
+                    Stock Manager
+                </Link>
+            </button>
+
             </button> */}
 
 
@@ -117,6 +125,7 @@ function Login() {
                     </div>
                 </div>
             </div >
+
         </>
     )
 }
