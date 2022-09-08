@@ -1,356 +1,241 @@
-
-import React, { Component } from 'react';
-import SalesRepDashboard from '../../../../components/SalesRepDashboard';
+import React, { Component } from 'react'
+import axios from 'axios';
+import ProductManagerDashboard from '../../../../components/ProductManagerDashboard/ProductManagerDashboard';
 import { Form, Button, Table, Row, Col, Container } from "react-bootstrap";
 import AccountCSS from './account.module.css';
 import { BsRecord2Fill } from "react-icons/bs";
 
-class createShop extends Component {
+export default class AddSupplier extends Component {
 
-    constructor(props) {
-        super(props)
-
-        this.state = {
-
-        }
-
-        this.onAllShopSubmit = this.onAllShopSubmit.bind(this);
+  constructor(props){
+    super(props);
+    this.state={
+        
+        dateCreated:"",
+        supplierId:"",
+        supplier:"",
+        contactPerson:"",   
+        status:"",    
+       
+         /** */
+        errorA:{},
+        errorB:{},
+        errorC:{},
+        errorD:{},
     }
+  }
+    handleInputChange=(e)=>{
+      const {name,value} = e.target;
 
-    onAllShopSubmit(){
+      this.setState({
+          ...this.state,
+          [name]:value
+      })
+  }
 
-        this.props.history.push('/allShops');
+/** */
+formValidation = () =>{
+  const{dateCreated,supplierId,supplier,contactPerson}=this.state;
+  let isValid = true;
+  const errorA ={};
+  const errorB={};
+  const errorC={};
 
+
+  if(!supplierId){
+      errorA["supplierIdInput"] = "Supplier Id Field is EMPTY!";
+      isValid=false;
+  }
+
+  if(!supplier){
+    errorB["supplierFieldInput"] = "Supplier Field is EMPTY!";
+    isValid=false;
+  }
+    if(!contactPerson){
+        errorC["contactPersonFieldInput"] = "Contact Person Field is EMPTY!";
+        isValid=false;
     }
+  if(!supplierId.match(/^[a-z A-Z 1-9]*$/)){
+      errorA["supplierIdInputPattern"] = "Supplier Id must contain characters only!";
+      isValid=false;
+  }
 
-    componentDidMount(){
 
+   
+
+
+
+  this.setState({errorA:errorA,errorB:errorB,errorC:errorC});
+  return isValid;
+}
+/** */
+
+  onSubmit=(e)=>{
+    e.preventDefault();
+
+    /** */
+    const isValid = this.formValidation();
+    if(isValid){
+
+
+    const{dateCreated,supplierId,supplier,contactPerson,status}= this.state;
+
+       
+    const data={
+        
+        dateCreated:dateCreated,
+        supplierId:supplierId,
+        supplier:supplier,
+        contactPerson:contactPerson, 
+        status:status
     }
-
-
-
-    render() {
-        return (
-            <>
-                <SalesRepDashboard />
-
-                <div style={{ "marginLeft": "40px", "marginTop": "30px", "flex": "none" }}>
-
-
-                    <Row>
-
-                        <Col>
-
-                            <Button style={{ "width": "110px", "fontWeight": "600" }} onClick={this.onAllShopSubmit}>ALL SHOPS</Button>
-
-
-                        </Col>
-
-                        <Col>
-
-                            <Button style={{ "width": "110px", "fontWeight": "600" }}>CREATE</Button>
-
-                        </Col>
-                    </Row>
-
-
-                </div>
-                <Row>
-
-                    <div className={AccountCSS.container}>
-
-                        <div style={{ "marginTop": "18px", "marginLeft": "15px", "color": "rgba(66, 74, 155, 1)", "fontFamily": "sans-serif" }}>
-
-                            <h4>Shop Registration<hr style={{ "marginTop": "2px", "width": "1520px", "border": "1px solid rgba(66, 74, 155, 1)" }} /></h4>
-
-
-
-                        </div>
-
-                        <h5 style={{ "marginTop": "25px" }}><BsRecord2Fill style={{ "fontSize": "40px", "marginLeft": "-30px" }} /> Owner Details</h5>
-
-
-                        <Form onSubmit={this.add} ref={this.formData}>
-                            <div className={AccountCSS.form}>
-                                <Row>
-                                    <Col>
-
-                                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                                            <Form.Label><span style={{ "fontFamily": "sans-serif" }}>Name</span><span style={{ "color": "#fe0017" }}>*</span></Form.Label>
-                                            <Form.Control type="text" value={this.state.holderName} onChange={this.changHolderName} name="holderName" />
-
-                                        </Form.Group>
-
-                                    </Col>
-
-                                    <Col style={{ "marginLeft": "50px" }}>
-
-
-                                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                                            <Form.Label><span style={{ "fontFamily": "sans-serif" }}>Phone Number</span><span style={{ "color": "#fe0017" }}>*</span></Form.Label>
-                                            <Form.Control type="text" value={this.state.phoneNumber} onChange={this.changPhonenumber} name="phoneNumber" />
-                                            {!this.state.holdertype && <p style={{ "color": "#fe0017", "font-size": "small" }}>Please enter only numbers. </p>}
-
-
-                                        </Form.Group>
-
-
-
-
-                                    </Col>
-
-
-
-                                </Row>
-
-                                <Row>
-                                    <Col>
-
-                                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                                            <Form.Label><span style={{ "fontFamily": "sans-serif" }}>NIC Number</span><span style={{ "color": "#fe0017" }}>*</span></Form.Label>
-                                            <Form.Control type="text" value={this.state.holderName} onChange={this.changHolderName} name="holderName" />
-
-                                        </Form.Group>
-
-                                    </Col>
-
-                                    <Col style={{ "marginLeft": "50px" }}>
-
-
-                                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                                            <Form.Label><span style={{ "fontFamily": "sans-serif" }}>Email Address</span><span style={{ "color": "#fe0017" }}>*</span></Form.Label>
-                                            <Form.Control type="text" value={this.state.phoneNumber} onChange={this.changPhonenumber} name="phoneNumber" />
-                                            {!this.state.holdertype && <p style={{ "color": "#fe0017", "font-size": "small" }}>Please enter valide email. </p>}
-
-
-                                        </Form.Group>
-
-
-
-
-                                    </Col>
-
-
-
-                                </Row>
-                            </div>
-
-                            <h5 style={{ "marginTop": "15px" }}><BsRecord2Fill style={{ "fontSize": "40px", "marginLeft": "-30px" }} /> Shop Details</h5>
-
-                            <div className={AccountCSS.form}>
-                                <Row>
-                                    <Col>
-
-                                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                                            <Form.Label><span style={{ "fontFamily": "sans-serif" }}>Name</span><span style={{ "color": "#fe0017" }}>*</span></Form.Label>
-                                            <Form.Control type="text" value={this.state.holderName} onChange={this.changHolderName} name="holderName" />
-
-                                        </Form.Group>
-
-                                    </Col>
-
-                                    <Col style={{ "marginLeft": "50px" }}>
-
-
-                                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                                            <Form.Label><span style={{ "fontFamily": "sans-serif" }}>Phone Number</span><span style={{ "color": "#fe0017" }}>*</span></Form.Label>
-                                            <Form.Control type="text" value={this.state.phoneNumber} onChange={this.changPhonenumber} name="phoneNumber" />
-                                            {!this.state.holdertype && <p style={{ "color": "#fe0017", "font-size": "small" }}>Please enter only numbers. </p>}
-
-
-                                        </Form.Group>
-
-
-
-
-                                    </Col>
-
-
-
-                                </Row>
-
-                                <Row>
-                                    <Col>
-
-                                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                                            <Form.Label><span style={{ "fontFamily": "sans-serif" }}>NIC Number</span><span style={{ "color": "#fe0017" }}>*</span></Form.Label>
-                                            <Form.Control type="text" value={this.state.holderName} onChange={this.changHolderName} name="holderName" />
-
-                                        </Form.Group>
-
-                                    </Col>
-
-                                    <Col style={{ "marginLeft": "50px" }}>
-
-
-                                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                                            <Form.Label><span style={{ "fontFamily": "sans-serif" }}>Email Address</span><span style={{ "color": "#fe0017" }}>*</span></Form.Label>
-                                            <Form.Control type="text" value={this.state.phoneNumber} onChange={this.changPhonenumber} name="phoneNumber" />
-                                            {!this.state.holdertype && <p style={{ "color": "#fe0017", "font-size": "small" }}>Please enter valide email. </p>}
-
-
-                                        </Form.Group>
-
-
-
-
-                                    </Col>
-
-
-
-                                </Row>
-
-
-                                <Row>
-                                    <Col>
-
-                                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                                            <Form.Label><span style={{ "fontFamily": "sans-serif" }}>NIC Number</span><span style={{ "color": "#fe0017" }}>*</span></Form.Label>
-                                            <Form.Control type="text" value={this.state.holderName} onChange={this.changHolderName} name="holderName" />
-
-                                        </Form.Group>
-
-                                    </Col>
-
-                                    <Col style={{ "marginLeft": "50px" }}>
-
-
-                                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                                            <Form.Label><span style={{ "fontFamily": "sans-serif" }}>Email Address</span><span style={{ "color": "#fe0017" }}>*</span></Form.Label>
-                                            <Form.Control type="text" value={this.state.phoneNumber} onChange={this.changPhonenumber} name="phoneNumber" />
-                                            {!this.state.holdertype && <p style={{ "color": "#fe0017", "font-size": "small" }}>Please enter valide email. </p>}
-
-
-                                        </Form.Group>
-
-
-
-
-                                    </Col>
-
-
-
-                                </Row>
-
-                                <Row>
-                                    <Col xs={2}>
-
-                                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                                            <Form.Label><span style={{ "fontFamily": "sans-serif" }}>NIC Number</span><span style={{ "color": "#fe0017" }}>*</span></Form.Label>
-                                            <Form.Control type="text" value={this.state.holderName} onChange={this.changHolderName} name="holderName" />
-
-                                        </Form.Group>
-
-                                    </Col>
-
-                                    <Col xs={3} style={{ "marginLeft": "100px" }}>
-
-
-                                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                                            <Form.Label><span style={{ "fontFamily": "sans-serif" }}>Email Address</span><span style={{ "color": "#fe0017" }}>*</span></Form.Label>
-                                            <Form.Control type="text" value={this.state.phoneNumber} onChange={this.changPhonenumber} name="phoneNumber" />
-                                            {!this.state.holdertype && <p style={{ "color": "#fe0017", "font-size": "small" }}>Please enter valide email. </p>}
-
-
-                                        </Form.Group>
-
-
-
-
-                                    </Col>
-
-                                    <Col style={{ "marginLeft": "50px" }}>
-
-
-                                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                                            <Form.Label><span style={{ "fontFamily": "sans-serif" }}>Email Address</span><span style={{ "color": "#fe0017" }}>*</span></Form.Label>
-                                            <Form.Control type="text" value={this.state.phoneNumber} onChange={this.changPhonenumber} name="phoneNumber" />
-                                            {!this.state.holdertype && <p style={{ "color": "#fe0017", "font-size": "small" }}>Please enter valide email. </p>}
-
-
-                                        </Form.Group>
-
-
-
-
-                                    </Col>
-
-
-
-                                </Row>
-
-                            </div>
-
-                            <h5 style={{ "marginTop": "15px" }}><BsRecord2Fill style={{ "fontSize": "40px", "marginLeft": "-30px" }} /> Product Details</h5>
-
-                            <div className={AccountCSS.form}>
-
-                                <Row>
-
-                                    <Col xs={4}>
-
-
-                                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                                            <Form.Label><span style={{ "fontFamily": "sans-serif" }}>Email Address</span><span style={{ "color": "#fe0017" }}>*</span></Form.Label>
-                                            <Form.Control type="text" value={this.state.phoneNumber} onChange={this.changPhonenumber} name="phoneNumber" />
-                                            {!this.state.holdertype && <p style={{ "color": "#fe0017", "font-size": "small" }}>Please enter valide email. </p>}
-
-
-                                        </Form.Group>
-
-
-
-
-                                    </Col>
-
-
-                                    <Col xs={1} style={{ "marginLeft": "100px" }}>
-
-
-                                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                                            <Form.Label><span style={{ "fontFamily": "sans-serif" }}>QTY</span><span style={{ "color": "#fe0017" }}>*</span></Form.Label>
-                                            <Form.Control type="text" value={this.state.phoneNumber} onChange={this.changPhonenumber} name="phoneNumber" />
-
-
-
-                                        </Form.Group>
-
-
-
-
-                                    </Col>
-
-                                    <Col>
-
-                                        <div className={AccountCSS.productContainer}>
-
-
-                                        </div>
-
-
-                                    </Col>
-
-
-                                </Row>
-
-                            </div>
-
-                        </Form>
-
-
-                    </div>
-
-
-
-
-
-                </Row>
-
-
-
-            </>
-        );
-    }
+        
+    console.log(data);
+
+    axios.post("http://localhost:8000/supplier/post",data).then((res)=>{
+      if(res.data.success){
+        alert("Supplier added Successfully!");
+        window.location.href='/supplierList';
+        this.setState(
+          {
+            dateCreated:"",
+            supplierId:"",
+            supplier:"",
+            contactPerson:"",
+            status:"" 
+          }
+        )
+      }
+    })
+}
 }
 
-export default createShop;
+  
+  render() {
+
+    const{errorA}=this.state;
+    const{errorB}=this.state;
+    const{errorC}=this.state;
+
+    return (
+        <>
+        <ProductManagerDashboard/>
+
+
+        <Row>
+      <div className='container'>
+      <div className = 'card' style={{marginLeft:'220px', marginTop:'20px', background: "#D3D3D3",height:'auto',width:'600px',marginRight:'100px'}}>
+      <div className='col-md-8 mt-4 mx-auto'>
+      
+      
+
+        <h3   style={{color: 'rgba(6, 21, 117)', fontWeight:'bold'}}> ADD SUPPLIER </h3>
+        <button className="btn btn-primary" style={{"width": "360px", "fontWeight": "600"}}>
+        <a href="/supplierList" style={{textDecoration:'none',color:'white', fontWeight:'bold',}}>
+          SUPPLIER LIST
+        </a></button><br/> 
+        <form className='needs-validation' noValidate onSubmit={this.onSubmit}>
+         
+          <div className='form-group' style={{marginBottom:'15px'}}>
+            <label style={{marginBottom:'5px'}}>SUPPLIER ID</label>
+            <input 
+              type="text"
+              className="form-control"
+              name="supplierId"
+              placeholder="Enter Supplier Id"
+              value={this.state.supplierId}
+              onChange={this.handleInputChange}
+            />
+             {Object.keys(errorA).map((key)=>{
+              return <div style={{color:'red'}} key={key}>{errorA[key]}</div> })}
+          </div>
+
+          <div className='form-group' style={{marginBottom:'15px'}}>
+            <label style={{marginBottom:'5px'}}>SUPPLIER</label>
+            <input 
+              type="text"
+              className="form-control"
+              name="supplier"
+              placeholder="Enter Supplier"
+              value={this.state.supplier}
+              onChange={this.handleInputChange}
+            />
+            {Object.keys(errorB).map((key)=>{
+              return <div style={{color:'red'}} key={key}>{errorB[key]}</div> })}
+          </div>
+
+          <div className='form-group' style={{marginBottom:'15px'}}>
+            <label style={{marginBottom:'5px'}}>CONTACT PERSON</label>
+            <input 
+              type="text"
+              className="form-control"
+              name="contactPerson"
+              placeholder="Enter Contact Person"
+              value={this.state.contactPerson}
+              onChange={this.handleInputChange}
+            />
+            {Object.keys(errorC).map((key)=>{
+              return <div style={{color:'red'}} key={key}>{errorC[key]}</div> })}
+          </div>
+
+          <div className='form-group' style={{marginBottom:'15px'}}>
+            <label style={{marginBottom:'5px'}}>STATUS</label>
+            <input 
+              type="text"
+              className="form-control"
+              name="status"
+              placeholder="Enter Status"
+              value={this.state.status}
+              onChange={this.handleInputChange}
+            />
+          </div>
+
+          {/* <div className='form-group' style={{marginBottom:'15px'}}>
+            <label style={{marginBottom:'5px'}}>STATUS</label>
+                  <select id="status" value={this.state.status} onChange={this.handleChange} className="btn  dropdown-toggle">
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                  </select>
+          </div> */}
+
+          <div className='form-group' style={{marginBottom:'15px'}}>
+            <label style={{marginBottom:'5px'}}>DATE CREATED</label>
+            <input 
+              type="date"
+              className="form-control"
+              name="dateCreated"
+              value={this.state.dateCreated}
+              onChange={this.handleInputChange}
+            />
+          </div>
+
+          <Row>
+          <Col> 
+          <button className="btn" type="submit" style={{marginTop:'15px',marginBottom:'150px', backgroundColor: 'rgba(6, 21, 117)', color:"#ffffff", fontWeight:'bold'}} onClick={this.onSubmit}>
+            <i className="far fa-check-square"></i>
+             &nbsp;Save
+          </button>
+          </Col>
+          <Col> 
+          <button className="btn" type="submit" style={{marginTop:'15px',marginBottom:'150px', marginLeft:'-70px', backgroundColor: 'rgba(6, 21, 117)', color:"#ffffff", fontWeight:'bold'}} ><a href='/SupplierList' style={{textDecoration:'none',color:'white'}}> 
+          <i className="far fa-check-square"></i>
+            
+             &nbsp;Cancel
+             </a>
+          </button>
+          </Col>
+          </Row>
+           
+        </form>
+
+      </div>
+      </div>
+      </div>
+
+      </Row>
+       
+       
+      </>
+    )
+  }
+}
