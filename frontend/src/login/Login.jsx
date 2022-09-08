@@ -46,7 +46,6 @@ function Login() {
 
             const { status, accountType } = jwt(token);
 
-            console.log(status, accountType);
 
             if (status === false) {
                 history.push('/updateEmployee');
@@ -55,6 +54,10 @@ function Login() {
                     history.push("/mainPage");
                 } else if (accountType === "Sales Rep") {
                     history.push("/salesPerson");
+                } else if (accountType === "Stock Manager") {
+                    history.push("/stockManagement")
+                } else if (accountType === "Production Manager") {
+                    history.push("/productManager")
                 }
             }
         }).catch(err => {
@@ -78,19 +81,6 @@ function Login() {
 
     return (
         <>
-            {/* <h1>LOGIN PAGE</h1>
-            <button className='btn btn-primary ' style={{ height: "40px" }}>
-                <Link to='/mainPage' style={{ color: "white" }}>
-                    Main Page
-                </Link>
-            </button>
-            <button className='btn btn-primary ' style={{ height: "40px" }}>
-                <Link to='/salesPerson' style={{ color: "white" }}>
-                    Sales Person
-                </Link>
-            </button> */}
-
-
             <div className={login.login_container}>
                 <div className={login.loginform_container}>
                     <div className={login.form_container}>
