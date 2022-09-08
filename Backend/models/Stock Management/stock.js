@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema;
 
-const reqStockSchema = new mongoose.Schema({
+const stockSchema = new mongoose.Schema({
     product_id:{
         type:String,
         required:true
@@ -15,14 +15,22 @@ const reqStockSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    DueDate:{
+    regular_price:{
         type:String,
         required:true
     },
-    qty:{
+    status:{
+        type:String,
+        required:true
+    },
+    stock_count:{
+        type:String,
+        required:true
+    },
+    reg_date:{
         type:String,
         required:true
     }
 },{timestamps:true});
 
-module.exports = mongoose.model('RequestStocks', reqStockSchema) //Though it is stocks the cluster will be created as stocks
+module.exports = mongoose.model('Stocks', stockSchema) //Though it is stocks the cluster will be created as stocks

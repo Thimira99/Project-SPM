@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import StockNavbar from '../../components/StockNavBar';
-import TopBar from '../../components/Topbar';
+import StockNavbar from '../../components/Stock Management/StockNavBar';
 import axios from 'axios';
 import stockManagementStyles from './createStocks.module.scss'
-
+import {FaRegDotCircle} from "react-icons/fa";
 
 export default class createRequestStocks extends Component{
 
@@ -13,18 +12,19 @@ export default class createRequestStocks extends Component{
         this.state={
             product_id:"",
             product_type:"",
-            product_name:"",
+            reqNoStocks:"",
+            reqDate:"",
             DueDate:"",
-            qty:"",
+            regPrice:"",
             reqStocks:[],
 
                /** */
         errorId:{},
-        erroridEmp:{},
         errorType:{},
-        errorName:{},
+        errorReqStocks:{},
+        errorReqDate:{},
         errorDate:{},
-        errorCount:{}
+        errorRegPrice:{}
 
         };
         
@@ -46,24 +46,32 @@ export default class createRequestStocks extends Component{
 }
 
 formValidation = () =>{
-    const{product_id, product_type,product_name,DueDate,qty}=this.state;
+    const{product_id, product_type,reqNoStocks, reqDate, DueDate, regPrice}=this.state;
     let isValid = true;
     const errorId={};
     const errorType ={};
-    const errorName = {};
+    const errorReqStocks ={};
+    const errorReqDate ={};
     const errorDate = {};
-    const errorCount={};
+    const errorRegPrice ={};
 
-    if(!product_id.match(/^[A-Z]{4,}[0-9]{3,}$/)){
-        errorId["idInput"] = "Product Id should contain at least 4 uppercase letters and at least 3 numbers"
+    if(!product_id.match(/^[S][H][K][0-9]{3,}$/)){
+        errorId["idInput"] = "Product Id should contain 'S','H','K' uppercase letters and at least 3 numbers"
+        isValid=false;
     }
 
     if(!product_id){
         errorId["idEmpty"]="Product Id Field is EMPTY!"
+        isValid=false;
     }
 
     if(!product_type.match(/^[a-z A-Z]*$/)){
       errorType["productTypeInput"] = "Product Type must contain characters only!";
+        isValid=false;
+    }
+
+    if(!product_type){
+        errorType["productTypeInput"]="Product type Field is EMPTY!"
         isValid=false;
     }
   
@@ -71,19 +79,34 @@ formValidation = () =>{
         errorDate["dateInput"]="Due date Field is EMPTY!";
         isValid=false;
     }
-  
-    if(!qty.match(/^[0-9]*$/)){
-        errorCount["countError"] = "Count can contain numbers Only!";
+
+    if(!reqDate){
+        errorReqDate["reqDateInput"]="Requested date Field is EMPTY!";
         isValid=false;
     }
-  
-    if(!product_name){
-        errorName["productNameInput"] = "Name Field is EMPTY!";
+
+    if(!regPrice){
+        errorRegPrice["priceError"]="Price Field is EMPTY!";
         isValid=false;
     }
-  
+
+    if(!regPrice.match(/^[0-9]*$/)){
+        errorRegPrice["priceError"] = "Price can contain numbers Only!";
+        isValid=false;
+    }
+
+    if(!reqNoStocks){
+        errorReqStocks["reqCountError"]="Request Field is EMPTY!";
+        isValid=false;
+    }
+
+    if(!reqNoStocks.match(/^[0-9]*$/)){
+        errorReqStocks["reqCountError"] = "Request can contain numbers Only!";
+        isValid=false;
+    }
+    
        
-    this.setState({errorType:errorType,DueDate:DueDate,errorCount:errorCount,errorName:errorName});
+    this.setState({errorId:errorId, errorType:errorType, errorReqStocks:errorReqStocks, errorReqDate:errorReqDate, errorDate:errorDate, errorRegPrice:errorRegPrice});
     return isValid;
   }
 
@@ -96,29 +119,31 @@ formValidation = () =>{
    
     const isValid = this.formValidation();
     if(isValid){
-    const{product_id,product_type,product_name,DueDate,qty}= this.state;
+    const{product_id,product_type, reqNoStocks,reqDate,DueDate,regPrice}= this.state;
 
     const data={
         product_id:product_id,
         product_type:product_type,
-        product_name:product_name,
+        reqNoStocks:reqNoStocks,
+        reqDate:reqDate,
         DueDate:DueDate,
-        qty:qty,
+        regPrice:regPrice
     }
         
     console.log(data);
 
     axios.post("http://localhost:8000/request/stocks/create",data).then((res)=>{
-      if(res.data.success){
+      if(res.status==200){
         alert("Request created Successfully!")
         window.location.href='/reqStocks';
         this.setState(
           {
             product_id:"",
             product_type:"",
-            product_name:"",
+            reqNoStocks:"",
+            reqDate:"",
             DueDate:"",
-            qty:"",
+            regPrice:""
           }
         )
       }
@@ -134,42 +159,59 @@ componentDidMount(){
 
 retrieveReqStocks(){
     axios.get("http://localhost:8000/retrieve/request/stocks").then(res=>{
-        if(res.data.success){
+        if(res.status==200){
             this.setState({
-                reqStocks:res.data.existingReqStocks
+                reqStocks:res.data.data
             });
             console.log(this.state.reqStocks)
         }
     });
 }
+onCancel(){
+    window.location.reload();
+}
+
     render(){
         const {errorId}= this.state;
         const{errorType}=this.state;
+        const{errorReqStocks}=this.state;
+        const{errorReqDate}=this.state;
         const{errorDate}=this.state;
-        const{errorCount}=this.state;
-        const{errorName}=this.state;
+        const{errorRegPrice}=this.state;
+        
 
         return(
             <>
-                <TopBar/>
-                <div className={stockManagementStyles.main}>
                 <StockNavbar/>
-                <div className='container'>
-                    <h1 style={{
-                        marginLeft:'450px',
-                        marginTop:'10px'
-                    }}>REQUEST A STOCK!</h1>
-                    <br/>
-                    <div className='card' style={{
-                        border:'none'
-                    }}>
-                  
+                <br/>
+                <h3 className={stockManagementStyles.heading}>REQUISITION REGISTRATION</h3>
+               
+                <br/>
+                <div className={stockManagementStyles.main}>
+                <br/>
+
+                <div className='card' style={{
+                    marginTop:'60px',
+                    marginLeft:'-500px',
+                    width:'900px',
+                    height:'auto',
+                    border:'none'
+                }}>
+                    
                         <form className='needs-validation' noValidate onSubmit={this.onSubmit} style={{
                             height:'auto'
                         }}>
-                            <div className='form-group'>
-                                <label style={{
-                                    fontWeight:'bold'
+                        <div class="row">
+                            <div class="col-lg-5">
+                            <h5 style={{
+                                marginLeft:'30px',
+                                marginTop:'40px'
+                            }}><FaRegDotCircle/> &nbsp; Product Details</h5>
+                            <br/>
+                            <div class="mb-3">
+                                <label class="form-label" style={{
+                                    fontWeight:'bold',
+                                    marginLeft:'30px'
                                 }}>
                                 PRODUCT ID
                                 </label>
@@ -180,111 +222,183 @@ retrieveReqStocks(){
                                     placeholder="Enter product id"
                                     value={this.state.product_id}
                                     onChange={this.handleInputChange}
+                                    style={{
+                                        marginLeft:'30px'
+                                    }}
                                     />
                                     {Object.keys(errorId).map((key)=>{
-                                    return <div style={{color:'red'}} key={key}>{errorId[key]}</div>
+                                    return <div style={{color:'red',marginLeft:'30px'}} key={key}>{errorId[key]}</div>
                             })}
                             </div>
-                            
-                            <br/>
+                            </div>
 
-                            <div className='form-group'>
-                                <label style={{
-                                    fontWeight:'bold'
-                                }}>
-                                PRODUCT TYPE
+                            <div class="col-lg-5" style={{
+                                marginLeft:'150px'
+                            }}>
+                            <h5 style={{
+                                marginLeft:'-30px',
+                                marginTop:'40px'
+                            }}><FaRegDotCircle/> &nbsp; Stock Details</h5>
+                            <br/>
+                            <div class="mb-3">
+                            <label class="form-label" style={{
+                                    fontWeight:'bold',
+                                    marginLeft:'-30px'
+                                    }}>REQUESTED STOCKS
+                                </label>
+                                <input 
+                                    type="text"
+                                    className="form-control"
+                                    name="reqNoStocks"
+                                    placeholder="Enter requested stocks"
+                                    value={this.state.reqNoStocks}
+                                    onChange={this.handleInputChange}
+                                    style={{
+                                        marginLeft:'-30px'
+                                    }}
+                                    />
+                                    {Object.keys(errorReqStocks).map((key)=>{
+                                    return <div style={{color:'red'}} key={key}>{errorReqStocks[key]}</div>
+                            })}
+                            </div>
+                            </div>
+                            </div>
+                            <br/>
+                            <div class="row">
+                            <div class="col-lg-5">
+                            <div class="mb-3">
+                            <label class="form-label" style={{
+                                    fontWeight:'bold',
+                                    marginLeft:'30px'
+                                }}>PRODUCT TYPE
                                 </label>
                                 <input 
                                     type="text"
                                     className="form-control"
                                     name="product_type"
-                                    placeholder="Enter product name"
+                                    placeholder="Enter product type"
                                     value={this.state.product_type}
                                     onChange={this.handleInputChange}
+                                    style={{
+                                        marginLeft:'30px'
+                                    }}
                                     />
                                     {Object.keys(errorType).map((key)=>{
-                                    return <div style={{color:'red'}} key={key}>{errorType[key]}</div>
+                                    return <div style={{color:'red',marginLeft:'30px'}} key={key}>{errorType[key]}</div>
                             })}
                             </div>
-
-                            <br/>
-
-                            <div className='form-group'>
-                                <label style={{
-                                    fontWeight:'bold'
-                                }}>
-                                PRODUCT NAME
+                            </div>
+                            <div class="col-lg-5" style={{
+                                marginLeft:'150px'
+                            }}>
+                            <div class="mb-3">
+                                <label class="form-label" style={{
+                                    fontWeight:'bold',
+                                    marginLeft:'-30px'
+                                    }}>REGULAR PRICE
                                 </label>
                                 <input 
                                     type="text"
                                     className="form-control"
-                                    name="product_name"
-                                    placeholder="Enter product name"
-                                    value={this.state.product_name}
+                                    name="regPrice"
+                                    placeholder="Enter regular price"
+                                    value={this.state.regPrice}
                                     onChange={this.handleInputChange}
+                                    style={{
+                                        marginLeft:'-30px'
+                                    }}
                                     />
-                                    {Object.keys(errorName).map((key)=>{
-                                    return <div style={{color:'red'}} key={key}>{errorName[key]}</div>
+                                    {Object.keys(errorRegPrice).map((key)=>{
+                                    return <div style={{color:'red'}} key={key}>{errorRegPrice[key]}</div>
                             })}
+                            </div>
+                            </div>
                             </div>
 
                             <br/>
-
-                            <div className='form-group'>
-                                <label style={{
-                                    fontWeight:'bold'
-                                }}>
-                                DUE DATE
+                            <div class="row">
+                            <div class="col-lg-5">
+                            <div class="mb-3">
+                            <label class="form-label" style={{
+                                    fontWeight:'bold',
+                                    marginLeft:'30px'
+                                    }}>REQUESTED DATE
+                                </label>
+                                <input 
+                                    type="date"
+                                    className="form-control"
+                                    name="reqDate"
+                                    placeholder="Enter requested date"
+                                    value={this.state.reqDate}
+                                    onChange={this.handleInputChange}
+                                    style={{
+                                        marginLeft:'30px'
+                                    }}
+                                    />
+                                    {Object.keys(errorReqDate).map((key)=>{
+                                    return <div style={{color:'red',marginLeft:'30px'}} key={key}>{errorReqDate[key]}</div>
+                            })}
+                            </div>
+                            </div>
+                            
+                            <div class="col-lg-5" style={{
+                                marginLeft:'150px'
+                            }}>
+                            <div class="mb-3">
+                            <button class="btn btn-outline-primary" type="submit" style={{
+                                width:'auto',
+                                fontWeight:'600',
+                                marginTop:'30px',
+                                marginLeft:'-30px'
+                                }} onClick={this.onSubmit}>
+                            
+                                &nbsp; Add &nbsp;
+                            </button>
+                            <button class="btn btn-outline-secondary" type="submit" 
+                                style={{
+                                marginLeft:'20px',
+                                width:'auto',
+                                fontWeight:'600',
+                                marginTop:'30px',
+                                
+                                }}
+                                onClick={this.onCancel}
+                            >
+                            &nbsp; Cancel &nbsp;    
+                            </button>
+                            </div>
+                            </div>
+                            </div>
+                           
+                            <br/>
+                            <div className='row'>
+                            <div class="col-lg-5">
+                            <div class="mb-3">
+                                <label class="form-label" style={{
+                                    fontWeight:'bold',
+                                    marginLeft:'30px'
+                                    }}>DUE DATE
                                 </label>
                                 <input 
                                     type="date"
                                     className="form-control"
                                     name="DueDate"
-                                    placeholder="Enter regular price"
+                                    placeholder="Enter due date"
                                     value={this.state.DueDate}
                                     onChange={this.handleInputChange}
+                                    style={{
+                                        marginLeft:'30px'
+                                    }}
                                     />
                                     {Object.keys(errorDate).map((key)=>{
-                                    return <div style={{color:'red'}} key={key}>{errorDate[key]}</div>
+                                    return <div style={{color:'red',marginLeft:'30px'}} key={key}>{errorDate[key]}</div>
                             })}
-
+                            </div>
+                            </div>
+                            </div>
                             <br/>
-
-                            <div className='form-group'>
-                                <label style={{
-                                    fontWeight:'bold'
-                                }}>
-                                QUANTITY
-                                </label>
-                                <input 
-                                    type="text"
-                                    className="form-control"
-                                    name="qty"
-                                    placeholder="Enter regular price"
-                                    value={this.state.qty}
-                                    onChange={this.handleInputChange}
-                                    />
-                                    {Object.keys(errorCount).map((key)=>{
-                                    return <div style={{color:'red'}} key={key}>{errorCount[key]}</div>
-                            })}
-                            </div>
-
-                            </div>
-                            <button className="btn btn-success" type="submit" style={{
-                                marginTop:'15px',
-                                marginBottom:'150px',
-                                backgroundColor:'#287BD4',
-                                fontWeight:'bold'
-                                }} onClick={this.onSubmit}>
-                            
-                                &nbsp;REQUEST &nbsp;
-                            </button>
-                        <br/>
                         </form>
                     </div>
-                </div>
-
-                    
                 </div>
             </>
         )

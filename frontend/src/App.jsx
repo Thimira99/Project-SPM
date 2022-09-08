@@ -12,7 +12,7 @@ import createRequestStocks from './pages/StockManagement/createRequestStocks';
 import dashboard from './pages/SalesManeger/Dashboard/dashboard';
 import createShop from './pages/SalesManeger/Shops/CreateShop/createShop';
 import allShops from './pages/SalesManeger/Shops/AllShops/allShops';
-// import SupplierList from './pages/ProductManeger/Suppliers/SupplierList/SupplierList';
+import SupplierList from './pages/ProductManager/Suppliers/SupplierList/SupplierList';
 import ProductManagerDashboard from './pages/ProductManager/Dashboard/dashboard';
 
 import 'react-toastify/dist/ReactToastify.css';
@@ -48,9 +48,15 @@ function App() {
               <Route path='/createShop' component={createShop} />
               <Route path='/allShops' component={allShops} />
 
+<<<<<<< HEAD
               {/* Product Manager Link */}
               <Route path='/productManager' component={ProductManagerDashboard} />
               {/* <Route path='/supplierList' component={SupplierList} /> */}
+=======
+               {/* Product Manager Link */}
+               <Route path='/productManager' component={ProductManagerDashboard} />
+               <Route path='/supplierList' component={SupplierList} />
+>>>>>>> 19bf8446e213f7af4c9696c76ee1187af38b2b0a
 
               <Route path='/login' component={Login} />
               <Redirect from='/' to='/login' />
