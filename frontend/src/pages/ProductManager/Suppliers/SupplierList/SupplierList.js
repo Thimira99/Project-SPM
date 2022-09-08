@@ -126,17 +126,21 @@ class SupplierList extends Component {
 
                     <Row>
                         <Col>
-                            <Button style={{ "width": "130px", "fontWeight": "600" }} onClick={this.onSupplierListSubmit}>SUPPLIER LIST</Button>
+                            <Button style={{ "width": "150px", "fontWeight": "600" }}> <a href='/supplierList' style={{textDecoration:'none',color:'white', fontWeight:'bold'}}>
+                        SUPPLIER LIST
+          </a></Button>
 
                         </Col>
 
                         <Col>
-                            <Button style={{ "width": "110px", "fontWeight": "600" }}>CREATE</Button>
+                            <Button style={{ "width": "150px", "fontWeight": "600" }}><a href='/addSupplier' style={{textDecoration:'none',color:'white', fontWeight:'bold'}}>
+                        ADD SUPPLIER
+          </a></Button>
                         </Col>
                     </Row>
 
-
                 </div>
+                
                 <Row>
 
                     <div className={AccountCSS.container}>

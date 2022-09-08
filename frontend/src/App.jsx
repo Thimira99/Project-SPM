@@ -14,6 +14,7 @@ import createShop from './pages/SalesManeger/Shops/CreateShop/createShop';
 import allShops from './pages/SalesManeger/Shops/AllShops/allShops';
 import SupplierList from './pages/ProductManager/Suppliers/SupplierList/SupplierList';
 import ProductManagerDashboard from './pages/ProductManager/Dashboard/dashboard';
+import AddSupplier from './pages/ProductManager/Suppliers/AddSupplier/AddSupplier';
 
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
@@ -47,6 +48,7 @@ function App() {
                {/* Product Manager Link */}
                <Route path='/productManager' component={ProductManagerDashboard} />
                <Route path='/supplierList' component={SupplierList} />
+               <Route path='/addSupplier' component={AddSupplier} />
 
               <Route path='/login' component={Login} />
               <Redirect from='/' to='/login' />
