@@ -4,12 +4,13 @@ const dotenv = require('dotenv')
 const stock_routes = require("./routes/stockRoutes")
 
 const distribution_routes = require("./routes/distributionRoutes")
+const notes_routes = require("./notes/notes.router")
 
- 
+
 const productManagerRoutes = require("./routes/productManagerRoutes")
- 
+
 const user_router = require("./routes/userRoutes/userRoutes");
- 
+
 
 const app = express()
 dotenv.config()
@@ -24,12 +25,13 @@ app.use(express.json())
 app.use(stock_routes);
 
 app.use(distribution_routes);
+app.use(notes_routes);
 
- 
+
 app.use(productManagerRoutes);
- 
+
 app.use(user_router);
- 
+
 
 
 const port = process.env.PORT || 8000
