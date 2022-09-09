@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import StockNavbar from '../../components/Stock Management/StockNavBar';
+import DistributionNavbar from '../../components/Distribution Management/distributionNavBar';
 import { Form, Button, Table, Row, Col, Container } from "react-bootstrap";
 import AccountCSS from './account.module.css';
 import { BsRecord2Fill } from "react-icons/bs";
@@ -8,9 +8,8 @@ import { MDBDataTable } from 'mdbreact';
 import { FcCheckmark, FcCancel, FcOk, FcInspection, FcOvertime, FcProcess, FcPicture ,FcFullTrash,FcViewDetails } from "react-icons/fc";
 import { FaEdit } from "react-icons/fa";
 import axios from 'axios';
-import stockManagementStyles from './stockManagement.module.scss'
 
-class allShops extends Component {
+class companies extends Component {
 
     constructor(props) {
         super(props)
@@ -80,8 +79,8 @@ class allShops extends Component {
             }]
         }
 
-        this.onAllStocksSubmit = this.onAllStocksSubmit.bind(this);
-        this.getAllStocks = this.getAllStocks.bind(this);
+        this.onAllCompanies = this.onAllCompanies.bind(this);
+        this.getAllCompanies = this.getAllCompanies.bind(this);
         this.edit=this.edit.bind(this);
         this.delete=this.delete.bind(this);
     }
@@ -91,22 +90,22 @@ class allShops extends Component {
     }
 
     
-    onAllStocksSubmit() {
+    onAllCompanies() {
 
-        this.props.history.push('/stockManagement');
+        this.props.history.push('/companies');
 
     }
 
-    getAllStocks(){
+    getAllCompanies(){
         
-            axios.get("http://localhost:8000/retrieve/stocks").then(res=>{
+            axios.get("http://localhost:8000/retrieve/companies").then(res=>{
                 if(res.status==200){
                     this.setState({
-                        stocks:res.data.data
+                        companies:res.data.data
                     },()=>{
-                        console.log("message",this.state.stocks)
+                        console.log("message",this.state.companies)
                         const userAttributes = []
-                        this.state.stocks.forEach(el => {
+                        this.state.companies.forEach(el => {
                             // el.bagageData.map(obj => {
                             //     bagageID = obj.bagageID,
                             //         serialNumber = obj.serialNumber
@@ -115,18 +114,11 @@ class allShops extends Component {
                 
                             // const data = el.productCategory == 'tvSeries' ? el.productDetails + " EP" : el.productDetails + " Min"
                             userAttributes.push({
-                                productid: el.product_id,
-                                producttype: el.product_type,
-                                productname: el.product_name,
-                                regularprice: el.regular_price,
-                                status: el.status,
-                             
-                              
-                                // discription: el.status == 'Received' ? <FcCheckmark style={{"fontSize":"25px"}}/>: <FcCancel style={{"fontSize":"25px"}}/>,
-                
-                                age: <><FaEdit style={{"marginLeft":"15px","fontSize":"23px"}} onClick={this.edit}/><BsFilterSquareFill style={{"marginLeft":"15px","fontSize":"23px"}} /><BsTrashFill style={{"marginLeft":"15px","fontSize":"23px"}} onClick={this.delete}/></>
-                
-                
+                                regid: el.reg_id,
+                                companyname: el.company_name,
+                                address: el.company_address,
+                                regdate: el.regDate,
+                                
                             })
                         });
                 
@@ -134,53 +126,33 @@ class allShops extends Component {
                             data: {
                                 columns: [
                                     {
-                                        label: 'PRODUCT ID',
-                                        field: 'productid',
+                                        label: 'COMPANY ID',
+                                        field: 'regid',
                                         sort: 'asc',
                                         width: 100,
                 
                                     },
                                     {
-                                        label: 'PRODUCT TYPE',
-                                        field: 'producttype',
+                                        label: 'COMPANY NAME',
+                                        field: 'companyname',
                                         sort: 'asc',
                                         width: 100
                                     },
                                     {
-                                        label: 'PRODUCT NAME',
-                                        field: 'productname',
+                                        label: 'ADDRESS',
+                                        field: 'address',
                                         sort: 'asc',
-                                        width: 150,
+                                        width: 110,
                 
                                     },
                 
                                     {
-                                        label: 'REGULAR PRICE',
-                                        field: 'regularprice',
+                                        label: 'REGISTERED DATE',
+                                        field: 'regdate',
                                         sort: 'asc',
-                                        width: 50
-                                    },
-                                  
-                                    {
-                                        label: 'STATUS',
-                                        field: 'status',
-                                        sort: 'asc',
-                                        width: 50,
+                                        width: 100
                                     }
-                                    ,
-                                    // {
-                                    //     label: 'REGISTERED DATE',
-                                    //     field: 'registereddate',
-                                    //     sort: 'asc',
-                                    //     width: 100,
-                                    // }
-                                    // ,
-                                    {
-                                        label: 'ACTION ',
-                                        field: 'age',
-                                        sort: 'asc',
-                                        width: 120
-                                    }
+                                    
                                 ],
                                 rows: userAttributes
                             }
@@ -193,36 +165,39 @@ class allShops extends Component {
 }
 
 delete(id){
-    if (window.confirm("Do you want to remove this stock?")) {
-        axios.delete(`http://localhost:8000/stocks/delete/${id}`).then((res) => {
-          alert("Stock removed Successfully!");
-          this.getAllStocks();
+    if (window.confirm("Do you want to remove this company?")) {
+        axios.delete(`http://localhost:8000/distribution/delete/${id}`).then((res) => {
+          alert("Company removed Successfully!");
+          this.getAllCompanies();
         });
       }
 }
     componentDidMount() {
 
-        this.getAllStocks();
+        this.getAllCompanies();
     }
 
 
     render() {
         return (
             <>
-                <StockNavbar />
+                <DistributionNavbar />
 
-                <div style={{ "marginLeft": "40px", "marginTop": "30px", "flex": "none" }}>
+                <div style={{ "marginLeft": "60px", "marginTop": "30px", "flex": "none" }}>
 
 
+                    
                     <Row>
-                    <h3 style={{color: "#287BD4"}}>STOCK REVIEW</h3>
-                    </Row>
+                    <h3 style={{color: "#287BD4"}}>COMPANIES</h3>
+                   </Row>
 
 
                 </div>
                 <Row>
 
-                    <div className={AccountCSS.container}>
+                    <div className={AccountCSS.container} style={{
+                      marginLeft:'-180px'
+                    }}>
 
 
                         <MDBDataTable
@@ -258,4 +233,4 @@ delete(id){
     }
 }
 
-export default allShops;
+export default companies;

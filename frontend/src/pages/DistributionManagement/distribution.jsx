@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import StockNavbar from '../../components/Stock Management/StockNavBar';
 import { Form, Button, Table, Row, Col, Container } from "react-bootstrap";
 import AccountCSS from './account.module.css';
 import { BsRecord2Fill } from "react-icons/bs";
@@ -8,9 +7,11 @@ import { MDBDataTable } from 'mdbreact';
 import { FcCheckmark, FcCancel, FcOk, FcInspection, FcOvertime, FcProcess, FcPicture ,FcFullTrash,FcViewDetails } from "react-icons/fc";
 import { FaEdit } from "react-icons/fa";
 import axios from 'axios';
-import stockManagementStyles from './stockManagement.module.scss'
+import distributionStyles from './distribution.module.scss'
+import DistributionNavbar from '../../components/Distribution Management/distributionNavBar';
 
-class allShops extends Component {
+
+class distributions extends Component {
 
     constructor(props) {
         super(props)
@@ -80,8 +81,8 @@ class allShops extends Component {
             }]
         }
 
-        this.onAllStocksSubmit = this.onAllStocksSubmit.bind(this);
-        this.getAllStocks = this.getAllStocks.bind(this);
+        this.onAlldistributionsSubmit = this.onAlldistributionsSubmit.bind(this);
+        this.getAllDistributions = this.getAllDistributions.bind(this);
         this.edit=this.edit.bind(this);
         this.delete=this.delete.bind(this);
     }
@@ -91,22 +92,22 @@ class allShops extends Component {
     }
 
     
-    onAllStocksSubmit() {
+    onAlldistributionsSubmit() {
 
-        this.props.history.push('/stockManagement');
+        this.props.history.push('/distributions');
 
     }
 
-    getAllStocks(){
+    getAllDistributions(){
         
-            axios.get("http://localhost:8000/retrieve/stocks").then(res=>{
+            axios.get("http://localhost:8000/retrieve/distributions").then(res=>{
                 if(res.status==200){
                     this.setState({
-                        stocks:res.data.data
+                        distributions:res.data.data
                     },()=>{
-                        console.log("message",this.state.stocks)
+                        console.log("message",this.state.distributions)
                         const userAttributes = []
-                        this.state.stocks.forEach(el => {
+                        this.state.distributions.forEach(el => {
                             // el.bagageData.map(obj => {
                             //     bagageID = obj.bagageID,
                             //         serialNumber = obj.serialNumber
@@ -115,12 +116,12 @@ class allShops extends Component {
                 
                             // const data = el.productCategory == 'tvSeries' ? el.productDetails + " EP" : el.productDetails + " Min"
                             userAttributes.push({
-                                productid: el.product_id,
-                                producttype: el.product_type,
-                                productname: el.product_name,
-                                regularprice: el.regular_price,
-                                status: el.status,
-                             
+                                distributionid: el.distribution_id,
+                                stockcount: el.stock_count,
+                                company: el.company,
+                                assignedRep: el.assignedRep,
+                                // amount: el.amount,
+                                productid : el.product_id,
                               
                                 // discription: el.status == 'Received' ? <FcCheckmark style={{"fontSize":"25px"}}/>: <FcCancel style={{"fontSize":"25px"}}/>,
                 
@@ -134,43 +135,43 @@ class allShops extends Component {
                             data: {
                                 columns: [
                                     {
-                                        label: 'PRODUCT ID',
-                                        field: 'productid',
+                                        label: 'DISTRIBUTION ID',
+                                        field: 'distributionid',
                                         sort: 'asc',
                                         width: 100,
                 
                                     },
                                     {
-                                        label: 'PRODUCT TYPE',
-                                        field: 'producttype',
+                                        label: 'PRODUCT ID',
+                                        field: 'productid',
                                         sort: 'asc',
                                         width: 100
                                     },
                                     {
-                                        label: 'PRODUCT NAME',
-                                        field: 'productname',
+                                        label: 'STOCK COUNT',
+                                        field: 'stockcount',
                                         sort: 'asc',
                                         width: 150,
                 
                                     },
                 
                                     {
-                                        label: 'REGULAR PRICE',
-                                        field: 'regularprice',
+                                        label: 'COMPANY',
+                                        field: 'company',
                                         sort: 'asc',
                                         width: 50
                                     },
                                   
                                     {
-                                        label: 'STATUS',
-                                        field: 'status',
+                                        label: 'SALES REP',
+                                        field: 'assignedRep',
                                         sort: 'asc',
                                         width: 50,
                                     }
                                     ,
                                     // {
-                                    //     label: 'REGISTERED DATE',
-                                    //     field: 'registereddate',
+                                    //     label: 'AMOUNT',
+                                    //     field: 'amount',
                                     //     sort: 'asc',
                                     //     width: 100,
                                     // }
@@ -196,20 +197,20 @@ delete(id){
     if (window.confirm("Do you want to remove this stock?")) {
         axios.delete(`http://localhost:8000/stocks/delete/${id}`).then((res) => {
           alert("Stock removed Successfully!");
-          this.getAllStocks();
+          this.getAllDistributions();
         });
       }
 }
     componentDidMount() {
 
-        this.getAllStocks();
+        this.getAllDistributions();
     }
 
 
     render() {
         return (
             <>
-                <StockNavbar />
+                <DistributionNavbar />
 
                 <div style={{ "marginLeft": "40px", "marginTop": "30px", "flex": "none" }}>
 
@@ -258,4 +259,4 @@ delete(id){
     }
 }
 
-export default allShops;
+export default distributions;
