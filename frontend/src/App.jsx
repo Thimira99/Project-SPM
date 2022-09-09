@@ -16,7 +16,7 @@ import ProductManagerDashboard from './pages/ProductManager/Dashboard/dashboard'
 import SupplierList from './pages/ProductManager/Suppliers/SupplierList/SupplierList';
 import AddSupplier from './pages/ProductManager/Suppliers/AddSupplier/AddSupplier';
 import MaterialList from './pages/ProductManager/Materials/MaterialList/MaterialList';
-// import AddMaterial from './pages/ProductManager/Materials/AddMaterial/AddMaterial';
+import AddMaterial from './pages/ProductManager/Materials/AddMaterial/AddMaterial';
 
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
@@ -61,7 +61,7 @@ function App() {
                <Route path='/supplierList' component={SupplierList} />
                <Route path='/addSupplier' component={AddSupplier} />
                <Route path='/materialList' component={MaterialList} />
-               {/* <Route path='/addMaterial' component={AddMaterial} /> */}
+               <Route path='/addMaterial' component={AddMaterial} />
  
  
 

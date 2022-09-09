@@ -33,6 +33,6 @@ export const sidebarData = [
     {
         title: "Material List",
         icon: <FaUserCircle />,
-        link: "/dashboard"
+        link: "/materialList"
     },
 ]
