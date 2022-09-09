@@ -10,26 +10,29 @@ export const sidebarData = [
     {
         title: "Dashboard",
         icon: <FaHome />,
-        link: "/salesPerson"
+        link: "/productManager"
     },
     {
-        title: "Shops",
+        title: "Purhcase Materials",
         icon: <FaUserPlus />,
-        link: "/createShop"
+        link: "/purchaseMaterials"
     },
     {
-        title: "Stock",
+        title: "Availability",
         icon: <FaUsers />,
         link: "/viewEmployee"
     },
+    // {
+    //     title: "Maintenance"
+    // },
     {
-        title: "Profile",
+        title: "Supplier List",
         icon: <FaStickyNote />,
-        link: "/dashboard"
+        link: "/supplierList"
     },
     {
-        title: "Profile",
+        title: "Material List",
         icon: <FaUserCircle />,
-        link: "/dashboard"
+        link: "/materialList"
     },
 ]

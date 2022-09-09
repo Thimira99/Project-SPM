@@ -14,10 +14,6 @@ class dashboard extends Component {
         return (
             <>
             <ProductManagerDashboard/>
-
-
-
-
                 
             </>
         );
