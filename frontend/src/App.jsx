@@ -13,6 +13,9 @@ import dashboard from './pages/SalesManeger/Dashboard/dashboard';
 import createShop from './pages/SalesManeger/Shops/CreateShop/createShop';
 import allShops from './pages/SalesManeger/Shops/AllShops/allShops';
 import ProductManagerDashboard from './pages/ProductManager/Dashboard/dashboard';
+
+import distributions from './pages/DistributionManagement/distribution'
+
 import SupplierList from './pages/ProductManager/Suppliers/SupplierList/SupplierList';
 import AddSupplier from './pages/ProductManager/Suppliers/AddSupplier/AddSupplier';
 import MaterialList from './pages/ProductManager/Materials/MaterialList/MaterialList';
@@ -23,9 +26,16 @@ import { ToastContainer } from 'react-toastify';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import TopBar from './components/Topbar';
 import UpdateUser from './pages/admin/UpdateAdmin/updateUser';
+
+import requestedStocks from './pages/DistributionManagement/requestedStocks'
+import regCompany from './pages/DistributionManagement/regCompanies'
+import companies from './pages/DistributionManagement/companies'
+import createDistributions from './pages/DistributionManagement/createDistributions';
+
 import ViewEmployee from './pages/admin/ViewEmployee/viewEmployee';
 import AddNotes from './pages/admin/Notes/addNotes';
 import CreateNotes from './pages/admin/Notes/createNotes';
+
 
 
 
@@ -45,10 +55,18 @@ function App() {
               <Route path='/notes' component={AddNotes} />
               <Route path='/createNotes' component={CreateNotes} />
 
+              {/* Stock manager Links */}
               <Route path='/stockManagement' component={stockManagement} />
               <Route path='/reqStocks' component={requestStocks} />
               <Route path='/createStocks' component={createStocks} />
               <Route path='/createRequests' component={createRequestStocks} />
+
+              {/* Distribution manager Link */}
+              <Route path='/distributions' component={distributions} />
+              <Route path='/requestedStocks' component={requestedStocks} />
+              <Route path='/regCompany' component={regCompany} />
+              <Route path='/companies' component={companies} />
+              <Route path='/regDistributions' component={createDistributions} />
 
               {/* sales Person Link */}
               <Route path='/salesPerson' component={dashboard} />

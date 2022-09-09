@@ -21,7 +21,7 @@ const distributionSchema = new mongoose.Schema({
     },
     amount:{
         type:String,
-        required:true
+        // required:true
     },
     product_id:{
         type:String,

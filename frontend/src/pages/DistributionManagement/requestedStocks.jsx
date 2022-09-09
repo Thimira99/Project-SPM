@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import StockNavbar from '../../components/Stock Management/StockNavBar';
+import DistributionNavbar from '../../components/Distribution Management/distributionNavBar';
 import { Form, Button, Table, Row, Col, Container } from "react-bootstrap";
 import AccountCSS from './account.module.css';
 import { BsRecord2Fill } from "react-icons/bs";
@@ -8,9 +8,8 @@ import { MDBDataTable } from 'mdbreact';
 import { FcCheckmark, FcCancel, FcOk, FcInspection, FcOvertime, FcProcess, FcPicture ,FcFullTrash,FcViewDetails } from "react-icons/fc";
 import { FaEdit } from "react-icons/fa";
 import axios from 'axios';
-import stockManagementStyles from './stockManagement.module.scss'
 
-class allShops extends Component {
+class requestedStocks extends Component {
 
     constructor(props) {
         super(props)
@@ -80,8 +79,8 @@ class allShops extends Component {
             }]
         }
 
-        this.onAllStocksSubmit = this.onAllStocksSubmit.bind(this);
-        this.getAllStocks = this.getAllStocks.bind(this);
+        this.onAllReqStocks = this.onAllReqStocks.bind(this);
+        this.getAllReqStocks = this.getAllReqStocks.bind(this);
         this.edit=this.edit.bind(this);
         this.delete=this.delete.bind(this);
     }
@@ -91,22 +90,22 @@ class allShops extends Component {
     }
 
     
-    onAllStocksSubmit() {
+    onAllReqStocks() {
 
         this.props.history.push('/stockManagement');
 
     }
 
-    getAllStocks(){
+    getAllReqStocks(){
         
-            axios.get("http://localhost:8000/retrieve/stocks").then(res=>{
+            axios.get("http://localhost:8000/retrieve/request/stocks").then(res=>{
                 if(res.status==200){
                     this.setState({
-                        stocks:res.data.data
+                        reqStocks:res.data.data
                     },()=>{
-                        console.log("message",this.state.stocks)
+                        console.log("message",this.state.reqStocks)
                         const userAttributes = []
-                        this.state.stocks.forEach(el => {
+                        this.state.reqStocks.forEach(el => {
                             // el.bagageData.map(obj => {
                             //     bagageID = obj.bagageID,
                             //         serialNumber = obj.serialNumber
@@ -117,16 +116,12 @@ class allShops extends Component {
                             userAttributes.push({
                                 productid: el.product_id,
                                 producttype: el.product_type,
-                                productname: el.product_name,
-                                regularprice: el.regular_price,
-                                status: el.status,
-                             
+                                reqStocks: el.reqNoStocks,
+                                reqdate: el.reqDate,
+                                duedate: el.DueDate,
+                                regprice:el.regPrice,
                               
-                                // discription: el.status == 'Received' ? <FcCheckmark style={{"fontSize":"25px"}}/>: <FcCancel style={{"fontSize":"25px"}}/>,
-                
-                                age: <><FaEdit style={{"marginLeft":"15px","fontSize":"23px"}} onClick={this.edit}/><BsFilterSquareFill style={{"marginLeft":"15px","fontSize":"23px"}} /><BsTrashFill style={{"marginLeft":"15px","fontSize":"23px"}} onClick={this.delete}/></>
-                
-                
+                                
                             })
                         });
                 
@@ -147,40 +142,34 @@ class allShops extends Component {
                                         width: 100
                                     },
                                     {
-                                        label: 'PRODUCT NAME',
-                                        field: 'productname',
+                                        label: 'REQUIRED STOCKS',
+                                        field: 'reqStocks',
                                         sort: 'asc',
-                                        width: 150,
+                                        width: 110,
                 
                                     },
                 
                                     {
-                                        label: 'REGULAR PRICE',
-                                        field: 'regularprice',
+                                        label: 'REGISTERED DATE',
+                                        field: 'reqdate',
                                         sort: 'asc',
-                                        width: 50
+                                        width: 100
                                     },
                                   
                                     {
-                                        label: 'STATUS',
-                                        field: 'status',
+                                        label: 'DUE DATE',
+                                        field: 'duedate',
                                         sort: 'asc',
-                                        width: 50,
+                                        width: 100,
                                     }
                                     ,
-                                    // {
-                                    //     label: 'REGISTERED DATE',
-                                    //     field: 'registereddate',
-                                    //     sort: 'asc',
-                                    //     width: 100,
-                                    // }
-                                    // ,
                                     {
-                                        label: 'ACTION ',
-                                        field: 'age',
+                                        label: 'REGULAR PRICE',
+                                        field: 'regprice',
                                         sort: 'asc',
-                                        width: 120
+                                        width: 100,
                                     }
+                                    
                                 ],
                                 rows: userAttributes
                             }
@@ -196,33 +185,36 @@ delete(id){
     if (window.confirm("Do you want to remove this stock?")) {
         axios.delete(`http://localhost:8000/stocks/delete/${id}`).then((res) => {
           alert("Stock removed Successfully!");
-          this.getAllStocks();
+          this.getAllReqStocks();
         });
       }
 }
     componentDidMount() {
 
-        this.getAllStocks();
+        this.getAllReqStocks();
     }
 
 
     render() {
         return (
             <>
-                <StockNavbar />
+                <DistributionNavbar />
 
                 <div style={{ "marginLeft": "40px", "marginTop": "30px", "flex": "none" }}>
 
 
+                    
                     <Row>
-                    <h3 style={{color: "#287BD4"}}>STOCK REVIEW</h3>
-                    </Row>
+                    <h3 style={{color: "#287BD4"}}>REQUISITIONS</h3>
+                   </Row>
 
 
                 </div>
                 <Row>
 
-                    <div className={AccountCSS.container}>
+                    <div className={AccountCSS.container} style={{
+                      marginLeft:'-180px'
+                    }}>
 
 
                         <MDBDataTable
@@ -258,4 +250,4 @@ delete(id){
     }
 }
 
-export default allShops;
+export default requestedStocks;

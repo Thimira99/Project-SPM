@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 
 import { FaHome } from "react-icons/fa";
 import { FaRegCalendarPlus } from "react-icons/fa";
-import { FaPlusCircle } from "react-icons/fa";
-import { FaShoppingCart } from "react-icons/fa";
-import { FaCartPlus } from "react-icons/fa";
+import { BiHighlight } from "react-icons/bi";
+import { BiArchiveOut } from "react-icons/bi";
+import { HiOutlineViewGridAdd } from "react-icons/hi"
+import { BiBuildings } from "react-icons/bi"
 
-export const StockSidebarData = [
+export const ditributionSideBarData = [
     {
         title: "Dashboard",
         icon: <FaHome />,
@@ -14,17 +15,28 @@ export const StockSidebarData = [
     },
     {
         title: "Distributions",
-        icon: <FaShoppingCart />,
-        link: "/stockManagement"
-    },
-    {
-        title: "Create Distributions",
-        icon: <FaPlusCircle />,
-        link: "/createStocks"
+        icon: <BiArchiveOut />,
+        link: "#"
     },
     {
         title: "Request Stocks",
         icon: <FaRegCalendarPlus />,
-        link: "/createRequests"
+        link: "/requestedStocks"
     },
+    {
+        title: "Companies",
+        icon: <BiBuildings />,
+        link: "/companies"
+    },
+    {
+        title: "Create Distributions",
+        icon: <BiHighlight />,
+        link: "/regDistributions"
+    },
+    {
+        title: "Add Companies",
+        icon: <HiOutlineViewGridAdd />,
+        link: "/regCompany"
+    }
+    
 ]
