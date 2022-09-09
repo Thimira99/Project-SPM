@@ -9,43 +9,44 @@ import { FcCheckmark, FcCancel, FcOk, FcInspection, FcOvertime, FcProcess, FcPic
 import { FaEdit } from "react-icons/fa";
 import axios from 'axios'
 
-class SupplierList extends Component {
+class MaterialList extends Component {
 
     constructor(props) {
         super(props)
 
         this.state = {
-            suppliers:[] 
+            materials:[] 
          
         }
 
         
-        this.getSupplierList = this.getSupplierList.bind(this);
+        this.getMaterialList = this.getMaterialList.bind(this);
     }
 
      
 
-    getSupplierList(){
+    getMaterialList(){
 
-        axios.get("http://localhost:8000/supplier/get").then(res=>{  
-            // console.log(res.data.existingSuppliers)
+        axios.get("http://localhost:8000/material/get").then(res=>{  
+            
             if(res.status ==  "200"){   
                 this.setState({  
-                    suppliers:res.data.existingSuppliers  
+                    materials:res.data.existingMaterials  
                 }, () =>{
-                    console.log("Suppliers", this.state.suppliers)
+                    console.log("Materials", this.state.materials)
 
                     const userAttributes = []
-                    this.state.suppliers.forEach(suppliers => {
+                    this.state.materials.forEach(materials => {
                         
                             
                         userAttributes.push({
-                            datecreated: suppliers.dateCreated,
-                            supplierid: suppliers.supplierId,
-                            supplier: suppliers.supplier,
-                            contactperson: suppliers.contactPerson,
+                            datecreated: materials.dateCreated,
+                            materialid: materials.materialId,
+                            supplier: materials.supplier,
+                            cost: materials.cost,
+                            weight: materials.weight,
                                
-                            status: suppliers.status == 'Active' ? <FcCheckmark style={{"fontSize":"25px"}}/>: <FcCancel style={{"fontSize":"25px"}}/>,
+                            status: materials.status == 'Active' ? <FcCheckmark style={{"fontSize":"25px"}}/>: <FcCancel style={{"fontSize":"25px"}}/>,
             
                             action: <><FaEdit style={{"marginLeft":"15px","fontSize":"23px"}}/><BsFilterSquareFill style={{"marginLeft":"15px","fontSize":"23px"}} /><BsTrashFill style={{"marginLeft":"15px","fontSize":"23px"}}/></>
             
@@ -64,8 +65,8 @@ class SupplierList extends Component {
             
                                 },
                                 {
-                                    label: 'SUPPLIER ID',
-                                    field: 'supplierid',
+                                    label: 'MATERIAL ID',
+                                    field: 'materialid',
                                     sort: 'asc',
                                     width: 100
                                 },
@@ -78,8 +79,15 @@ class SupplierList extends Component {
                                 },
             
                                 {
-                                    label: 'CONTACT PERSON',
-                                    field: 'contactperson',
+                                    label: 'COST',
+                                    field: 'cost',
+                                    sort: 'asc',
+                                    width: 100
+                                },
+
+                                {
+                                    label: 'WEIGHT',
+                                    field: 'weight',
                                     sort: 'asc',
                                     width: 100
                                 },
@@ -112,7 +120,7 @@ class SupplierList extends Component {
     }
 
     componentDidMount() {
-        this.getSupplierList();
+        this.getMaterialList();
     }
 
 
@@ -126,15 +134,15 @@ class SupplierList extends Component {
 
                     <Row>
                         <Col>
-                            <Button style={{ "width": "150px", "fontWeight": "600" }}> <a href='/supplierList' style={{textDecoration:'none',color:'white', fontWeight:'bold'}}>
-                        SUPPLIER LIST
+                            <Button style={{ "width": "150px", "fontWeight": "600" }}> <a href='/materialList' style={{textDecoration:'none',color:'white', fontWeight:'bold'}}>
+                        MATERIAL LIST
           </a></Button>
 
                         </Col>
 
                         <Col>
-                            <Button style={{ "width": "150px", "fontWeight": "600" }}><a href='/addSupplier' style={{textDecoration:'none',color:'white', fontWeight:'bold'}}>
-                        ADD SUPPLIER
+                            <Button style={{ "width": "150px", "fontWeight": "600" }}><a href='/addMaterial' style={{textDecoration:'none',color:'white', fontWeight:'bold'}}>
+                        ADD MATERIAL
           </a></Button>
                         </Col>
                     </Row>
@@ -178,4 +186,4 @@ class SupplierList extends Component {
     }
 }
 
-export default SupplierList;
+export default MaterialList;

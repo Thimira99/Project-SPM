@@ -5,16 +5,17 @@ import { Form, Button, Table, Row, Col, Container } from "react-bootstrap";
 import AccountCSS from './account.module.css';
 import { BsRecord2Fill } from "react-icons/bs";
 
-export default class AddSupplier extends Component {
+export default class AddMaterial extends Component {
 
   constructor(props){
     super(props);
     this.state={
         
         dateCreated:"",
-        supplierId:"",
+        materialId:"",
         supplier:"",
-        contactPerson:"",   
+        cost:"", 
+        weight:"",   
         status:"",    
        
          /** */
@@ -35,15 +36,15 @@ export default class AddSupplier extends Component {
 
 /** */
 formValidation = () =>{
-  const{dateCreated,supplierId,supplier,contactPerson}=this.state;
+  const{materialId,supplier,cost, weight}=this.state;
   let isValid = true;
   const errorA ={};
   const errorB={};
   const errorC={};
+  const errorD={};
 
-
-  if(!supplierId){
-      errorA["supplierIdInput"] = "Supplier Id Field is EMPTY!";
+  if(!materialId){
+      errorA["materialIdInput"] = "Material Id Field is EMPTY!";
       isValid=false;
   }
 
@@ -51,12 +52,16 @@ formValidation = () =>{
     errorB["supplierFieldInput"] = "Supplier Field is EMPTY!";
     isValid=false;
   }
-    if(!contactPerson){
-        errorC["contactPersonFieldInput"] = "Contact Person Field is EMPTY!";
+    if(!cost){
+        errorC["costFieldInput"] = "Cost Field is EMPTY!";
         isValid=false;
     }
-  if(!supplierId.match(/^[a-z A-Z 1-9]*$/)){
-      errorA["supplierIdInputPattern"] = "Supplier Id must contain characters only!";
+    if(!weight){
+      errorD["weightFieldInput"] = "Weight Field is EMPTY!";
+      isValid=false;
+  }
+  if(!materialId.match(/^[a-z A-Z 1-9]*$/)){
+      errorA["materialIdInputPattern"] = "Material Id must contain characters only!";
       isValid=false;
   }
 
@@ -65,7 +70,7 @@ formValidation = () =>{
 
 
 
-  this.setState({errorA:errorA,errorB:errorB,errorC:errorC});
+  this.setState({errorA:errorA,errorB:errorB,errorC:errorC,errorD:errorD});
   return isValid;
 }
 /** */
@@ -78,30 +83,32 @@ formValidation = () =>{
     if(isValid){
 
 
-    const{dateCreated,supplierId,supplier,contactPerson,status}= this.state;
+    const{dateCreated,materialId,supplier,cost,weight,status}= this.state;
 
        
     const data={
         
         dateCreated:dateCreated,
-        supplierId:supplierId,
+        materialId:materialId,
         supplier:supplier,
-        contactPerson:contactPerson, 
+        cost:cost, 
+        weight:weight,
         status:status
     }
         
     console.log(data);
 
-    axios.post("http://localhost:8000/supplier/post",data).then((res)=>{
+    axios.post("http://localhost:8000/material/post",data).then((res)=>{
       if(res.data.success){
-        alert("Supplier added Successfully!");
-        window.location.href='/supplierList';
+        alert("Material added Successfully!");
+        window.location.href='/materialList';
         this.setState(
           {
             dateCreated:"",
-            supplierId:"",
+            materialId:"",
             supplier:"",
-            contactPerson:"",
+            cost:"",
+            weight:"",
             status:"" 
           }
         )
@@ -116,6 +123,7 @@ formValidation = () =>{
     const{errorA}=this.state;
     const{errorB}=this.state;
     const{errorC}=this.state;
+    const{errorD}=this.state;
 
     return (
         <>
@@ -129,21 +137,21 @@ formValidation = () =>{
       
       
 
-        <h3   style={{color: 'rgba(6, 21, 117)', fontWeight:'bold'}}> ADD SUPPLIER </h3>
+        <h3   style={{color: 'rgba(6, 21, 117)', fontWeight:'bold'}}> ADD MATERIAL </h3>
         <button className="btn btn-primary" style={{"width": "360px", "fontWeight": "600"}}>
-        <a href="/supplierList" style={{textDecoration:'none',color:'white', fontWeight:'bold',}}>
-          SUPPLIER LIST
+        <a href="/materialList" style={{textDecoration:'none',color:'white', fontWeight:'bold',}}>
+          MATERIAL LIST
         </a></button><br/> 
         <form className='needs-validation' noValidate onSubmit={this.onSubmit}>
          
           <div className='form-group' style={{marginBottom:'15px'}}>
-            <label style={{marginBottom:'5px'}}>SUPPLIER ID</label>
+            <label style={{marginBottom:'5px'}}>MATERIAL ID</label>
             <input 
               type="text"
               className="form-control"
-              name="supplierId"
-              placeholder="Enter Supplier Id"
-              value={this.state.supplierId}
+              name="materialId"
+              placeholder="Enter Material Id"
+              value={this.state.materialId}
               onChange={this.handleInputChange}
             />
              {Object.keys(errorA).map((key)=>{
@@ -165,13 +173,27 @@ formValidation = () =>{
           </div>
 
           <div className='form-group' style={{marginBottom:'15px'}}>
-            <label style={{marginBottom:'5px'}}>CONTACT PERSON</label>
+            <label style={{marginBottom:'5px'}}>WEIGHT</label>
             <input 
               type="text"
               className="form-control"
-              name="contactPerson"
-              placeholder="Enter Contact Person"
-              value={this.state.contactPerson}
+              name="weight"
+              placeholder="Enter Weight"
+              value={this.state.weight}
+              onChange={this.handleInputChange}
+            />
+            {Object.keys(errorD).map((key)=>{
+              return <div style={{color:'red'}} key={key}>{errorC[key]}</div> })}
+          </div>
+
+          <div className='form-group' style={{marginBottom:'15px'}}>
+            <label style={{marginBottom:'5px'}}>COST</label>
+            <input 
+              type="text"
+              className="form-control"
+              name="cost"
+              placeholder="Enter Cost"
+              value={this.state.cost}
               onChange={this.handleInputChange}
             />
             {Object.keys(errorC).map((key)=>{
@@ -217,7 +239,7 @@ formValidation = () =>{
           </button>
           </Col>
           <Col> 
-          <button className="btn" type="submit" style={{marginTop:'15px',marginBottom:'150px', marginLeft:'-70px', backgroundColor: 'rgba(6, 21, 117)', color:"#ffffff", fontWeight:'bold'}} ><a href='/SupplierList' style={{textDecoration:'none',color:'white'}}> 
+          <button className="btn" type="submit" style={{marginTop:'15px',marginBottom:'150px', marginLeft:'-70px', backgroundColor: 'rgba(6, 21, 117)', color:"#ffffff", fontWeight:'bold'}} ><a href='/MaterialList' style={{textDecoration:'none',color:'white'}}> 
           <i className="far fa-check-square"></i>
             
              &nbsp;Cancel
