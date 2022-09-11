@@ -9,44 +9,45 @@ import { FcCheckmark, FcCancel, FcOk, FcInspection, FcOvertime, FcProcess, FcPic
 import { FaEdit } from "react-icons/fa";
 import axios from 'axios'
 
-class MaterialList extends Component {
+class ProductList extends Component {
 
     constructor(props) {
         super(props)
 
         this.state = {
-            materials:[] 
+            products:[] 
          
         }
 
         
-        this.getMaterialList = this.getMaterialList.bind(this);
+        this.getProductList = this.getProductList.bind(this);
     }
 
      
 
-    getMaterialList(){
+    getProductList(){
 
-        axios.get("http://localhost:8000/material/get").then(res=>{  
-            
+        axios.get("http://localhost:8000/product/get").then(res=>{  
+            // console.log(res.data.existingSuppliers)
             if(res.status ==  "200"){   
                 this.setState({  
-                    materials:res.data.existingMaterials  
+                    products:res.data.existingProducts  
                 }, () =>{
-                    console.log("Materials", this.state.materials)
+                    console.log("Products", this.state.products)
 
                     const userAttributes = []
-                    this.state.materials.forEach(materials => {
+                    this.state.products.forEach(products => {
                         
                             
                         userAttributes.push({
-                            datecreated: materials.dateCreated,
-                            materialid: materials.materialId,
-                            supplier: materials.supplier,
-                            cost: materials.cost,
-                            weight: materials.weight,
-                               
-                            status: materials.status == 'ACTIVE' ? <FcCheckmark style={{"fontSize":"25px"}}/>: <FcCancel style={{"fontSize":"25px"}}/>,
+                            datecreated: products.dateCreated,
+                            productid: products.productId,
+                            productname: products.productName,
+                            producttype: products.productType,
+                            quantity: products.quantity,
+                            weight: products.weight,
+                            price: products.price,
+                        
             
                             action: <><FaEdit style={{"marginLeft":"15px","fontSize":"23px"}}/><BsFilterSquareFill style={{"marginLeft":"15px","fontSize":"23px"}} /><BsTrashFill style={{"marginLeft":"15px","fontSize":"23px"}}/></>
             
@@ -58,52 +59,60 @@ class MaterialList extends Component {
                         data: {
                             columns: [
                                 {
-                                    label: 'CREATED DATE',
+                                    label: 'CREATED AT',
                                     field: 'datecreated',
                                     sort: 'asc',
+                                    width: 150,
+            
+                                },
+                                {
+                                    label: 'PRODUCT ID',
+                                    field: 'productid',
+                                    sort: 'asc',
+                                    width: 130
+                                },
+                                {
+                                    label: 'PROUDCT',
+                                    field: 'productname',
+                                    sort: 'asc',
                                     width: 130,
             
-                                },
-                                {
-                                    label: 'MATERIAL ID',
-                                    field: 'materialid',
-                                    sort: 'asc',
-                                    width: 100
-                                },
-                                {
-                                    label: 'SUPPLIER',
-                                    field: 'supplier',
-                                    sort: 'asc',
-                                    width: 130,
-            
-                                },
-            
-                                {
-                                    label: 'COST',
-                                    field: 'cost',
-                                    sort: 'asc',
-                                    width: 100
                                 },
 
                                 {
-                                    label: 'WEIGHT',
-                                    field: 'weight',
+                                    label: 'TYPE',
+                                    field: 'producttype',
+                                    sort: 'asc',
+                                    width: 130,
+            
+                                },
+            
+                                {
+                                    label: 'QUANTITY',
+                                    field: 'quantity',
                                     sort: 'asc',
                                     width: 100
                                 },
                               
                                 {
-                                    label: 'STATUS',
-                                    field: 'status',
+                                    label: 'WEIGHT',
+                                    field: 'weight',
                                     sort: 'asc',
-                                    width: 80,
+                                    width: 100,
                                 }
                                 ,
                                 {
-                                    label: 'ACTION ',
+                                    label: 'PRICE',
+                                    field: 'price',
+                                    sort: 'asc',
+                                    width: 100
+                                }
+                                ,
+                                {
+                                    label: 'STATUS',
                                     field: 'action',
                                     sort: 'asc',
-                                    width: 120
+                                    width: 140
                                 }
                             ],
                             rows: userAttributes
@@ -120,7 +129,7 @@ class MaterialList extends Component {
     }
 
     componentDidMount() {
-        this.getMaterialList();
+        this.getProductList();
     }
 
 
@@ -134,15 +143,15 @@ class MaterialList extends Component {
 
                     <Row>
                         <Col>
-                            <Button style={{ "width": "150px", "fontWeight": "600" }}> <a href='/materialList' style={{textDecoration:'none',color:'white', fontWeight:'bold'}}>
-                        MATERIAL LIST
+                            <Button style={{ "width": "150px", "fontWeight": "600" }}> <a href='/productList' style={{textDecoration:'none',color:'white', fontWeight:'bold'}}>
+                        PRODUCT LIST
           </a></Button>
 
                         </Col>
 
                         <Col>
-                            <Button style={{ "width": "150px", "fontWeight": "600" }}><a href='/addMaterial' style={{textDecoration:'none',color:'white', fontWeight:'bold'}}>
-                        ADD MATERIAL
+                            <Button style={{ "width": "150px", "fontWeight": "600" }}><a href='/addProduct' style={{textDecoration:'none',color:'white', fontWeight:'bold'}}>
+                        ADD PRODUCT
           </a></Button>
                         </Col>
                     </Row>
@@ -173,10 +182,6 @@ class MaterialList extends Component {
 
                     </div>
 
-
-
-
-
                 </Row>
 
 
@@ -186,4 +191,4 @@ class MaterialList extends Component {
     }
 }
 
-export default MaterialList;
+export default ProductList;
