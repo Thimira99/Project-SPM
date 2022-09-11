@@ -48,6 +48,12 @@ formValidation = () =>{
       isValid=false;
   }
 
+  if((materialId.length<=3)){
+    errorA["materialIdLength"] = "Material Id must be in length 4 or higher";
+    isValid=false;
+}
+
+
   if(!supplier){
     errorB["supplierFieldInput"] = "Supplier Field is EMPTY!";
     isValid=false;
@@ -158,18 +164,15 @@ formValidation = () =>{
               return <div style={{color:'red'}} key={key}>{errorA[key]}</div> })}
           </div>
 
+
           <div className='form-group' style={{marginBottom:'15px'}}>
             <label style={{marginBottom:'5px'}}>SUPPLIER</label>
-            <input 
-              type="text"
-              className="form-control"
-              name="supplier"
-              placeholder="Enter Supplier"
-              value={this.state.supplier}
-              onChange={this.handleInputChange}
-            />
-            {Object.keys(errorB).map((key)=>{
-              return <div style={{color:'red'}} key={key}>{errorB[key]}</div> })}
+                  <select id="supplier" value={this.state.supplier} onChange={e=> this.setState({supplier:e.target.value})} className="btn dropdown-toggle" style={{backgroundColor: '#fff', marginLeft:'20px'}}>
+                    <option selected> Select</option>
+                    <option>SUP333</option>
+                    <option>SUP336</option>
+                    <option>SUP338</option>
+                  </select>
           </div>
 
           <div className='form-group' style={{marginBottom:'15px'}}>
@@ -183,13 +186,13 @@ formValidation = () =>{
               onChange={this.handleInputChange}
             />
             {Object.keys(errorD).map((key)=>{
-              return <div style={{color:'red'}} key={key}>{errorC[key]}</div> })}
+              return <div style={{color:'red'}} key={key}>{errorD[key]}</div> })}
           </div>
 
           <div className='form-group' style={{marginBottom:'15px'}}>
             <label style={{marginBottom:'5px'}}>COST</label>
             <input 
-              type="text"
+              type="number"
               className="form-control"
               name="cost"
               placeholder="Enter Cost"
@@ -202,28 +205,18 @@ formValidation = () =>{
 
           <div className='form-group' style={{marginBottom:'15px'}}>
             <label style={{marginBottom:'5px'}}>STATUS</label>
-            <input 
-              type="text"
-              className="form-control"
-              name="status"
-              placeholder="Enter Status"
-              value={this.state.status}
-              onChange={this.handleInputChange}
-            />
+                  <select id="status" value={this.state.status} onChange={e=> this.setState({status:e.target.value})} className="btn dropdown-toggle" style={{backgroundColor: '#fff', marginLeft:'20px'}}>
+                    <option selected> Select</option>
+                    <option>ACTIVE</option>
+                    <option>INACTIVE</option>
+                  </select>
           </div>
 
-          {/* <div className='form-group' style={{marginBottom:'15px'}}>
-            <label style={{marginBottom:'5px'}}>STATUS</label>
-                  <select id="status" value={this.state.status} onChange={this.handleChange} className="btn  dropdown-toggle">
-                    <option value="Active">Active</option>
-                    <option value="Inactive">Inactive</option>
-                  </select>
-          </div> */}
 
           <div className='form-group' style={{marginBottom:'15px'}}>
             <label style={{marginBottom:'5px'}}>DATE CREATED</label>
             <input 
-              type="date"
+              type="datetime-local"
               className="form-control"
               name="dateCreated"
               value={this.state.dateCreated}

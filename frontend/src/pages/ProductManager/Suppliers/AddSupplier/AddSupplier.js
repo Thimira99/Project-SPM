@@ -33,6 +33,11 @@ export default class AddSupplier extends Component {
       })
   }
 
+  handleInputSelect=(e)=>{
+    this.setState({status:e.target.value})
+    console.log("status",e.target.value)
+}
+
 /** */
 formValidation = () =>{
   const{dateCreated,supplierId,supplier,contactPerson}=this.state;
@@ -46,6 +51,11 @@ formValidation = () =>{
       errorA["supplierIdInput"] = "Supplier Id Field is EMPTY!";
       isValid=false;
   }
+
+  if((supplierId.length<=3)){
+    errorA["supplierIdLength"] = "Supplier Id must be in length 4 or higher";
+    isValid=false;
+}
 
   if(!supplier){
     errorB["supplierFieldInput"] = "Supplier Field is EMPTY!";
@@ -178,30 +188,21 @@ formValidation = () =>{
               return <div style={{color:'red'}} key={key}>{errorC[key]}</div> })}
           </div>
 
+
+
           <div className='form-group' style={{marginBottom:'15px'}}>
             <label style={{marginBottom:'5px'}}>STATUS</label>
-            <input 
-              type="text"
-              className="form-control"
-              name="status"
-              placeholder="Enter Status"
-              value={this.state.status}
-              onChange={this.handleInputChange}
-            />
+                  <select id="status" value={this.state.status} onChange={this.handleInputSelect} className="btn dropdown-toggle" style={{backgroundColor: '#fff', marginLeft:'20px'}}>
+                    <option selected> Select</option>
+                    <option>Active</option>
+                    <option>Inactive</option>
+                  </select>
           </div>
 
-          {/* <div className='form-group' style={{marginBottom:'15px'}}>
-            <label style={{marginBottom:'5px'}}>STATUS</label>
-                  <select id="status" value={this.state.status} onChange={this.handleChange} className="btn  dropdown-toggle">
-                    <option value="Active">Active</option>
-                    <option value="Inactive">Inactive</option>
-                  </select>
-          </div> */}
-
           <div className='form-group' style={{marginBottom:'15px'}}>
-            <label style={{marginBottom:'5px'}}>DATE CREATED</label>
+            <label style={{marginBottom:'5px'}}>CREATED AT</label>
             <input 
-              type="date"
+              type="datetime-local"
               className="form-control"
               name="dateCreated"
               value={this.state.dateCreated}
