@@ -6,6 +6,8 @@ const stock_routes = require("./routes/stockRoutes")
 const productManagerRoutes = require("./routes/productManagerRoutes")
  
 const user_router = require("./routes/userRoutes/userRoutes");
+
+const sales_rep_routes = require("./routes/salesRepRoutes")
  
 const app = express()
 dotenv.config()
@@ -22,6 +24,8 @@ app.use(stock_routes);
 app.use(productManagerRoutes);
  
 app.use(user_router);
+
+app.use("/api",sales_rep_routes);
  
 
 const port = process.env.PORT || 8000

@@ -8,12 +8,15 @@ import Swal from 'sweetalert2'
 import axios, { Axios } from 'axios';
 import validator from 'validator'
 
-class createShop extends Component {
+class updateShop extends Component {
 
     constructor(props) {
         super(props)
 
         this.state = {
+
+            shopID: this.props.match.params.id,
+            shopData:'',
 
             ownerName: '',
             ownerPhoneNumber: '',
@@ -61,6 +64,35 @@ class createShop extends Component {
         this.addShopData = this.addShopData.bind(this);
         this.clearDetails = this.clearDetails.bind(this);
         this.onAddProduct = this.onAddProduct.bind(this);
+        this.getShopDetaills = this.getShopDetaills.bind(this);
+    }
+
+    getShopDetaills(){
+        console.log("update id",this.state.shopID)
+        const url = `http://localhost:8000/api/account/get/${this.state.shopID}`;
+
+        axios.get(url).then((res) => {
+            console.log(res.data.supplier)
+            this.setState({
+                shopData:res.data.supplier
+        },()=>{
+            this.setState({
+                ownerName: this.state.shopData.name,
+                ownerPhoneNumber: this.state.shopData.phonenNmber,
+                ownerNic: this.state.shopData.nicNumber,
+                ownerEmailAddress: this.state.shopData.ownerEmailAddress,
+                shopName: this.state.shopData.sh_Name,
+                shopRegNumber: this.state.shopData.sh_RegistrationNumber,
+                shopPhoneNumber: this.state.shopData.sh_phoneNumber,
+                shopEmailAddress: this.state.shopData.sh_emailAddress,
+                shopRegion: this.state.shopData.sh_Region,
+                shopPostalCode: this.state.shopData.sh_PostalCode,
+                shopAdress: "NO 03",
+                shopLane: "SamanalUyana",
+                shopCity: "rathnapura",
+            })
+        })
+        })
     }
 
     onAddProduct() {
@@ -237,106 +269,115 @@ class createShop extends Component {
     addShopData = (event) => {
 
         event.preventDefault();
+        Swal.fire({
 
-        console.log(this.formData.current.ownerName.value)
-
-        if (this.formData.current.ownerName.value && this.formData.current.ownerPhoneNumber.value && this.formData.current.ownerNic.value && this.formData.current.shopName.value && this.formData.current.shopRegNumber.value && this.formData.current.shopCity.value
-            && this.formData.current.shopPhoneNumber.value && this.formData.current.shopEmailAddress.value && this.formData.current.shopRegion.value && this.formData.current.shopPostalCode.value && this.formData.current.shopAdress.value && this.formData.current.shopLane.value) {
-
-
-
-            if (!validator.isEmail(this.formData.current.ownerEmailAddress.value)) {
-
-                this.setState({
-                    ownerEmailholdertype: false
+                    icon: 'success',
+                    title: 'Data Updated',
+                    showConfirmButton: false,
+                    timer: 1500
                 })
 
-                return -1
+                this.props.history.push('/allShops');    
 
+        // console.log(this.formData.current.ownerName.value)
 
-            }
-
-            if (!validator.isEmail(this.formData.current.shopEmailAddress.value)) {
-
-                this.setState({
-                    shopEmailholdertype: false
-                })
-                return -1
-
-            }
-
-            const shopAddress = this.formData.current.shopAdress.value + "/" + this.formData.current.shopLane.value + "/" + this.formData.current.shopCity.value
-
-            const data = {
-                "name": this.formData.current.ownerName.value,
-                "phonenNmber": this.formData.current.ownerPhoneNumber.value,
-                "nicNumber": this.formData.current.ownerNic.value,
-                "ownerEmailAddress": this.formData.current.ownerEmailAddress.value,
-                "sh_Name": this.formData.current.shopName.value,
-                "sh_RegistrationNumber": this.formData.current.shopRegNumber.value,
-                "sh_phoneNumber": this.formData.current.shopPhoneNumber.value,
-                "sh_emailAddress": this.formData.current.shopEmailAddress.value,
-                "sh_Region": this.formData.current.shopRegion.value,
-                "sh_PostalCode": this.formData.current.shopPostalCode.value,
-                "sh_Address": shopAddress,
-                "productData": this.state.products
-            }
-
-            console.log("shopAddress", data)
-            const url = 'http://localhost:8000/api/account/post';
-
-            if (this.state.shopEmailholdertype && this.state.ownerEmailholdertype && this.state.ownerholdertype && this.state.holdertype) {
-                axios.post(url, data).then((res) => {
-                    console.log("response", res.data.code)
-                    if (res.data.code == "200") {
-
-                        Swal.fire({
-                            position: 'top-end',
-                            icon: 'success',
-                            title: 'Data Added',
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
-
-                        this.setState({
-
-                            ownerName: '',
-                            ownerPhoneNumber: '',
-                            ownerNic: '',
-                            ownerEmailAddress: '',
-                            shopName: '',
-                            shopRegNumber: '',
-                            shopPhoneNumber: '',
-                            shopEmailAddress: '',
-                            shopRegion: '',
-                            shopPostalCode: '',
-                            shopAdress: '',
-                            shopLane: '',
-                            shopCity: '',
-                            productType: '',
-                            productqty: '',
-                            products: [
-
-                            ],
-                        })
-                    }
-                })
-            }
+        // if (this.formData.current.ownerName.value && this.formData.current.ownerPhoneNumber.value && this.formData.current.ownerNic.value && this.formData.current.shopName.value && this.formData.current.shopRegNumber.value && this.formData.current.shopCity.value
+        //     && this.formData.current.shopPhoneNumber.value && this.formData.current.shopEmailAddress.value && this.formData.current.shopRegion.value && this.formData.current.shopPostalCode.value && this.formData.current.shopAdress.value && this.formData.current.shopLane.value) {
 
 
 
+        //     if (!validator.isEmail(this.formData.current.ownerEmailAddress.value)) {
 
-        } else {
+        //         this.setState({
+        //             ownerEmailholdertype: false
+        //         })
 
-            Swal.fire({
+        //         return -1
 
-                icon: 'warning',
-                title: 'Some Fields are empty',
-                showConfirmButton: false,
-                timer: 1500
-            })
 
-        }
+        //     }
+
+        //     if (!validator.isEmail(this.formData.current.shopEmailAddress.value)) {
+
+        //         this.setState({
+        //             shopEmailholdertype: false
+        //         })
+        //         return -1
+
+        //     }
+
+        //     const shopAddress = this.formData.current.shopAdress.value + "/" + this.formData.current.shopLane.value + "/" + this.formData.current.shopCity.value
+
+        //     const data = {
+        //         "name": this.formData.current.ownerName.value,
+        //         "phonenNmber": this.formData.current.ownerPhoneNumber.value,
+        //         "nicNumber": this.formData.current.ownerNic.value,
+        //         "ownerEmailAddress": this.formData.current.ownerEmailAddress.value,
+        //         "sh_Name": this.formData.current.shopName.value,
+        //         "sh_RegistrationNumber": this.formData.current.shopRegNumber.value,
+        //         "sh_phoneNumber": this.formData.current.shopPhoneNumber.value,
+        //         "sh_emailAddress": this.formData.current.shopEmailAddress.value,
+        //         "sh_Region": this.formData.current.shopRegion.value,
+        //         "sh_PostalCode": this.formData.current.shopPostalCode.value,
+        //         "sh_Address": shopAddress,
+        //         "productData": this.state.products
+        //     }
+
+        //     console.log("shopAddress", data)
+        //     const url = 'http://localhost:8000/api/account/post';
+
+        //     if (this.state.shopEmailholdertype && this.state.ownerEmailholdertype && this.state.ownerholdertype && this.state.holdertype) {
+        //         axios.post(url, data).then((res) => {
+        //             console.log("response", res.data.code)
+        //             if (res.data.code == "200") {
+
+        //                 Swal.fire({
+        //                     position: 'top-end',
+        //                     icon: 'success',
+        //                     title: 'Data Added',
+        //                     showConfirmButton: false,
+        //                     timer: 1500
+        //                 })
+
+        //                 this.setState({
+
+        //                     ownerName: '',
+        //                     ownerPhoneNumber: '',
+        //                     ownerNic: '',
+        //                     ownerEmailAddress: '',
+        //                     shopName: '',
+        //                     shopRegNumber: '',
+        //                     shopPhoneNumber: '',
+        //                     shopEmailAddress: '',
+        //                     shopRegion: '',
+        //                     shopPostalCode: '',
+        //                     shopAdress: '',
+        //                     shopLane: '',
+        //                     shopCity: '',
+        //                     productType: '',
+        //                     productqty: '',
+        //                     products: [
+
+        //                     ],
+        //                 })
+        //             }
+        //         })
+        //     }
+
+
+
+
+        // } else {
+
+        //     Swal.fire({
+
+        //         icon: 'warning',
+        //         title: 'Some Fields are empty',
+        //         showConfirmButton: false,
+        //         timer: 1500
+        //     })
+
+        // }
 
 
 
@@ -350,6 +391,8 @@ class createShop extends Component {
     }
 
     componentDidMount() {
+
+        this.getShopDetaills();
 
     }
 
@@ -714,7 +757,7 @@ class createShop extends Component {
 
                                                 <Col style={{ "marginLeft": "100px" }}>
 
-                                                    <Button style={{ "width": "110px", "fontWeight": "600" }} type="submit">SUBMIT</Button>
+                                                    <Button style={{ "width": "110px", "fontWeight": "600" }} type="submit">UPDATE</Button>
 
                                                 </Col>
 
@@ -749,4 +792,6 @@ class createShop extends Component {
     }
 }
 
-export default createShop;
+export default updateShop;
+
+
