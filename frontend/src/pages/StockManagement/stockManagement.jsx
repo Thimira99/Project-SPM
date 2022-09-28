@@ -1,163 +1,261 @@
 import React, { Component } from 'react';
-import StockNavbar from '../../components/StockNavBar';
-import TopBar from '../../components/Topbar';
-import axios from 'axios'
-import stockManagementStyles from './stockManagement.module.scss';
-//import { MDBDataTable } from 'mdbreact';
+import StockNavbar from '../../components/Stock Management/StockNavBar';
+import { Form, Button, Table, Row, Col, Container } from "react-bootstrap";
+import AccountCSS from './account.module.css';
+import { BsRecord2Fill } from "react-icons/bs";
+import { BsXLg ,BsTrashFill,BsFilterSquareFill} from "react-icons/bs";
+import { MDBDataTable } from 'mdbreact';
+import { FcCheckmark, FcCancel, FcOk, FcInspection, FcOvertime, FcProcess, FcPicture ,FcFullTrash,FcViewDetails } from "react-icons/fc";
+import { FaEdit } from "react-icons/fa";
+import axios from 'axios';
+import stockManagementStyles from './stockManagement.module.scss'
 
-export default class stockManagement extends Component {
-  constructor(props) {
-    super(props);
+class allShops extends Component {
 
-    this.state = {
-      stocks: []
-    };
-  }
+    constructor(props) {
+        super(props)
 
-  componentDidMount() {
-    this.retrieveStocks();
-  }
+        this.state = {
 
-  retrieveStocks() {
+            testData:[{
+                "dateCreated":"2022-01-03 22.03",
+                "orderCode":"ORD101",
+                "supplier":"SUP103",
+                "totalCost":"2300",
+                "status":"Received"
+            },{
+                "dateCreated":"2022-02-11 12.03",
+                "orderCode":"ORD102",
+                "supplier":"SUP303",
+                "totalCost":"2300",
+                "status":"Received"
+            },{
+                "dateCreated":"2022-02-15 12.07",
+                "orderCode":"ORD105",
+                "supplier":"SUP107",
+                "totalCost":"2050",
+                "status":"Pending"
+            },{
+                "dateCreated":"2022-03-13 08.03",
+                "orderCode":"ORD501",
+                "supplier":"SUP503",
+                "totalCost":"1240",
+                "status":"Received"
+            },{
+                "dateCreated":"2022-03-15 14.03",
+                "orderCode":"ORD121",
+                "supplier":"SUP123",
+                "totalCost":"1200",
+                "status":"Received"
+            },{
+                "dateCreated":"2022-04-01 06.09",
+                "orderCode":"ORD141",
+                "supplier":"SUP105",
+                "totalCost":"2000",
+                "status":"Received"
+            },{
+                "dateCreated":"2021-04-17 16.35",
+                "orderCode":"ORD142",
+                "supplier":"SUP106",
+                "totalCost":"2000",
+                "status":"Received"
+            },{
+                "dateCreated":"2021-05-01 12.03",
+                "orderCode":"ORD143",
+                "supplier":"SUP107",
+                "totalCost":"2300",
+                "status":"Received"
+            },{
+                "dateCreated":"2022-07-03 16.53",
+                "orderCode":"ORD144",
+                "supplier":"SUP108",
+                "totalCost":"2000",
+                "status":"Pending"
+            },{
+                "dateCreated":"2022-08-03 12.03",
+                "orderCode":"ORD145",
+                "supplier":"SUP109",
+                "totalCost":"2000",
+                "status":"Pending"
+            }]
+        }
 
-    axios.get("http://localhost:8000/retrieve/stocks").then(res => {
-      console.log("resData", res.data.data)
-      if (res.data.success) {
-        this.setState({
-          stocks: res.data.data
-        }, () => {
-          console.log("res", this.state.stocks)
-          this.state.stocks.map(x =>
-            console.log("x value", x))
-        });
-
-      }
-    });
-  }
-
-  onDelete = (id) => {
-    if (window.confirm("Do you want to remove this stock?")) {
-      axios.delete(`http://localhost:8000/stocks/delete/${id}`).then((res) => {
-        alert("Stock removed Successfully!");
-        this.retrieveStocks();
-      });
+        this.onAllStocksSubmit = this.onAllStocksSubmit.bind(this);
+        this.getAllStocks = this.getAllStocks.bind(this);
+        this.edit=this.edit.bind(this);
+        this.delete=this.delete.bind(this);
     }
-  };
 
-  //Search bar
-  filterData(stocks, searchKey) {
-    const result = stocks.filter(
-      (item) =>
-        item.product_id.toLowerCase().includes(searchKey) || //toLowerCase() helps to filter the data using the lowercase letters.
-        item.product_id.toUpperCase().includes(searchKey) || //toUpperCase() helps to filter the data using the Uppercase letters.
-        item.product_type.toUpperCase().includes(searchKey) ||
-        item.product_type.toLowerCase().includes(searchKey) ||
-        item.product_name.toUpperCase().includes(searchKey) ||
-        item.product_name.toLowerCase().includes(searchKey) ||
-        item.status.toUpperCase().includes(searchKey) ||
-        item.status.toLowerCase().includes(searchKey)
-    );
+    edit(){
+        console.log("edit")
+    }
 
-    this.setState({ stocks: result });
-  }
+    
+    onAllStocksSubmit() {
 
-  handleSearchArea = (e) => {
-    const searchKey = e.currentTarget.value;
+        this.props.history.push('/stockManagement');
 
-    axios.get("http://localhost:8000/retrieve/stocks").then((res) => {
-      if (res.data.success) {
-        this.filterData(res.data.existingStocks, searchKey);
-      }
+    }
+
+    getAllStocks(){
+        
+            axios.get("http://localhost:8000/retrieve/stocks").then(res=>{
+                if(res.status==200){
+                    this.setState({
+                        stocks:res.data.data
+                    },()=>{
+                        console.log("message",this.state.stocks)
+                        const userAttributes = []
+                        this.state.stocks.forEach(el => {
+                            // el.bagageData.map(obj => {
+                            //     bagageID = obj.bagageID,
+                            //         serialNumber = obj.serialNumber
+                            // }
+                            // )
+                
+                            // const data = el.productCategory == 'tvSeries' ? el.productDetails + " EP" : el.productDetails + " Min"
+                            userAttributes.push({
+                                productid: el.product_id,
+                                producttype: el.product_type,
+                                productname: el.product_name,
+                                regularprice: el.regular_price,
+                                status: el.status,
+                             
+                              
+                                // discription: el.status == 'Received' ? <FcCheckmark style={{"fontSize":"25px"}}/>: <FcCancel style={{"fontSize":"25px"}}/>,
+                
+                                age: <><FaEdit style={{"marginLeft":"15px","fontSize":"23px"}} onClick={this.edit}/><BsFilterSquareFill style={{"marginLeft":"15px","fontSize":"23px"}} /><BsTrashFill style={{"marginLeft":"15px","fontSize":"23px"}} onClick={this.delete}/></>
+                
+                
+                            })
+                        });
+                
+                        this.setState({
+                            data: {
+                                columns: [
+                                    {
+                                        label: 'PRODUCT ID',
+                                        field: 'productid',
+                                        sort: 'asc',
+                                        width: 100,
+                
+                                    },
+                                    {
+                                        label: 'PRODUCT TYPE',
+                                        field: 'producttype',
+                                        sort: 'asc',
+                                        width: 100
+                                    },
+                                    {
+                                        label: 'PRODUCT NAME',
+                                        field: 'productname',
+                                        sort: 'asc',
+                                        width: 150,
+                
+                                    },
+                
+                                    {
+                                        label: 'REGULAR PRICE',
+                                        field: 'regularprice',
+                                        sort: 'asc',
+                                        width: 50
+                                    },
+                                  
+                                    {
+                                        label: 'STATUS',
+                                        field: 'status',
+                                        sort: 'asc',
+                                        width: 50,
+                                    }
+                                    ,
+                                    // {
+                                    //     label: 'REGISTERED DATE',
+                                    //     field: 'registereddate',
+                                    //     sort: 'asc',
+                                    //     width: 100,
+                                    // }
+                                    // ,
+                                    {
+                                        label: 'ACTION ',
+                                        field: 'age',
+                                        sort: 'asc',
+                                        width: 120
+                                    }
+                                ],
+                                rows: userAttributes
+                            }
+                        })
+        
+        });
+                    
+        }
     });
-  };
-
-
-  render() {
-    return (
-
-      <>
-        <div className={stockManagementStyles.main}>
-          <StockNavbar />
-          <h1 style={{
-            marginLeft: '450px',
-            marginTop: '20px'
-          }}>Stock Management</h1>
-
-
-          <div className={stockManagementStyles.button}>
-            <button style={{
-              marginTop: "80px",
-              marginLeft: "-700px",
-              backgroundColor: "#287BD4",
-              border: "none",
-              color: 'white',
-              fontWeight: "bold",
-              height: "50px"
-            }}><a href="/createStocks"
-              style={{
-                textDecoration: 'none',
-                color: 'white'
-              }}
-            >
-                Create stocks
-              </a></button>
-          </div>
-          <div>
-            <table className="table table-hover"
-              style={{
-                marginTop: '200px',
-                marginLeft: '-500px',
-                backgroundColor: "#ffff",
-                borderRadius: "5px",
-                width: "100%",
-                //border: "none",
-              }}>
-              <thead>
-                <tr>
-                  <th scope='col'>#</th>
-                  <th scope='col'>PRODUCT ID</th>
-                  <th scope='col'>PRODUCT TYPE</th>
-                  <th scope='col'>PRODUCT NAME</th>
-                  <th scope='col'>REGULAR PRICE</th>
-                  <th scope='col'>STATUS</th>
-                  <th scope='col'>STOCK COUNT</th>
-                </tr>
-              </thead>
-              <tbody>
-                {this.state.stocks.map((stocks, index) => (
-                  <tr>
-                    <th scope='row'>{index + 1}</th>
-                    <td>
-                      {stocks.product_id}
-                    </td>
-                    <td>{stocks.product_type}</td>
-                    <td>{stocks.product_name}</td>
-                    <td>{stocks.regular_price}</td>
-                    <td>{stocks.status}</td>
-                    <td>{stocks.stock_count}</td>
-                    <td>
-                      <a className='btn btn-warning' href={`/edit/stocks/${stocks._id}`} style={{ color: 'black' }}>
-                        <i className='fas fa-edit'></i>
-                        &nbsp;EDIT
-                      </a>
-                      &nbsp;
-                      <a className="btn btn-danger" href="#" onClick={() => this.onDelete(stocks._id)} style={{ textDecoration: "none", color: "white" }}
-                      >
-                        <i className='fas fa-trash-alt'></i>
-                        &nbsp;REMOVE
-                      </a>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-
-
-            </table>
-          </div>
-        </div>
-
-
-      </>
-    )
-  }
 }
+
+delete(id){
+    if (window.confirm("Do you want to remove this stock?")) {
+        axios.delete(`http://localhost:8000/stocks/delete/${id}`).then((res) => {
+          alert("Stock removed Successfully!");
+          this.getAllStocks();
+        });
+      }
+}
+    componentDidMount() {
+
+        this.getAllStocks();
+    }
+
+
+    render() {
+        return (
+            <>
+                <StockNavbar />
+
+                <div style={{ "marginLeft": "40px", "marginTop": "30px", "flex": "none" }}>
+
+
+                    <Row>
+                    <h3 style={{color: "#287BD4"}}>STOCK REVIEW</h3>
+                    </Row>
+
+
+                </div>
+                <Row>
+
+                    <div className={AccountCSS.container}>
+
+
+                        <MDBDataTable
+
+
+                            style={{ "whitespace": "nowrap", }}
+                            scrollY
+                            maxHeight="1000px"
+                            loading={false}
+                            hover
+                            bordered
+                            word-wrap="breakword"
+
+                            whitespace="nowrap"
+                            textoverflow="ellipsis"
+
+                            data={this.state.data}
+                            className={AccountCSS.yourcustomstyles}
+                        />
+
+                    </div>
+
+
+
+
+
+                </Row>
+
+
+
+            </>
+        );
+    }
+}
+
+export default allShops;

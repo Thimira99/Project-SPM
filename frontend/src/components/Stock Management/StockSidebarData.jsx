@@ -4,7 +4,7 @@ import { FaHome } from "react-icons/fa";
 import { FaRegCalendarPlus } from "react-icons/fa";
 import { FaPlusCircle } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
-//import { FaUserCircle } from "react-icons/fa";
+import { FaCartPlus } from "react-icons/fa";
 
 export const StockSidebarData = [
     {
@@ -13,9 +13,14 @@ export const StockSidebarData = [
         link: "/"
     },
     {
-        title: "Shop",
+        title: "Inventory",
         icon: <FaShoppingCart />,
         link: "/stockManagement"
+    },
+    {
+        title: "Requisitions",
+        icon: <FaCartPlus />,
+        link: "/reqStocks"
     },
     {
         title: "Create Stocks",
@@ -25,11 +30,6 @@ export const StockSidebarData = [
     {
         title: "Request Stocks",
         icon: <FaRegCalendarPlus />,
-        link: "/reqStocks"
+        link: "/createRequests"
     },
-//     {
-//         title: "Profile",
-//         icon: <FaUserCircle />,
-//         link: "/dashboard"
-//     },
 ]

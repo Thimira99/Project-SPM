@@ -1,0 +1,19 @@
+.notes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin: 2rem -0.2rem;
+
+    #card {
+        margin: 0.2rem;
+    }
+}
+
+.mainWrapper {
+    margin-top: 1rem;
+    padding: 0 2rem;
+}
+
+.button {
+    display: flex;
+}

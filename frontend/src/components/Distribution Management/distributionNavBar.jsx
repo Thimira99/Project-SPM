@@ -1,15 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import navbarStyles from './Navbar.module.scss';
+import navbarStyles from '../Navbar.module.scss';
 
-import { StockSidebarData } from './StockSidebarData';
+import { ditributionSideBarData } from './distributionSideBarData';
 
 
-function HomeNavBar() {
+function distributionNavbar() {
     return (
         <>
             <div className={navbarStyles.mainSidebar}>
-                {StockSidebarData.map((value) => (
+                {ditributionSideBarData.map((value) => (
                     <>
                         <div className={navbarStyles.sidebar}>
                             <li style={{ listStyleType: 'none' }} >
@@ -38,4 +38,4 @@ function HomeNavBar() {
     )
 }
 
-export default HomeNavBar;
+export default distributionNavbar;

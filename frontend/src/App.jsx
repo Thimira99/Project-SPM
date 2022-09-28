@@ -12,8 +12,16 @@ import createRequestStocks from './pages/StockManagement/createRequestStocks';
 import dashboard from './pages/SalesManeger/Dashboard/dashboard';
 import createShop from './pages/SalesManeger/Shops/CreateShop/createShop';
 import allShops from './pages/SalesManeger/Shops/AllShops/allShops';
-// import SupplierList from './pages/ProductManeger/Suppliers/SupplierList/SupplierList';
 import ProductManagerDashboard from './pages/ProductManager/Dashboard/dashboard';
+
+import distributions from './pages/DistributionManagement/distribution'
+
+import SupplierList from './pages/ProductManager/Suppliers/SupplierList/SupplierList';
+import AddSupplier from './pages/ProductManager/Suppliers/AddSupplier/AddSupplier';
+import MaterialList from './pages/ProductManager/Materials/MaterialList/MaterialList';
+import AddMaterial from './pages/ProductManager/Materials/AddMaterial/AddMaterial';
+import ProductList from './pages/ProductManager/Products/ProductList/ProductList';
+import AddProduct from './pages/ProductManager/Products/AddProduct/AddProduct';
 
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
@@ -22,6 +30,16 @@ import TopBar from './components/Topbar';
 import UpdateUser from './pages/admin/UpdateAdmin/updateUser';
 import serchShop from './pages/SalesManeger/Stock/SerchShop/serchShop';
 import updateShop from './pages/SalesManeger/Shops/updateShop/updateShop';
+
+import requestedStocks from './pages/DistributionManagement/requestedStocks'
+import regCompany from './pages/DistributionManagement/regCompanies'
+import companies from './pages/DistributionManagement/companies'
+import createDistributions from './pages/DistributionManagement/createDistributions';
+
+import ViewEmployee from './pages/admin/ViewEmployee/viewEmployee';
+import AddNotes from './pages/admin/Notes/addNotes';
+import CreateNotes from './pages/admin/Notes/createNotes';
+
 
 
 
@@ -37,11 +55,22 @@ function App() {
               <Route path='/mainPage' component={Dashboard} />
               <Route path='/createEmployee' component={CreateEmployee} />
               <Route path='/updateEmployee' component={UpdateUser} />
+              <Route path='/viewEmployee' component={ViewEmployee} />
+              <Route path='/notes' component={AddNotes} />
+              <Route path='/createNotes' component={CreateNotes} />
 
+              {/* Stock manager Links */}
               <Route path='/stockManagement' component={stockManagement} />
               <Route path='/reqStocks' component={requestStocks} />
               <Route path='/createStocks' component={createStocks} />
               <Route path='/createRequests' component={createRequestStocks} />
+
+              {/* Distribution manager Link */}
+              <Route path='/distributions' component={distributions} />
+              <Route path='/requestedStocks' component={requestedStocks} />
+              <Route path='/regCompany' component={regCompany} />
+              <Route path='/companies' component={companies} />
+              <Route path='/regDistributions' component={createDistributions} />
 
               {/* sales Person Link */}
               <Route path='/salesPerson' component={dashboard} />
@@ -51,9 +80,15 @@ function App() {
               <Route path='/updateShop/:id' component={updateShop} />
               
 
+ 
                {/* Product Manager Link */}
                <Route path='/productManager' component={ProductManagerDashboard} />
-              {/* <Route path='/supplierList' component={SupplierList} /> */}
+               <Route path='/supplierList' component={SupplierList} />
+               <Route path='/addSupplier' component={AddSupplier} />
+               <Route path='/materialList' component={MaterialList} />
+               <Route path='/addMaterial' component={AddMaterial} />
+               <Route path='/productList' component={ProductList} />
+               <Route path='/addProduct' component={AddProduct} />
 
               <Route path='/login' component={Login} />
               <Redirect from='/' to='/login' />

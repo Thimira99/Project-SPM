@@ -1,4 +1,4 @@
-const supplier = require('../models/Suppliers')
+const supplier = require('../../models/ProductManager/Suppliers')
 
 /*create supplier*/
 const postSupplier = async(req,res)=>{

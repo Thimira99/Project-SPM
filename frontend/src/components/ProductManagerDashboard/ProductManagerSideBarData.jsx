@@ -1,35 +1,44 @@
 import React from 'react';
 
 import { FaHome } from "react-icons/fa";
-import { FaUserPlus } from "react-icons/fa";
-import { FaUsers } from "react-icons/fa";
-import { FaStickyNote } from "react-icons/fa";
+import { FaShoppingCart } from "react-icons/fa";
+import { FaElementor } from "react-icons/fa";
+import { FaPeopleCarry } from "react-icons/fa";
 import { FaUserCircle } from "react-icons/fa";
-
+import { FaProductHunt } from "react-icons/fa";
+import { FaCodepen } from "react-icons/fa";
 export const sidebarData = [
     {
         title: "Dashboard",
         icon: <FaHome />,
-        link: "/salesPerson"
+        link: "/productManager"
     },
     {
-        title: "Shops",
-        icon: <FaUserPlus />,
-        link: "/createShop"
+        title: "Purhcase Materials",
+        icon: <FaShoppingCart />,
+        link: "/purchaseMaterials"
     },
     {
-        title: "Stock",
-        icon: <FaUsers />,
-        link: "/viewEmployee"
+        title: "Availability",
+        icon: <FaElementor />,
+        link: "/"
+    },
+    // {
+    //     title: "Maintenance"
+    // },
+    {
+        title: "Suppliers",
+        icon: <FaPeopleCarry />,
+        link: "/supplierList"
     },
     {
-        title: "Profile",
-        icon: <FaStickyNote />,
-        link: "/dashboard"
+        title: "Materials",
+        icon: <FaCodepen />,
+        link: "/materialList"
     },
     {
-        title: "Profile",
-        icon: <FaUserCircle />,
-        link: "/dashboard"
+        title: "Products",
+        icon: <FaProductHunt />,
+        link: "/productList"
     },
 ]

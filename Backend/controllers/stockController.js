@@ -1,5 +1,5 @@
-const Stocks = require ('../models/stock.js')
-const reqStocks = require ('../models/reqStocks.js')
+const Stocks = require ('../models/Stock Management/stock.js')
+const reqStocks = require ('../models/Stock Management/reqStocks')
 /* Create stocks */
 const createStocks = async (req,res)=>{
     let newStock = new Stocks(req.body);
