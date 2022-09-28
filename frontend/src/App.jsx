@@ -35,6 +35,7 @@ import createDistributions from './pages/DistributionManagement/createDistributi
 import ViewEmployee from './pages/admin/ViewEmployee/viewEmployee';
 import AddNotes from './pages/admin/Notes/addNotes';
 import CreateNotes from './pages/admin/Notes/createNotes';
+import updateStocks from './pages/StockManagement/updateStocks';
 
 
 
@@ -60,7 +61,8 @@ function App() {
               <Route path='/reqStocks' component={requestStocks} />
               <Route path='/createStocks' component={createStocks} />
               <Route path='/createRequests' component={createRequestStocks} />
-
+              <Route path='/update/stock/:id' component={updateStocks} />
+              
               {/* Distribution manager Link */}
               <Route path='/distributions' component={distributions} />
               <Route path='/requestedStocks' component={requestedStocks} />
