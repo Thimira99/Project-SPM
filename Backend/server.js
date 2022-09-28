@@ -12,6 +12,11 @@ const productManagerRoutes = require("./routes/productManagerRoutes")
 const user_router = require("./routes/userRoutes/userRoutes");
 
 
+const sales_rep_routes = require("./routes/salesRepRoutes")
+ 
+
+
+
 const app = express()
 dotenv.config()
 require('./DB/DB.js');
@@ -31,6 +36,11 @@ app.use(notes_routes);
 app.use(productManagerRoutes);
 
 app.use(user_router);
+
+
+app.use("/api",sales_rep_routes);
+ 
+
 
 
 

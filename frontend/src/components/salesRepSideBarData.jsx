@@ -20,7 +20,7 @@ export const sidebarData = [
     {
         title: "Stock",
         icon: <FaUsers />,
-        link: "/viewEmployee"
+        link: "/serchShop"
     },
     {
         title: "Profile",

@@ -7,6 +7,7 @@ import { BsXLg, BsTrashFill, BsFilterSquareFill } from "react-icons/bs";
 import { MDBDataTable } from 'mdbreact';
 import { FcCheckmark, FcCancel, FcOk, FcInspection, FcOvertime, FcProcess, FcPicture, FcFullTrash, FcViewDetails } from "react-icons/fc";
 import { FaEdit } from "react-icons/fa";
+import axios from 'axios';
 
 class allShops extends Component {
 
@@ -14,6 +15,11 @@ class allShops extends Component {
         super(props)
 
         this.state = {
+
+
+            allShops:[],
+
+           
 
             testData: [{
                 "dateCreated": "2022-01-03 22.03",
@@ -76,10 +82,24 @@ class allShops extends Component {
                 "totalCost": "2000",
                 "status": "Pending"
             }]
+
         }
 
         this.onAllShopSubmit = this.onAllShopSubmit.bind(this);
         this.getAllShops = this.getAllShops.bind(this);
+        this.onCreate = this.onCreate.bind(this);
+        this.onUpdateShop = this.onUpdateShop.bind(this);
+    }
+
+    onUpdateShop(id){
+
+      
+        this.props.history.push(`/updateShop/${id}`);
+
+    }
+
+    onCreate(){
+        this.props.history.push('/createShop');
     }
 
     onAllShopSubmit() {
@@ -89,6 +109,95 @@ class allShops extends Component {
     }
 
     getAllShops() {
+
+
+        axios.get('http://localhost:8000/api/account/get').then((res) => {
+            console.log("res data",res.data)
+            if(res.data.code == "200"){
+                this.setState({
+                    allShops:res.data.data
+                },()=>{
+
+
+
+                    const userAttributes = []
+                    this.state.allShops.forEach(el => {
+              
+                        userAttributes.push({
+                            shopname: el.sh_Name,
+                            ownername: el.name,
+                            regnumber: el.sh_RegistrationNumber,
+                            phonenumber: el.sh_phoneNumber,
+                            region:el.sh_Region,
+                            adress:el.sh_Address,
+
+                            action: <><FaEdit style={{"marginLeft":"15px","fontSize":"23px"}} onClick={() => this.onUpdateShop(el._id)}/></>
+            
+            
+                        })
+                    });
+            
+                    this.setState({
+                        data: {
+                            columns: [
+                                {
+                                    label: 'SHOP NAME',
+                                    field: 'shopname',
+                                    sort: 'asc',
+                                    width: 200,
+            
+                                },
+                                {
+                                    label: 'OWNER NAME',
+                                    field: 'ownername',
+                                    sort: 'asc',
+                                    width: 200
+                                },
+                                {
+                                    label: 'REG NUMBER',
+                                    field: 'regnumber',
+                                    sort: 'asc',
+                                    width: 100,
+            
+                                },
+            
+                                {
+                                    label: 'PHONE NUMBER',
+                                    field: 'phonenumber',
+                                    sort: 'asc',
+                                    width: 100
+                                },
+                              
+                                {
+                                    label: 'REGION',
+                                    field: 'region',
+                                    sort: 'asc',
+                                    width: 100,
+            
+            
+                                },
+                                {
+                                    label: 'ADDRESS',
+                                    field: 'adress',
+                                    sort: 'asc',
+                                    width: 150,
+            
+            
+                                }
+                                ,
+                                {
+                                    label: 'ACTION ',
+                                    field: 'action',
+                                    sort: 'asc',
+                                    width: 50
+                                }
+                            ],
+                            rows: userAttributes
+                        }
+                    })
+
+
+                })
 
         const userAttributes = []
         this.state.testData.forEach(el => {
@@ -162,8 +271,13 @@ class allShops extends Component {
                     }
                 ],
                 rows: userAttributes
+
             }
         })
+
+
+
+ 
     }
 
     componentDidMount() {
@@ -185,14 +299,14 @@ class allShops extends Component {
 
                         <Col>
 
-                            <Button style={{ "width": "110px", "fontWeight": "600" }} onClick={this.onAllShopSubmit}>ALL SHOPS</Button>
+                            <Button style={{ "width": "110px", "fontWeight": "600","backgroundColor":"#0D4582" }} onClick={this.onAllShopSubmit}>ALL SHOPS</Button>
 
 
                         </Col>
 
                         <Col>
 
-                            <Button style={{ "width": "110px", "fontWeight": "600" }}>CREATE</Button>
+                            <Button style={{ "width": "110px", "fontWeight": "600" }} onClick={this.onCreate}>CREATE</Button>
 
                         </Col>
                     </Row>

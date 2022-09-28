@@ -28,6 +28,8 @@ import { ToastContainer } from 'react-toastify';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import TopBar from './components/Topbar';
 import UpdateUser from './pages/admin/UpdateAdmin/updateUser';
+import serchShop from './pages/SalesManeger/Stock/SerchShop/serchShop';
+import updateShop from './pages/SalesManeger/Shops/updateShop/updateShop';
 
 import requestedStocks from './pages/DistributionManagement/requestedStocks'
 import regCompany from './pages/DistributionManagement/regCompanies'
@@ -74,6 +76,9 @@ function App() {
               <Route path='/salesPerson' component={dashboard} />
               <Route path='/createShop' component={createShop} />
               <Route path='/allShops' component={allShops} />
+              <Route path='/serchShop' component={serchShop} />
+              <Route path='/updateShop/:id' component={updateShop} />
+              
 
  
                {/* Product Manager Link */}
