@@ -10,7 +10,8 @@ import { FaEdit } from "react-icons/fa";
 import axios from 'axios';
 import stockManagementStyles from './stockManagement.module.scss'
 
-class allShops extends Component {
+
+class stockManagement extends Component {
 
     constructor(props) {
         super(props)
@@ -78,16 +79,14 @@ class allShops extends Component {
                 "totalCost":"2000",
                 "status":"Pending"
             }]
+
+            
         }
 
         this.onAllStocksSubmit = this.onAllStocksSubmit.bind(this);
         this.getAllStocks = this.getAllStocks.bind(this);
-        this.edit=this.edit.bind(this);
-        this.delete=this.delete.bind(this);
-    }
-
-    edit(){
-        console.log("edit")
+        // this.onClickDelete=this.onClickDelete.bind(this);
+        
     }
 
     
@@ -95,6 +94,19 @@ class allShops extends Component {
 
         this.props.history.push('/stockManagement');
 
+    }
+
+    onClickUpdate(id){
+        this.props.history.push(`/update/stock/${id}`);
+    }
+
+    onClickDelete(id){
+        if (window.confirm("Do you want to remove this stock?")) {
+            axios.delete(`http://localhost:8000/stocks/delete/${id}`).then((res) => {
+              alert("Stock removed Successfully!");
+              this.getAllStocks();
+            });
+          }
     }
 
     getAllStocks(){
@@ -119,12 +131,17 @@ class allShops extends Component {
                                 producttype: el.product_type,
                                 productname: el.product_name,
                                 regularprice: el.regular_price,
+                                reg_date:el.reg_date,
+                                stock_count:el.stock_count,
                                 status: el.status,
                              
                               
                                 // discription: el.status == 'Received' ? <FcCheckmark style={{"fontSize":"25px"}}/>: <FcCancel style={{"fontSize":"25px"}}/>,
                 
-                                age: <><FaEdit style={{"marginLeft":"15px","fontSize":"23px"}} onClick={this.edit}/><BsFilterSquareFill style={{"marginLeft":"15px","fontSize":"23px"}} /><BsTrashFill style={{"marginLeft":"15px","fontSize":"23px"}} onClick={this.delete}/></>
+                                age: <><FaEdit style={{"marginLeft":"15px","fontSize":"23px"}} onClick={()=> this.onClickUpdate(el._id)} />
+                                
+                                <BsTrashFill style={{"marginLeft":"15px","fontSize":"23px" }} onClick={()=> this.onClickDelete(el._id)} />
+                                </>
                 
                 
                             })
@@ -168,13 +185,20 @@ class allShops extends Component {
                                         width: 50,
                                     }
                                     ,
-                                    // {
-                                    //     label: 'REGISTERED DATE',
-                                    //     field: 'registereddate',
-                                    //     sort: 'asc',
-                                    //     width: 100,
-                                    // }
-                                    // ,
+                                    {
+                                        label: 'STOCK COUNT',
+                                        field: 'stock_count',
+                                        sort: 'asc',
+                                        width: 50,
+                                    }
+                                    ,
+                                    {
+                                        label: 'REGISTERED DATE',
+                                        field: 'reg_date',
+                                        sort: 'asc',
+                                        width: 100,
+                                    }
+                                    ,
                                     {
                                         label: 'ACTION ',
                                         field: 'age',
@@ -192,14 +216,7 @@ class allShops extends Component {
     });
 }
 
-delete(id){
-    if (window.confirm("Do you want to remove this stock?")) {
-        axios.delete(`http://localhost:8000/stocks/delete/${id}`).then((res) => {
-          alert("Stock removed Successfully!");
-          this.getAllStocks();
-        });
-      }
-}
+
     componentDidMount() {
 
         this.getAllStocks();
@@ -210,21 +227,21 @@ delete(id){
         return (
             <>
                 <StockNavbar />
-
+                
                 <div style={{ "marginLeft": "40px", "marginTop": "30px", "flex": "none" }}>
 
 
                     <Row>
-                    <h3 style={{color: "#287BD4"}}>STOCK REVIEW</h3>
+                    <h3 style={{color: "#287BD4"}}>STOCK REVIEW </h3> &nbsp;
+                    
                     </Row>
-
 
                 </div>
                 <Row>
-
+            
                     <div className={AccountCSS.container}>
 
-
+                    <br/>
                         <MDBDataTable
 
 
@@ -258,4 +275,4 @@ delete(id){
     }
 }
 
-export default allShops;
+export default stockManagement;
