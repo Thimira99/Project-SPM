@@ -5,10 +5,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './login/Login';
 import Dashboard from './pages/dashboard/Dashboard';
 import CreateEmployee from './pages/createEmployee/CreateEmployee';
+
 import stockManagement from './pages/StockManagement/stockManagement';
 import createStocks from './pages/StockManagement/createStocks';
 import requestStocks from './pages/StockManagement/requestStocks';
 import createRequestStocks from './pages/StockManagement/createRequestStocks';
+import updateStocks from './pages/StockManagement/updateStocks';
+import stockReport from './pages/StockManagement/stockReport';
+
 import dashboard from './pages/SalesManeger/Dashboard/dashboard';
 import createShop from './pages/SalesManeger/Shops/CreateShop/createShop';
 import allShops from './pages/SalesManeger/Shops/AllShops/allShops';
@@ -64,6 +68,8 @@ function App() {
               <Route path='/reqStocks' component={requestStocks} />
               <Route path='/createStocks' component={createStocks} />
               <Route path='/createRequests' component={createRequestStocks} />
+              <Route path='/update/stock/:id' component={updateStocks} />
+              <Route path='/stockReport' component={stockReport} />
 
               {/* Distribution manager Link */}
               <Route path='/distributions' component={distributions} />

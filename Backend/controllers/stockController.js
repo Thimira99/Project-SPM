@@ -45,6 +45,22 @@ const getStocks = async(req,res)=>{
     
 }
 
+/*get a specific stock by id */
+const getASpecificStock=async(req,res)=>{
+    let stockId = req.params.id;
+    Stocks.findById(stockId,(err,stock)=>{
+        if(err){
+            return res.status(400).json({success:false,err});
+        }
+
+        return res.status(200).json({
+            success:true,
+            stock
+        });
+    });
+
+}
+
 /* retrieve req stocks */
 const getReqStocks = async(req,res)=>{
     try{
@@ -54,6 +70,22 @@ const getReqStocks = async(req,res)=>{
         return res.status(500).send({err:err})
     }
     
+}
+
+/*get a specific requestedStock by id */
+const getASpecificReqStock=async(req,res)=>{
+    let reqStockId = req.params.id;
+    Stocks.findById(reqStockId,(err,stock)=>{
+        if(err){
+            return res.status(400).json({success:false,err});
+        }
+
+        return res.status(200).json({
+            success:true,
+            stock
+        });
+    });
+
 }
 
 
@@ -129,7 +161,9 @@ module.exports={
     createStocks,
     createReqStocks,
     getStocks,
+    getASpecificStock,
     getReqStocks,
+    getASpecificReqStock,
     updateStocks,
     updateReqStocks,
     deleteStocks,
