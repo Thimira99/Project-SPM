@@ -39,6 +39,16 @@ export default class updateStocks extends Component {
         })
     }
 
+    handleTypeInputSelect = (e)=>{
+        this.setState({product_type:e.target.value})
+        console.log("handle type",e.target.value)
+    }
+
+    handleNameInputSelect = (e)=>{
+        this.setState({product_name:e.target.value})
+        console.log("handle name",e.target.value)
+    }
+
     handleValueChange=(e)=>{
         this.setState({status:e.target.value})
         console.log("status",e.target.value)
@@ -103,12 +113,23 @@ export default class updateStocks extends Component {
 
         componentDidMount(){
                 this.updateData();
+                this.retrieveProducts();                
         }
 
         onCancel(){
             window.location.href='/stockManagement';
+        }     
+
+        retrieveProducts(){
+            axios.get("http://localhost:8000/product/get").then(res=>{
+                if(res.status==200){
+                    this.setState({
+                        stocks:res.data.existingProducts
+                    });
+                    console.log(this.state.stocks)
+                }
+            });
         }
-        
 
   render() {
     return (
@@ -203,18 +224,20 @@ export default class updateStocks extends Component {
                                 }}>
                                 PRODUCT TYPE
                                 </label>
-                                <input 
-                                    type="text"
-                                    className="form-control"
-                                    name="product_type"
-                                    placeholder="Enter product type"
-                                    value={this.state.product_type}
-                                    onChange={this.handleInputChange}
-                                    style={{
-                                        marginLeft:'20px'
-                                    }}
-                                    />
-                                    
+                                <br/>
+                                <select id="product_type" onChange={this.handleTypeInputSelect} value={this.state.product_type} 
+                                    className="btn btn-outline-secondary dropdown-toggle" 
+                                    style={{marginLeft:'30px', width:'auto'}}>
+                                    <option selected> Choose...</option>
+                                    {
+                                        this.state.stocks.map((object) => (
+                                        
+                                            <option>{object.productType}</option>
+                                        ))
+
+                                    }
+
+                                </select>
                             </div>
                             </div>
                             <div class="col-lg-5" style={{
@@ -228,14 +251,7 @@ export default class updateStocks extends Component {
                                     STATUS
                                 </label>
                                 <br/>
-                                {/* <select id="status" 
-                                //onChange={this.handleInputSelect} 
-                                value={this.state.status} className="btn btn-outline-secondary dropdown-toggle" style={{marginLeft:'-30px', width:'auto'}}>
-                                    <option> Choose...</option>
-                                    <option> In Stock</option>
-                                    <option> Out Of Stock</option>
-                                readOnly
-                                </select> */}
+                                
                                <span 
                                 value={this.state.status}
                                 // onChange={this.handleValueChange}
@@ -256,17 +272,20 @@ export default class updateStocks extends Component {
                                 }}>
                                 PRODUCT NAME
                             </label>
-                                <input 
-                                    type="text"
-                                    className="form-control"
-                                    name="product_name"
-                                    placeholder="Enter product name"
-                                    value={this.state.product_name}
-                                    onChange={this.handleInputChange}
-                                    style={{
-                                        marginLeft:'20px'
-                                    }}
-                                    />
+                            <br/>
+                            <select id="product_name" onChange={this.handleNameInputSelect} value={this.state.product_name} 
+                                    className="btn btn-outline-secondary dropdown-toggle" 
+                                    style={{marginLeft:'30px', width:'auto'}}>
+                                    <option selected> Choose...</option>
+                                    {
+                                        this.state.stocks.map((object) => (
+                                        
+                                            <option>{object.productName}</option>
+                                        ))
+
+                                    }
+
+                                </select>
                                    
                             </div>
                             </div>

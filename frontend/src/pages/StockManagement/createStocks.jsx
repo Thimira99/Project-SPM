@@ -35,6 +35,14 @@ export default class createStocks extends Component{
         console.log("messgae",e)
         const {name,value} = e.target;
 
+        if(name=='stock_count'){
+            if(value==0){
+                this.setState({
+                    status:'OUT OF STOCK'
+                })
+            }
+        }
+
       this.setState({
           ...this.state,
           [name]:value
@@ -45,31 +53,45 @@ export default class createStocks extends Component{
     this.setState({status:e.target.value})
     console.log("handle",e.target.value)
 }
+    handleIdInputSelect=(e)=>{
+        this.setState({product_id:e.target.value})
+        console.log("handle id",e.target.value)
+}
+
+    handleNameInputSelect = (e)=>{
+        this.setState({product_name:e.target.value})
+        console.log("handle name",e.target.value)
+    }
+
+    handleTypeInputSelect = (e)=>{
+        this.setState({product_type:e.target.value})
+        console.log("handle type",e.target.value)
+    }
 
 formValidation = () =>{
     const{product_id, product_type,product_name,regular_price,stock_count,reg_date}=this.state;
     let isValid = true;
-    const errorId={};
+    // const errorId={};
     const errorType ={};
     const errorName = {};
     const errorPrice = {};
     const errorCount={};
     const errorRegDate={};
 
-    if(!product_id.match(/^[S][H][K][0-9]{3,}$/)){
-        errorId["idInput"] = "Product Id should contain S,H,K uppercase letters and at least 3 numbers"
-        isValid=false;
-    }
+    // if(!product_id.match(/^[S][H][K][0-9]{3,}$/)){
+    //     errorId["idInput"] = "Product Id should contain S,H,K uppercase letters and at least 3 numbers"
+    //     isValid=false;
+    // }
 
-    if(!product_id){
-        errorId["idInput"]="Product Id Field is EMPTY!"
-        isValid=false;
-    }
+    // if(!product_id){
+    //     errorId["idInput"]="Product Id Field is EMPTY!"
+    //     isValid=false;
+    // }
 
-    if(!product_type.match(/^[a-z A-Z]*$/)){
-      errorType["productTypeInput"] = "Product Type must contain characters only!";
-        isValid=false;
-    }
+    // if(!product_type.match(/^[a-z A-Z]*$/)){
+    //   errorType["productTypeInput"] = "Product Type must contain characters only!";
+    //     isValid=false;
+    // }
 
     if(!product_type){
         errorType["productTypeInput"]="Product type Field is EMPTY!"
@@ -105,7 +127,7 @@ formValidation = () =>{
     }
 
        
-    this.setState({errorId:errorId, errorType:errorType,errorPrice:errorPrice,errorCount:errorCount,errorName:errorName,errorRegDate:errorRegDate});
+    this.setState({errorType:errorType,errorPrice:errorPrice,errorCount:errorCount,errorName:errorName,errorRegDate:errorRegDate});
     return isValid;
   }
 
@@ -125,7 +147,7 @@ formValidation = () =>{
         product_type:product_type,
         product_name:product_name,
         regular_price:regular_price,
-        status:status,
+        status:this.state.stock_count > 0 ? "IN STOCK":"OUT OF STOCK",
         stock_count:stock_count,
         reg_date:reg_date
     }
@@ -155,14 +177,14 @@ formValidation = () =>{
 }
 
 componentDidMount(){
-    this.retrieveStocks();
+    this.retrieveProducts();
 }
 
-retrieveStocks(){
-    axios.get("http://localhost:8000/retrieve/stocks").then(res=>{
-        if(res.data.success){
+retrieveProducts(){
+    axios.get("http://localhost:8000/product/get").then(res=>{
+        if(res.status==200){
             this.setState({
-                stocks:res.data.existingStocks
+                stocks:res.data.existingProducts
             });
             console.log(this.state.stocks)
         }
@@ -174,11 +196,11 @@ onCancel(){
 }
 
     render(){
-        const {errorId}= this.state;
-        const{errorType}=this.state;
+        // const {errorId}= this.state;
+
         const{errorPrice}=this.state;
         const{errorCount}=this.state;
-        const{errorName}=this.state;
+      
         const {errorRegDate} = this.state;
         
         return(
@@ -218,19 +240,21 @@ onCancel(){
                                 }}>
                                 PRODUCT ID
                                 </label>
-                                <input 
-                                    type="text"
-                                    className="form-control"
-                                    name="product_id"
-                                    placeholder="Enter product id"
-                                    value={this.state.product_id}
-                                    onChange={this.handleInputChange}
-                                    required
-                                    style={{marginLeft:'20px'}}
-                                    />
-                                    {Object.keys(errorId).map((key)=>{
-                                    return <div style={{color:'red',marginLeft:'20px',}} key={key}>{errorId[key]}</div>
-                            })}
+                                <br/>
+                                <select id="product_id" onChange={this.handleIdInputSelect} value={this.state.product_id} 
+                                    className="btn btn-outline-secondary dropdown-toggle" 
+                                    style={{marginLeft:'30px', width:'auto'}}>
+                                    <option selected> Choose...</option>
+                                    {
+                                        this.state.stocks.map((object) => (
+                                        
+                                            <option>{object.productId}</option>
+                                        ))
+
+                                    }
+
+                                </select>
+                                
                             </div>
                             </div>
                             
@@ -277,21 +301,20 @@ onCancel(){
                                 }}>
                                 PRODUCT TYPE
                                 </label>
-                                <input 
-                                    type="text"
-                                    className="form-control"
-                                    name="product_type"
-                                    placeholder="Enter product type"
-                                    value={this.state.product_type}
-                                    onChange={this.handleInputChange}
-                                    style={{
-                                        marginLeft:'20px'
-                                    }}
-                                    />
-                                    {Object.keys(errorType).map((key)=>{
-                                    return <div style={{color:'red',marginLeft:'20px',}} key={key}>{errorType[key]}</div>
-                            })}
-                                
+                                <br/>
+                                <select id="product_type" onChange={this.handleTypeInputSelect} value={this.state.product_type} 
+                                    className="btn btn-outline-secondary dropdown-toggle" 
+                                    style={{marginLeft:'30px', width:'auto'}}>
+                                    <option selected> Choose...</option>
+                                    {
+                                        this.state.stocks.map((object) => (
+                                        
+                                            <option>{object.productType}</option>
+                                        ))
+
+                                    }
+
+                                </select>
                             </div>
                             </div>
                             <div class="col-lg-5" style={{
@@ -304,13 +327,13 @@ onCancel(){
                                     }}>
                                     STATUS
                                 </label>
-                                <br/>
-                                <select id="status" onChange={this.handleInputSelect} value={this.state.status} className="btn btn-outline-secondary dropdown-toggle" style={{marginLeft:'-30px', width:'auto'}}>
-                                    <option selected> Choose...</option>
-                                    <option selected> In Stock</option>
-                                    <option selected> Out Of Stock</option>
-
-                                </select>
+                                <br/>   
+                               <span 
+                                    value={this.state.status}
+                                    // onChange={this.handleValueChange}
+                                    style={{marginLeft:'-30px', width:'auto'}}>
+                                    {this.state.stock_count > 0 ? "IN STOCK":"OUT OF STOCK"}
+                               </span>
                                 
                             </div>
                             </div>
@@ -326,7 +349,21 @@ onCancel(){
                                 }}>
                                 PRODUCT NAME
                             </label>
-                                <input 
+                            <br/>
+                            <select id="product_name" onChange={this.handleNameInputSelect} value={this.state.product_name} 
+                                    className="btn btn-outline-secondary dropdown-toggle" 
+                                    style={{marginLeft:'30px', width:'auto'}}>
+                                    <option selected> Choose...</option>
+                                    {
+                                        this.state.stocks.map((object) => (
+                                        
+                                            <option>{object.productName}</option>
+                                        ))
+
+                                    }
+
+                                </select>
+                                {/* <input 
                                     type="text"
                                     className="form-control"
                                     name="product_name"
@@ -339,7 +376,7 @@ onCancel(){
                                     />
                                     {Object.keys(errorName).map((key)=>{
                                     return <div style={{color:'red',marginLeft:'20px',}} key={key}>{errorName[key]}</div>
-                            })}
+                            })} */}
                             </div>
                             </div>
 

@@ -3,6 +3,7 @@ import axios from 'axios';
 import jsPDF from "jspdf";
 import AccountCSS from './account.module.css';
 import StockNavbar from '../../components/Stock Management/StockNavBar';
+import logo from '../../images/logo.png';
 
 export default class stockReport extends Component{
     constructor(props){
@@ -45,7 +46,7 @@ export default class stockReport extends Component{
         return (
             <>
             <StockNavbar />
-            <div className='card' style={{marginTop:'0px',width:'100%',alignItems:'center',marginLeft:'0px',border:'none'}} >
+            <div className='card' style={{marginTop:'0px',width:'100%',alignItems:'center',marginLeft:'0px',border:'none',height:'auto'}} >
             
 
                 <div className="row">
@@ -73,10 +74,11 @@ export default class stockReport extends Component{
                 </div>
 
                     {/* Stock report  */}
+                    <br/>
                 <div id="stockRepo">
-                    {/* <img src={gqheader} alt='' style={{width:'100%'}}/> */}
-                    <hr/>
-                <h2 style={{marginLeft:'400px',color:'black'}}>Summary Stock Report</h2>
+                    <img src={logo} alt='' style={{width:'200px', marginLeft:'3.5px',marginTop:'10px'}}/>
+
+                <h2 style={{marginLeft:'300px',color:'black',marginTop:'-90px', fontSize:'40px'}}>Summary Stock Report</h2>
                 {/* <h4 style={{color:'black',fontWeight:'bolder',marginTop:'50px',marginLeft:'400px'}}> 
                 Total number of Stocks: 
                     {this.state.stocks.reduce(
@@ -84,7 +86,7 @@ export default class stockReport extends Component{
                     )}
                 </h4> */}
             
-               <table style={{marginTop:'40px',backgroundColor:'#ffff',borderRadius:'30px',borderColor:'#ffff',marginLeft:'200px',width:'auto'}}>
+               <table style={{marginTop:'80px',backgroundColor:'#ffff',borderRadius:'30px',borderColor:'#ffff',marginLeft:'200px',width:'auto'}}>
                    <thead>
                     <tr  style={{fontWeight:'bold',color:'black',fontSize:'20px', width:'auto'}}>
                         <th scope="col" style={{width:'50px'}}>#</th>
@@ -116,15 +118,16 @@ export default class stockReport extends Component{
                 </tbody>
                </table>
                <br/>
-                    <hr/>
-                    <h6 id="gqcenter" style={{marginLeft:'50px'}}>
-                    SNACKHACK 365 <br/>
+                  
+                    <h6 id="gqcenter" style={{marginLeft:'50px', marginTop:'60px'}}>
+                    SNACKHACK &nbsp;&nbsp;365 <br/>
                     Stock summary report <br/>
                     on {this.state.date.toLocaleDateString()}<br/>
                     At {this.state.hours}:{this.state.min}:{this.state.sec}
                     </h6>
                     <br/>
                     <div style={{marginLeft:'900px',marginTop:'-120px'}}>
+                    <br/>
                     <p>.................................</p>
                     <h6>Signature</h6></div>
                     <div className="date" style={{marginLeft:'900px'}}>
