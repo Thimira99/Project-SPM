@@ -23,7 +23,9 @@ class ProductList extends Component {
         this.getProductList = this.getProductList.bind(this);
     }
 
-     
+    onClickUpdate(id){
+        this.props.history.push(`/updateProduct/${id}`);
+    } 
 
     getProductList(){
 
@@ -49,7 +51,8 @@ class ProductList extends Component {
                             price: products.price,
                         
             
-                            action: <><FaEdit style={{"marginLeft":"15px","fontSize":"23px"}}/><BsFilterSquareFill style={{"marginLeft":"15px","fontSize":"23px"}} /><BsTrashFill style={{"marginLeft":"15px","fontSize":"23px"}}/></>
+                            action: <><FaEdit style={{"marginLeft":"15px","fontSize":"23px"}} onClick={()=> this.onClickUpdate(products._id)}/>
+                            <BsFilterSquareFill style={{"marginLeft":"15px","fontSize":"23px"}} /><BsTrashFill style={{"marginLeft":"15px","fontSize":"23px"}}/></>
             
             
                         })
