@@ -23,7 +23,9 @@ class MaterialList extends Component {
         this.getMaterialList = this.getMaterialList.bind(this);
     }
 
-     
+    onClickUpdate(id){
+        this.props.history.push(`/updateMaterial/${id}`);
+    }
 
     getMaterialList(){
 
@@ -48,7 +50,8 @@ class MaterialList extends Component {
                                
                             status: materials.status == 'ACTIVE' ? <FcCheckmark style={{"fontSize":"25px"}}/>: <FcCancel style={{"fontSize":"25px"}}/>,
             
-                            action: <><FaEdit style={{"marginLeft":"15px","fontSize":"23px"}}/><BsFilterSquareFill style={{"marginLeft":"15px","fontSize":"23px"}} /><BsTrashFill style={{"marginLeft":"15px","fontSize":"23px"}}/></>
+                            action: <><FaEdit style={{"marginLeft":"15px","fontSize":"23px"}} onClick={()=> this.onClickUpdate(materials._id)}/>
+                            <BsFilterSquareFill style={{"marginLeft":"15px","fontSize":"23px"}} /><BsTrashFill style={{"marginLeft":"15px","fontSize":"23px"}}/></>
             
             
                         })
@@ -145,6 +148,7 @@ class MaterialList extends Component {
                         ADD MATERIAL
           </a></Button>
                         </Col>
+                        
                     </Row>
 
                 </div>
