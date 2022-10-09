@@ -23,7 +23,9 @@ class SupplierList extends Component {
         this.getSupplierList = this.getSupplierList.bind(this);
     }
 
-     
+    onClickUpdate(id){
+        this.props.history.push(`/updateSupplier/${id}`);
+    }  
 
     getSupplierList(){
 
@@ -47,7 +49,8 @@ class SupplierList extends Component {
                                
                             status: suppliers.status == 'Active' ? <FcCheckmark style={{"fontSize":"25px"}}/>: <FcCancel style={{"fontSize":"25px"}}/>,
             
-                            action: <><FaEdit style={{"marginLeft":"15px","fontSize":"23px"}}/><BsFilterSquareFill style={{"marginLeft":"15px","fontSize":"23px"}} /><BsTrashFill style={{"marginLeft":"15px","fontSize":"23px"}}/></>
+                            action: <><FaEdit style={{"marginLeft":"15px","fontSize":"23px"}} onClick={()=> this.onClickUpdate(suppliers._id)}/>
+                            <BsFilterSquareFill style={{"marginLeft":"15px","fontSize":"23px"}} /><BsTrashFill style={{"marginLeft":"15px","fontSize":"23px"}}/></>
             
             
                         })
