@@ -5,7 +5,7 @@ import { Form, Button, Table, Row, Col, Container } from "react-bootstrap";
 import AccountCSS from './account.module.css';
 import { BsRecord2Fill } from "react-icons/bs";
 
-export default class AddMaterial extends Component {
+export default class UpdateMaterial extends Component {
 
   constructor(props){
     super(props);
@@ -19,11 +19,6 @@ export default class AddMaterial extends Component {
         status:"",  
         suppliers:[],  
        
-         /** */
-        errorA:{},
-        errorB:{},
-        errorC:{},
-        errorD:{},
     }
   }
     handleInputChange=(e)=>{
@@ -34,62 +29,17 @@ export default class AddMaterial extends Component {
           [name]:value
       })
   }
-
-/** */
-formValidation = () =>{
-  const{materialId,supplier,cost, weight}=this.state;
-  let isValid = true;
-  const errorA ={};
-  const errorB={};
-  const errorC={};
-  const errorD={};
-
-  if(!materialId){
-      errorA["materialIdInput"] = "Material Id Field is EMPTY!";
-      isValid=false;
-  }
-
-  if((materialId.length<=3)){
-    errorA["materialIdLength"] = "Material Id must be in length 4 or higher";
-    isValid=false;
-}
-
-
-  if(!supplier){
-    errorB["supplierFieldInput"] = "Supplier Field is EMPTY!";
-    isValid=false;
-  }
-    if(!cost){
-        errorC["costFieldInput"] = "Cost Field is EMPTY!";
-        isValid=false;
-    }
-    if(!weight){
-      errorD["weightFieldInput"] = "Weight Field is EMPTY!";
-      isValid=false;
-  }
-  if(!materialId.match(/^[a-z A-Z 1-9]*$/)){
-      errorA["materialIdInputPattern"] = "Material Id must contain characters only!";
-      isValid=false;
-  }
-
-
    
-
-
-
-  this.setState({errorA:errorA,errorB:errorB,errorC:errorC,errorD:errorD});
-  return isValid;
+  handleInputSelect=(e)=>{
+    this.setState({supplier:e.target.value})
+    console.log("supplier",e.target.value)
 }
-/** */
 
   onSubmit=(e)=>{
     e.preventDefault();
 
     /** */
-    const isValid = this.formValidation();
-    if(isValid){
-
-
+    const id = this.props.match.params.id;
     const{dateCreated,materialId,supplier,cost,weight,status}= this.state;
 
        
@@ -105,9 +55,9 @@ formValidation = () =>{
         
     console.log(data);
 
-    axios.post("http://localhost:8000/material/post",data).then((res)=>{
+    axios.put(`http://localhost:8000/material/update/${id}`,data).then((res)=>{
       if(res.data.success){
-        alert("Material added Successfully!");
+        alert("Material details updated Successfully!");
         window.location.href='/materialList';
         this.setState(
           {
@@ -121,12 +71,39 @@ formValidation = () =>{
         )
       }
     })
-}
+
 }
 
 componentDidMount(){
+  const id=this.props.match.params.id;
+
+  axios.get(`http://localhost:8000/material/get/${id}`).then((res) =>{
+      if(res.data.success){
+          this.setState({
+            dateCreated:res.data.material.dateCreated,
+            materialId:res.data.material.materialId,
+            supplier:res.data.material.supplier,
+            cost:res.data.material.cost,
+            weight:res.data.material.weight,
+            status:res.data.material.status
+          });
+
+          console.log(this.state.materialId);
+      }
+  });
+
+  axios.get("http://localhost:8000/material/get").then((res)=>{
+      if(res.data.success){
+          this.setState({
+              materials:res.data.existingMaterials
+          })
+      }
+  })
+
   this.retrieveSuppliers(); 
 }
+
+ 
 
 retrieveSuppliers(){
   axios.get("http://localhost:8000/supplier/get").then(res=>{
@@ -142,10 +119,6 @@ retrieveSuppliers(){
  
   render() {
      
-    const{errorA}=this.state;
-    const{errorB}=this.state;
-    const{errorC}=this.state;
-    const{errorD}=this.state;
 
     return (
         <>
@@ -159,12 +132,12 @@ retrieveSuppliers(){
       
       
 
-        <h3   style={{color: 'rgba(6, 21, 117)', fontWeight:'bold'}}> ADD MATERIAL </h3>
+        <h3   style={{color: 'rgba(6, 21, 117)', fontWeight:'bold'}}> UPDATE MATERIAL </h3>
         <button className="btn btn-primary" style={{"width": "360px", "fontWeight": "600"}}>
         <a href="/materialList" style={{textDecoration:'none',color:'white', fontWeight:'bold',}}>
-          MATERIAL LIST
+          VIEW MATERIALS 
         </a></button><br/> 
-        <form className='needs-validation' noValidate onSubmit={this.onSubmit}>
+        <form className='needs-validation' noValidate >
          
           <div className='form-group' style={{marginBottom:'15px'}}>
             <label style={{marginBottom:'5px'}}>MATERIAL ID</label>
@@ -176,22 +149,16 @@ retrieveSuppliers(){
               value={this.state.materialId}
               onChange={this.handleInputChange}
             />
-             {Object.keys(errorA).map((key)=>{
-              return <div style={{color:'red'}} key={key}>{errorA[key]}</div> })}
+             
           </div>
 
 
           <div className='form-group' style={{marginBottom:'15px'}}>
             <label style={{marginBottom:'5px'}}>SUPPLIER</label>
-                  {/* <select id="supplier" value={this.state.supplier} onChange={e=> this.setState({supplier:e.target.value})} className="btn dropdown-toggle" style={{backgroundColor: '#fff', marginLeft:'20px'}}>
-                    <option selected> Select</option>
-                    <option>SUP333</option>
-                    <option>SUP336</option>
-                    <option>SUP338</option>
-                  </select> */}
-                  <select id="supplier" value={this.state.supplierId} onChange={e=> this.setState({supplier:e.target.value})}
+                   
+                  <select id="supplier" value={this.state.supplierId} onChange={this.handleInputSelect}
                     className="btn dropdown-toggle" style={{backgroundColor: '#fff', marginLeft:'20px'}}>
-                  <option selected> Choose...</option>
+                  <option selected>{this.state.supplier}</option>
                       {
                         this.state.suppliers.map((obj)=>(
                           <option>{obj.supplierId}</option>
@@ -212,8 +179,7 @@ retrieveSuppliers(){
               value={this.state.weight}
               onChange={this.handleInputChange}
             />
-            {Object.keys(errorD).map((key)=>{
-              return <div style={{color:'red'}} key={key}>{errorD[key]}</div> })}
+             
           </div>
 
           <div className='form-group' style={{marginBottom:'15px'}}>
@@ -226,8 +192,7 @@ retrieveSuppliers(){
               value={this.state.cost}
               onChange={this.handleInputChange}
             />
-            {Object.keys(errorC).map((key)=>{
-              return <div style={{color:'red'}} key={key}>{errorC[key]}</div> })}
+            
           </div>
 
           <div className='form-group' style={{marginBottom:'15px'}}>
@@ -255,7 +220,7 @@ retrieveSuppliers(){
           <Col> 
           <button className="btn" type="submit" style={{marginTop:'15px',marginBottom:'150px', backgroundColor: 'rgba(6, 21, 117)', color:"#ffffff", fontWeight:'bold'}} onClick={this.onSubmit}>
             <i className="far fa-check-square"></i>
-             &nbsp;Save
+             &nbsp;Update
           </button>
           </Col>
           <Col> 

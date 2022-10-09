@@ -26,6 +26,7 @@ import MaterialList from './pages/ProductManager/Materials/MaterialList/Material
 import AddMaterial from './pages/ProductManager/Materials/AddMaterial/AddMaterial';
 import ProductList from './pages/ProductManager/Products/ProductList/ProductList';
 import AddProduct from './pages/ProductManager/Products/AddProduct/AddProduct';
+import UpdateMaterial from './pages/ProductManager/Materials/UpdateMaterial/UpdateMaterial';
 
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
@@ -95,6 +96,7 @@ function App() {
                <Route path='/addMaterial' component={AddMaterial} />
                <Route path='/productList' component={ProductList} />
                <Route path='/addProduct' component={AddProduct} />
+               <Route path='/updateMaterial/:id' component={UpdateMaterial} />
 
               <Route path='/login' component={Login} />
               <Redirect from='/' to='/login' />
