@@ -121,7 +121,7 @@ componentDidMount(){
       
       
 
-        <h3   style={{color: 'rgba(6, 21, 117)', fontWeight:'bold'}}> ADD PRODUCT </h3>
+        <h3   style={{color: 'rgba(6, 21, 117)', fontWeight:'bold'}}> UPDATE PRODUCT </h3>
         <button className="btn btn-primary" style={{"width": "360px", "fontWeight": "600"}}>
         <a href="/productList" style={{textDecoration:'none',color:'white', fontWeight:'bold',}}>
           PRODUCT LIST
