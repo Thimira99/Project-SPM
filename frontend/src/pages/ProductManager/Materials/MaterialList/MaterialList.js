@@ -27,6 +27,15 @@ class MaterialList extends Component {
         this.props.history.push(`/updateMaterial/${id}`);
     }
 
+    onClickDelete(id){
+        if (window.confirm("Do you want to remove this material?")) {
+            axios.delete(`http://localhost:8000/material/delete/${id}`).then((res) => {
+              alert("Material removed Successfully!");
+              this.getMaterialList();
+            });
+          }
+    }
+
     getMaterialList(){
 
         axios.get("http://localhost:8000/material/get").then(res=>{  
@@ -51,7 +60,8 @@ class MaterialList extends Component {
                             status: materials.status == 'ACTIVE' ? <FcCheckmark style={{"fontSize":"25px"}}/>: <FcCancel style={{"fontSize":"25px"}}/>,
             
                             action: <><FaEdit style={{"marginLeft":"15px","fontSize":"23px"}} onClick={()=> this.onClickUpdate(materials._id)}/>
-                            <BsFilterSquareFill style={{"marginLeft":"15px","fontSize":"23px"}} /><BsTrashFill style={{"marginLeft":"15px","fontSize":"23px"}}/></>
+                             
+                            <BsTrashFill style={{"marginLeft":"15px","fontSize":"23px"}} onClick={()=> this.onClickDelete(materials._id)} /></>
             
             
                         })

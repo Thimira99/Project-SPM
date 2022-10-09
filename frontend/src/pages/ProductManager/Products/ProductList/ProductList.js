@@ -27,6 +27,15 @@ class ProductList extends Component {
         this.props.history.push(`/updateProduct/${id}`);
     } 
 
+    onClickDelete(id){
+        if (window.confirm("Do you want to remove this product?")) {
+            axios.delete(`http://localhost:8000/product/delete/${id}`).then((res) => {
+              alert("Product removed Successfully!");
+              this.getProductList();
+            });
+          }
+    }
+
     getProductList(){
 
         axios.get("http://localhost:8000/product/get").then(res=>{  
@@ -52,7 +61,8 @@ class ProductList extends Component {
                         
             
                             action: <><FaEdit style={{"marginLeft":"15px","fontSize":"23px"}} onClick={()=> this.onClickUpdate(products._id)}/>
-                            <BsFilterSquareFill style={{"marginLeft":"15px","fontSize":"23px"}} /><BsTrashFill style={{"marginLeft":"15px","fontSize":"23px"}}/></>
+                            
+                            <BsTrashFill style={{"marginLeft":"15px","fontSize":"23px"}} onClick={()=> this.onClickDelete(products._id)}/></>
             
             
                         })

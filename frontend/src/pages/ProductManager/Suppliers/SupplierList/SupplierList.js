@@ -27,6 +27,15 @@ class SupplierList extends Component {
         this.props.history.push(`/updateSupplier/${id}`);
     }  
 
+    onClickDelete(id){
+        if (window.confirm("Do you want to remove this supplier?")) {
+            axios.delete(`http://localhost:8000/supplier/delete/${id}`).then((res) => {
+              alert("Supplier removed Successfully!");
+              this.getSupplierList();
+            });
+          }
+    }
+
     getSupplierList(){
 
         axios.get("http://localhost:8000/supplier/get").then(res=>{  
@@ -50,7 +59,8 @@ class SupplierList extends Component {
                             status: suppliers.status == 'Active' ? <FcCheckmark style={{"fontSize":"25px"}}/>: <FcCancel style={{"fontSize":"25px"}}/>,
             
                             action: <><FaEdit style={{"marginLeft":"15px","fontSize":"23px"}} onClick={()=> this.onClickUpdate(suppliers._id)}/>
-                            <BsFilterSquareFill style={{"marginLeft":"15px","fontSize":"23px"}} /><BsTrashFill style={{"marginLeft":"15px","fontSize":"23px"}}/></>
+                             
+                            <BsTrashFill style={{"marginLeft":"15px","fontSize":"23px"}} onClick={()=> this.onClickDelete(suppliers._id)}/></>
             
             
                         })
