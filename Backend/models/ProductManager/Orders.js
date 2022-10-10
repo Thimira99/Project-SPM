@@ -31,8 +31,7 @@ const orderSchema = new mongoose.Schema({
  
  ],
     weight:{
-        type:String,
-        required:true
+        type:String
     },
      
 },{timestamps:true});

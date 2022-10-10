@@ -75,13 +75,53 @@ useEffect(() => {
   getMaterials();
 }, []);
 
+/** */
+ 
+ 
+
 function checkLength(){
   
-    const long = [...materialItem];
-    if(long.length<4){
-      window.confirm("There should be 4 members to a panel");
-      submitBtn.setDisable(true)
-    }
+  if(!orderCode){
+    window.confirm("Order code can not be empty");
+    submitBtn.setDisable(true)
+  }
+
+  if(!orderCode.match(/^[a-z A-Z 1-9]*$/)){
+    window.confirm("Order code must contain characters only!");
+    submitBtn.setDisable(true)
+}
+
+if((orderCode.length<=3)){
+  window.confirm("Order Code must be in length 4 or higher");
+  submitBtn.setDisable(true)
+}
+   
+
+  if(!supplierEmail){
+    window.confirm("Supplier Email Field is EMPTY!");
+    submitBtn.setDisable(true)
+  }
+
+  // if(!weight){
+  //   window.confirm("Weight Field is EMPTY!");
+  //   submitBtn.setDisable(true)
+  // }
+
+  // if(!weight.match(/^[. 1-9]*$/)){
+  //   window.confirm("Weight must contain values only!");
+  //   submitBtn.setDisable(true)
+  // }
+      if(!supplierEmail.match(/^[. @ a-z A-Z 1-9]*$/)){
+        window.confirm("Email should be a valid one!");
+        submitBtn.setDisable(true)
+      }
+  
+    // const long = [...materialItem];
+    // if(long.length<4){
+    //   window.confirm("There should be 4 members to a panel");
+    //   submitBtn.setDisable(true)
+    // }
+ 
       orderCode+small_id;
       
       const newOrder= {
@@ -103,7 +143,9 @@ function checkLength(){
           alert("Unable to add" + err);
       })
     
-    }
+    
+
+  }
 
      
   return(
@@ -113,7 +155,7 @@ function checkLength(){
 
     <Row>
   <div className='container'>
-  <div className = 'card' style={{marginLeft:'220px', marginTop:'20px', background: "#D3D3D3",height:'auto',width:'600px',marginRight:'100px'}}>
+  <div className = 'card' style={{marginLeft:'140px', marginTop:'20px', background: "#D3D3D3",height:'auto',width:'900px',marginRight:'100px'}}>
   <div className='col-md-8 mt-4 mx-auto'>
   
   
@@ -123,7 +165,10 @@ function checkLength(){
     <a href="/productList" style={{textDecoration:'none',color:'white', fontWeight:'bold',}}>
       VIEW PAST ORDERS
     </a></button><br/> 
-    <form className='needs-validation' noValidate autoComplete='off' onSubmit={checkLength} > <br/>
+    <form className='needs-validation' noValidate  onSubmit={checkLength} > <br/>
+    <label style={{marginBottom:'5px', fontsize:'15pt', fontWeight:'bold'}}>ORDER DETAILS</label>
+    <Row>
+      <Col>
     <div className='form-group' style={{marginBottom:'15px'}}>
         <label style={{marginBottom:'5px'}}>ORDER CODE</label>
         <input 
@@ -137,8 +182,9 @@ function checkLength(){
         />
         
       </div>
+      </Col>
       <br/>
-
+        <Col>
       <div className='form-group' style={{marginBottom:'15px'}}>
         <label style={{marginBottom:'5px'}}>ORDER DATE</label>
         <input 
@@ -152,64 +198,50 @@ function checkLength(){
         />
         
       </div>
-      <br/>
+      </Col>
+      </Row>
+      <br></br>
+      <label style={{marginBottom:'5px', fontsize:'15pt', fontWeight:'bold'}}>SUPPLIER DETAILS</label>
+      <Row>
+        <Col>
       <div className='form-group' style={{marginBottom:'15px'}}>
-            <label style={{marginBottom:'5px'}}>MATERIAL</label>
-       
-          {materialItem.map((singleMaterial,index)=>(
-            <div key={index} >
-                <div>
-               
-                  <select id="materialItem"  name="materialItem" onChange={(e)=>handleMaterialChange(e,index)} value={singleMaterial.materialItem}
-                    className="btn btn-secondary dropdown-toggle" style={{backgroundColor:'rgba(143, 145, 148 ,1)'}}>
-                    <option selected> Choose...</option>
-                    {materialId.map(obj=>
-                      <option>{obj.materialId}</option>
-                    )}
-                
-            </select>
-                 
-                  {materialItem.length-1===index && materialItem.length<4 && (
-                    <button onClick={handleMaterialAdd}
-                      style={{marginLeft:'50px',marginTop:'-5px'}}
-                      className="btn btn-secondary">
-                      <span>+</span>
-                    </button>
-                  )}
-                </div>
-               
-                <div>
-                {materialItem.length>1 && (
-                  <button onClick={()=>handleMaterialRemove(index)}
-                      className="btn btn-danger"
-                      style={{padding:'10px',marginTop:'20px',marginBottom:'20px'}}
-                  >
-                    <span>Remove</span>
-                  </button>
-                  )}
-                </div>
-                
-            </div>
-            
-          ))}
-         
-      </div>
-        
-      <div className='form-group' style={{marginBottom:'15px'}}>
+        <Row>
+          <Col>
             <label style={{marginBottom:'5px'}}>SUPPLIER</label>
-
+            </Col>
+            
             <select id="supplierId" onChange={(e) =>{setSupplierId(e.target.value)}}
-              className="btn btn-secondary dropdown-toggle" style={{backgroundColor:'rgba(143, 145, 148 ,1)'}}>
+              className="btn dropdown-toggle" style={{backgroundColor: '#fff', marginLeft:'20px'}}>
               <option selected> Choose...</option>
               {supplierGrp  && supplierGrp.map(obj=>
                 <option>{obj.supplierId}</option>
               
-              )}
-                
+              )}               
             </select>
-        
+            </Row>
       </div>
-
+      </Col>
+      
+      <Col>
+      <div className='form-group' style={{marginBottom:'15px'}}>
+        <Row>
+          <Col> 
+            <label style={{marginBottom:'5px'}}>CONTACT PERSON</label>
+            </Col>
+            <Col>
+            <select id="contactPerson" onChange={(e) =>{setContactPerson(e.target.value)}}
+              className="btn dropdown-toggle" style={{backgroundColor: '#fff', marginLeft:'20px'}}>
+              <option selected> Choose...</option>
+              {supplierGrp  && supplierGrp.map(obj=>
+                <option>{obj.contactPerson}</option>             
+              )}               
+            </select>
+            </Col>
+            </Row>
+      </div>
+      </Col>
+      </Row>
+       
       <div className='form-group' style={{marginBottom:'15px'}}>
             <label style={{marginBottom:'5px'}}>SUPPLIER EMAIL</label>
             <input 
@@ -223,24 +255,59 @@ function checkLength(){
         />
         
       </div>
-
+       
+      <br></br>
+      <label style={{marginBottom:'5px', fontsize:'15pt', fontWeight:'bold'}}>MATERIAL DETAILS</label>
       <div className='form-group' style={{marginBottom:'15px'}}>
-            <label style={{marginBottom:'5px'}}>CONTACT PERSON</label>
-
-            <select id="contactPerson" onChange={(e) =>{setContactPerson(e.target.value)}}
-              className="btn btn-secondary dropdown-toggle" style={{backgroundColor:'rgba(143, 145, 148 ,1)'}}>
-              <option selected> Choose...</option>
-              {supplierGrp  && supplierGrp.map(obj=>
-                <option>{obj.contactPerson}</option>
-              
-              )}
+            <label style={{marginBottom:'5px'}}>MATERIAL</label>
+       
+          {materialItem.map((singleMaterial,index)=>(
+            <div key={index} >
+                <div>
+               
+                  <select id="materialItem"  name="materialItem" onChange={(e)=>handleMaterialChange(e,index)} value={singleMaterial.materialItem}
+                    className="btn dropdown-toggle" style={{backgroundColor: '#fff', marginLeft:'20px'}}>
+                    <option selected> Choose...</option>
+                    {materialId.map(obj=>
+                      <option>{obj.materialId}</option>
+                    )}
                 
             </select>
-        
+                 
+                  {materialItem.length-1===index && materialItem.length<10 && (
+                    <button onClick={handleMaterialAdd}
+                      style={{backgroundColor: '#fff', marginLeft:'50px',marginTop:'-5px'}}
+                      className="btn btn-primary">
+                      <span>+</span>
+                    </button>
+                  )}
+                </div>
+               
+                <div>
+                  <Row>
+                    <Col>
+                {materialItem.length>1 && (
+                  <button onClick={()=>handleMaterialRemove(index)}
+                      className="btn"
+                      style={{backgroundColor: '#000', fontWeight:'bold', color:'#fff', padding:'10px',marginTop:'20px',marginBottom:'20px'}}
+                  >
+                    <span>X</span>
+                  </button>
+                  )}
+                  </Col>
+                  </Row>
+                </div>
+                
+            </div>
+            
+          ))}
+         
       </div>
+        
+      
 
 
-      <div className='form-group' style={{marginBottom:'15px'}}>
+      {/* <div className='form-group' style={{marginBottom:'15px'}}>
             <label style={{marginBottom:'5px'}}>WEIGHT</label>
             <input 
           type="text"
@@ -252,7 +319,7 @@ function checkLength(){
           required
         />
         
-      </div>
+      </div> */}
         <br/>
 
         <Row>
