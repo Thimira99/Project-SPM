@@ -28,7 +28,10 @@ export default class createStocks extends Component{
         errorCount:{},
         errorRegDate:{},
         };
-        this.handleInputSelect=this.handleInputSelect.bind(this)
+        this.handleInputSelect=this.handleInputSelect.bind(this);
+        this.handleIdInputSelect=this.handleIdInputSelect.bind(this);
+        this.handleNameInputSelect=this.handleNameInputSelect.bind(this);
+        this.handleTypeInputSelect=this.handleTypeInputSelect.bind(this)
     }
 
     handleInputChange=(e)=>{

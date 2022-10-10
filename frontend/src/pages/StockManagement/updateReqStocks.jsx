@@ -1,201 +1,133 @@
-import React, { Component } from 'react';
-import StockNavbar from '../../components/Stock Management/StockNavBar';
+import React, { Component } from 'react'
 import axios from 'axios';
-import stockManagementStyles from './createStocks.module.scss'
+import { withRouter } from "react-router"; 
+import StockNavbar from '../../components/Stock Management/StockNavBar';
+import stockManagementStyles from './update.module.scss';
 import {FaRegDotCircle} from "react-icons/fa";
 
-export default class createRequestStocks extends Component{
+export default class updateReqStocks extends Component {
 
     constructor(props){
         super(props);
-
         this.state={
+            ReqStockId: this.props.match.params.id,
             product_id:"",
             product_type:"",
             reqNoStocks:"",
             reqDate:"",
             DueDate:"",
             regPrice:"",
-            reqStocks:[],
-
-               /** */
-        errorId:{},
-        errorType:{},
-        errorReqStocks:{},
-        errorReqDate:{},
-        errorDate:{},
-        errorRegPrice:{}
-
-        };
-        this.handleInputSelect=this.handleInputSelect.bind(this);
-        this.handleIdInputSelect=this.handleIdInputSelect.bind(this);
-        this.handleTypeInputSelect=this.handleTypeInputSelect.bind(this)
-        
+            reqStocks:[]
+        }
     }
 
     handleInputChange=(e)=>{
-        console.log("messgae",e)
         const {name,value} = e.target;
-
-      this.setState({
-          ...this.state,
-          [name]:value
-      }) 
-  }
-  
-  handleInputSelect=(e)=>{
-    this.setState({status:e.target.value})
-    console.log("handle",e.target.value)
-}
-
-// handleValueInput=(e)=>{
-//     const selectedValue = this.state.reqStocks.find(product=>product.product_id==e.target.value);
-//     this.setState({ ...this.state,regPrice:selectedValue.price})
-// }
-
-handleIdInputSelect=(e)=>{
-    this.setState({product_id:e.target.value})
-    console.log("handle id",e.target.value)
-}
-
-handleTypeInputSelect = (e)=>{
-    this.setState({product_type:e.target.value})
-    console.log("handle type",e.target.value)
-}
-
-
-formValidation = () =>{
-    const{reqNoStocks, reqDate, DueDate, regPrice}=this.state;
-    let isValid = true;
-    
-    const errorReqStocks ={};
-    const errorReqDate ={};
-    const errorDate = {};
-    const errorRegPrice ={};
-
-  
-    if(!DueDate){
-        errorDate["dateInput"]="Due date Field is EMPTY!";
-        isValid=false;
+        this.setState({
+            ...this.state,
+            [name]:value
+        })
     }
 
-    if(!reqDate){
-        errorReqDate["reqDateInput"]="Requested date Field is EMPTY!";
-        isValid=false;
+    handleTypeInputSelect = (e)=>{
+        this.setState({product_type:e.target.value})
+        console.log("handle type",e.target.value)
     }
-
-    if(!regPrice){
-        errorRegPrice["priceError"]="Price Field is EMPTY!";
-        isValid=false;
-    }
-
-    if(!regPrice.match(/^[0-9]*$/)){
-        errorRegPrice["priceError"] = "Price can contain numbers Only!";
-        isValid=false;
-    }
-
-    if(!reqNoStocks){
-        errorReqStocks["reqCountError"]="Request Field is EMPTY!";
-        isValid=false;
-    }
-
-    if(!reqNoStocks.match(/^[0-9]*$/)){
-        errorReqStocks["reqCountError"] = "Request can contain numbers Only!";
-        isValid=false;
-    }
-    
-       
-    this.setState({errorReqStocks:errorReqStocks, errorReqDate:errorReqDate, errorDate:errorDate, errorRegPrice:errorRegPrice});
-    return isValid;
-  }
-
-  /** */
-
-  onSubmit=(e)=>{
-    e.preventDefault();
-
-    /** */
-   
-    const isValid = this.formValidation();
-    if(isValid){
-    const{product_id,product_type, reqNoStocks,reqDate,DueDate,regPrice}= this.state;
-
-    const data={
-        product_id:product_id,
-        product_type:product_type,
-        reqNoStocks:reqNoStocks,
-        reqDate:reqDate,
-        DueDate:DueDate,
-        regPrice:regPrice
-    }
-        
-    console.log(data);
-
-    axios.post("http://localhost:8000/request/stocks/create",data).then((res)=>{
-      if(res.status==200){
-        alert("Request created Successfully!")
-        window.location.href='/reqStocks';
-        this.setState(
-          {
-            product_id:"",
-            product_type:"",
-            reqNoStocks:"",
-            reqDate:"",
-            DueDate:"",
-            regPrice:""
-          }
-        )
-      }
-    })
 
     
-    }
-}
+    
+    onSubmit=(e)=> {
+        e.preventDefault();
+        /** */
+            const id = this.props.match.params.id;
 
-componentDidMount(){
-    this.retrieveProducts();
-}
+            const {product_id, product_type, reqNoStocks, reqDate, DueDate, regPrice} = this.state;
 
-retrieveProducts(){
-    axios.get("http://localhost:8000/product/get").then(res=>{
-        if(res.status==200){
-            this.setState({
-                reqStocks:res.data.existingProducts
-            });
-            console.log(this.state.reqStocks)
+            const data = {
+                product_id: product_id,
+                product_type: product_type,
+                reqDate: reqDate,
+                DueDate:DueDate,
+                regPrice:regPrice,
+                reqNoStocks: reqNoStocks,            
+            }
+
+            console.log(data);
+
+            axios.put(`http://localhost:8000/update/request/stocks/${id}`, data).then((res) => {
+                if (res.status==200) {
+                    alert("Request stock Details Updated Successfully!")
+                    window.location.href='/reqStocks';
+                    this.setState(
+                        {
+                            product_id: "",
+                            product_type: "",
+                            reqDate: "",
+                            DueDate:"",
+                            regPrice: "",
+                            reqNoStocks:"",
+
+                        }
+                    )
+                }
+                console.log("updated data",data)
+            })
         }
-    });
-}
 
-onCancel(){
-    window.location.reload();
-}
-
-    render(){
-        const{errorReqStocks}=this.state;
-        const{errorReqDate}=this.state;
-        const{errorDate}=this.state;
-        const{errorRegPrice}=this.state;
-        
-
-        return(
-            <>
-                <StockNavbar/>
-                <br/>
-                <h3 className={stockManagementStyles.heading}>REQUISITION REGISTRATION</h3>
-               
-                <br/>
-                <div className={stockManagementStyles.main}>
-                <br/>
-
-                <div className='card' style={{
-                    marginTop:'60px',
-                    marginLeft:'-500px',
-                    width:'900px',
-                    height:'auto',
-                    border:'none'
-                }}>
+        updateData(){
+            console.log("req stock id",this.state.ReqStockId)
+            axios.get(`http://localhost:8000/retrieve/request/stock/${this.state.ReqStockId}`).then((res) =>{
+                console.log("response",res);
+                this.setState({
+                    product_id: res.data.reqStock.product_id,
+                    product_type: res.data.reqStock.product_type,
+                    reqDate: res.data.reqStock.reqDate,
+                    DueDate: res.data.reqStock.DueDate,
+                    regPrice: res.data.reqStock.regPrice,
+                    reqNoStocks: res.data.reqStock.reqNoStocks,
                     
+                })
+            });
+        }
+
+        componentDidMount(){
+            this.updateData();
+            this.retrieveProducts();                
+    }
+
+    onCancel(){
+        window.location.href='/reqStocks';
+    }     
+
+    retrieveProducts(){
+        axios.get("http://localhost:8000/product/get").then(res=>{
+            if(res.status==200){
+                this.setState({
+                    reqStocks:res.data.existingProducts
+                });
+                console.log("products",this.state.reqStocks)
+            }
+        });
+    }
+
+    render() {
+        return (
+            <>
+            <StockNavbar/>
+                    <br/>
+                    <h3 className={stockManagementStyles.heading}>STOCK REGISTRATION</h3>
+                    {/* <hr style={{color:'black',"marginTop": "2px", "width": "1520px"}}/> */}
+                    <br/>
+                    <div className={stockManagementStyles.main}>
+                    <br/>
+                    
+                    <div className='card' style={{
+                        marginTop:'60px',
+                        marginLeft:'-420px',
+                        width:'900px',
+                        height:'fitContent',
+                        border:'none'
+                    }}>
                         <form className='needs-validation' noValidate onSubmit={this.onSubmit} style={{
                             height:'auto'
                         }}>
@@ -214,19 +146,17 @@ onCancel(){
                                 PRODUCT ID
                                 </label>
                                 <br/>
-                                <select id="product_id" onChange={this.handleIdInputSelect} value={this.state.product_id} 
-                                    className="btn btn-outline-secondary dropdown-toggle" 
-                                    style={{marginLeft:'30px', width:'auto'}}>
-                                    <option selected> Choose...</option>
-                                    {
-                                        this.state.reqStocks.map((object) => (
-                                        
-                                            <option>{object.productId}</option>
-                                        ))
-
-                                    }
-
-                                </select>
+                                <input 
+                                    type="text"
+                                    className="form-control"
+                                    name="product_id"
+                                    placeholder="Enter product id"
+                                    value={this.state.product_id}
+                                    onChange={this.handleInputChange}
+                                    required
+                                    style={{marginLeft:'20px'}}
+                                    readOnly
+                                    />
                             </div>
                             </div>
 
@@ -255,9 +185,7 @@ onCancel(){
                                         marginLeft:'-30px'
                                     }}
                                     />
-                                    {Object.keys(errorReqStocks).map((key)=>{
-                                    return <div style={{color:'red'}} key={key}>{errorReqStocks[key]}</div>
-                            })}
+                                    
                             </div>
                             </div>
                             </div>
@@ -271,10 +199,11 @@ onCancel(){
                                 }}>PRODUCT TYPE
                                 </label>
                                 <br/>
+
                                 <select id="product_type" onChange={this.handleTypeInputSelect} value={this.state.product_type} 
                                     className="btn btn-outline-secondary dropdown-toggle" 
                                     style={{marginLeft:'30px', width:'auto'}}>
-                                    <option selected> Choose...</option>
+                                    <option selected> {this.state.product_type}</option>
                                     {
                                         this.state.reqStocks.map((object) => (
                                         
@@ -306,15 +235,7 @@ onCancel(){
                                         marginLeft:'-30px'
                                     }}
                                     />
-                                    {Object.keys(errorRegPrice).map((key)=>{
-                                    return <div style={{color:'red'}} key={key}>{errorRegPrice[key]}</div>
-                            })}
-                            {/* <span 
-                                    value={this.state.regPrice}
-                                    // onChange={this.handleValueChange}
-                                    style={{marginLeft:'-30px', width:'auto'}}>
-                                    {this.handleValueInput}
-                            </span> */}
+                                   
                             </div>
                             </div>
                             </div>
@@ -326,7 +247,7 @@ onCancel(){
                             <label class="form-label" style={{
                                     fontWeight:'bold',
                                     marginLeft:'30px'
-                                    }}>REQUESTED DATE
+                                    }}>REGISTERED DATE
                                 </label>
                                 <input 
                                     type="date"
@@ -336,51 +257,54 @@ onCancel(){
                                     value={this.state.reqDate}
                                     onChange={this.handleInputChange}
                                     style={{
-                                        marginLeft:'30px'
+                                        marginLeft:'20px'
                                     }}
                                     />
-                                    {Object.keys(errorReqDate).map((key)=>{
-                                    return <div style={{color:'red',marginLeft:'30px'}} key={key}>{errorReqDate[key]}</div>
-                            })}
+                                   
                             </div>
+                            </div>   
                             </div>
-                            
+
+                           
                             <div class="col-lg-5" style={{
-                                marginLeft:'150px'
+                                marginLeft:'480px'
                             }}>
                             <div class="mb-3">
+                            <br/>
+                            
                             <button class="btn btn-outline-primary" type="submit" style={{
                                 width:'auto',
+                                height:'auto',
                                 fontWeight:'600',
-                                marginTop:'30px',
-                                marginLeft:'-30px'
+                                marginTop:'-150px',
+                                marginLeft:'20px'
                                 }} onClick={this.onSubmit}>
                             
-                                &nbsp; Add &nbsp;
+                                &nbsp; Update &nbsp;
                             </button>
+
                             <button class="btn btn-outline-secondary" type="submit" 
                                 style={{
                                 marginLeft:'20px',
                                 width:'auto',
                                 fontWeight:'600',
-                                marginTop:'30px',
-                                
+                                marginTop:'-150px'
                                 }}
                                 onClick={this.onCancel}
                             >
                             &nbsp; Cancel &nbsp;    
                             </button>
+                            </div>  
                             </div>
-                            </div>
-                            </div>
-                           
-                            <br/>
-                            <div className='row'>
+                                                      
+                            <div className='row' style={{
+                                marginTop:'-30px'
+                            }}>
                             <div class="col-lg-5">
                             <div class="mb-3">
                                 <label class="form-label" style={{
                                     fontWeight:'bold',
-                                    marginLeft:'30px'
+                                    marginLeft:'30px',
                                     }}>DUE DATE
                                 </label>
                                 <input 
@@ -391,21 +315,22 @@ onCancel(){
                                     value={this.state.DueDate}
                                     onChange={this.handleInputChange}
                                     style={{
-                                        marginLeft:'30px'
+                                        marginLeft:'20px'
                                     }}
                                     />
-                                    {Object.keys(errorDate).map((key)=>{
-                                    return <div style={{color:'red',marginLeft:'30px'}} key={key}>{errorDate[key]}</div>
-                            })}
+                                    
                             </div>
                             </div>
                             </div>
-                            <br/>
+                            
+                        <br/>
                         </form>
+                        </div>
+                
+    
+                        
                     </div>
-                </div>
-            </>
+                    </>
         )
-    }
-
+      }
 }

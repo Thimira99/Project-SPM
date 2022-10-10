@@ -59,7 +59,7 @@ export default class updateStocks extends Component {
         /** */
             const id = this.props.match.params.id;
 
-            const {product_id, product_type, product_name, regular_price,status,stock_count,reg_date} = this.state;
+            const {product_id, product_type, product_name, regular_price,stock_count,reg_date} = this.state;
 
             const data = {
                 product_id: product_id,
@@ -225,10 +225,11 @@ export default class updateStocks extends Component {
                                 PRODUCT TYPE
                                 </label>
                                 <br/>
+                                
                                 <select id="product_type" onChange={this.handleTypeInputSelect} value={this.state.product_type} 
                                     className="btn btn-outline-secondary dropdown-toggle" 
                                     style={{marginLeft:'30px', width:'auto'}}>
-                                    <option selected> Choose...</option>
+                                    <option selected> {this.state.product_type}</option>
                                     {
                                         this.state.stocks.map((object) => (
                                         
@@ -276,7 +277,7 @@ export default class updateStocks extends Component {
                             <select id="product_name" onChange={this.handleNameInputSelect} value={this.state.product_name} 
                                     className="btn btn-outline-secondary dropdown-toggle" 
                                     style={{marginLeft:'30px', width:'auto'}}>
-                                    <option selected> Choose...</option>
+                                    <option selected> {this.state.product_name} </option>
                                     {
                                         this.state.stocks.map((object) => (
                                         

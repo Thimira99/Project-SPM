@@ -41,6 +41,6 @@ export const StockSidebarData = [
     {
         title: "Requisitions Report",
         icon: <FaRegFilePdf />,
-        link: "/createRequests"
+        link: "/reqStockReport"
     },
 ]
