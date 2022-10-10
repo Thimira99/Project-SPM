@@ -46,6 +46,7 @@ import createDistributions from './pages/DistributionManagement/createDistributi
 import ViewEmployee from './pages/admin/ViewEmployee/viewEmployee';
 import AddNotes from './pages/admin/Notes/addNotes';
 import CreateNotes from './pages/admin/Notes/createNotes';
+import AdminProfile from './pages/admin/AdminProfile/admiProfile';
 
 
 
@@ -65,6 +66,7 @@ function App() {
               <Route path='/viewEmployee' component={ViewEmployee} />
               <Route path='/notes' component={AddNotes} />
               <Route path='/createNotes' component={CreateNotes} />
+              <Route path='/profile' component={AdminProfile} />
 
               {/* Stock manager Links */}
               <Route path='/stockManagement' component={stockManagement} />
