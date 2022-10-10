@@ -81,13 +81,11 @@ class allShops extends Component {
 
         this.onAllReqStocks = this.onAllReqStocks.bind(this);
         this.getAllReqStocks = this.getAllReqStocks.bind(this);
-        this.edit=this.edit.bind(this);
+        this.onClickUpdate=this.onClickUpdate.bind(this);
         this.delete=this.delete.bind(this);
     }
 
-    edit(){
-        console.log("edit")
-    }
+    
 
     
     onAllReqStocks() {
@@ -123,7 +121,8 @@ class allShops extends Component {
                               
                                 // discription: el.status == 'Received' ? <FcCheckmark style={{"fontSize":"25px"}}/>: <FcCancel style={{"fontSize":"25px"}}/>,
                 
-                                age: <><FaEdit style={{"marginLeft":"15px","fontSize":"23px"}} onClick={this.edit}/><BsFilterSquareFill style={{"marginLeft":"15px","fontSize":"23px"}} /><BsTrashFill style={{"marginLeft":"15px","fontSize":"23px"}} onClick={this.delete}/></>
+                                age: <><FaEdit style={{"marginLeft":"15px","fontSize":"23px"}} onClick={()=> this.onClickUpdate(el._id)}/>
+                               <BsTrashFill style={{"marginLeft":"15px","fontSize":"23px"}} onClick={()=> this.delete(el._id)}/></>
                 
                 
                             })
@@ -191,10 +190,14 @@ class allShops extends Component {
     });
 }
 
+onClickUpdate(id){
+    this.props.history.push(`/update/request/stocks/${id}`);
+}
+
 delete(id){
     if (window.confirm("Do you want to remove this stock?")) {
-        axios.delete(`http://localhost:8000/stocks/delete/${id}`).then((res) => {
-          alert("Stock removed Successfully!");
+        axios.delete(`http://localhost:8000/request/stocks/delete/${id}`).then((res) => {
+          alert("Request removed Successfully!");
           this.getAllReqStocks();
         });
       }

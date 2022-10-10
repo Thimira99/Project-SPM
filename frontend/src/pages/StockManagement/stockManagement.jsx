@@ -239,15 +239,16 @@ class stockManagement extends Component {
                 </div>
                 <Row>
             
-                    <div className={AccountCSS.container}>
-
+                    <div className={AccountCSS.container} style={{
+                      marginLeft:'-180px'
+                    }}>
                     <br/>
                         <MDBDataTable
 
 
                             style={{ "whitespace": "nowrap", }}
                             scrollY
-                            maxHeight="1000px"
+                            maxHeight="1200px"
                             loading={false}
                             hover
                             bordered
