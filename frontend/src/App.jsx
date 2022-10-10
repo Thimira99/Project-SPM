@@ -29,6 +29,7 @@ import AddProduct from './pages/ProductManager/Products/AddProduct/AddProduct';
 import UpdateMaterial from './pages/ProductManager/Materials/UpdateMaterial/UpdateMaterial';
 import UpdateProduct from './pages/ProductManager/Products/UpdateProduct/UpdateProduct';
 import UpdateSupplier from './pages/ProductManager/Suppliers/UpdateSupplier/UpdateSupplier';
+import CreateOrder from './pages/ProductManager/Orders/CreateOrder/CreateOrder';
 
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
@@ -101,6 +102,7 @@ function App() {
                <Route path='/updateMaterial/:id' component={UpdateMaterial} />
                <Route path='/updateProduct/:id' component={UpdateProduct} />
                <Route path='/updateSupplier/:id' component={UpdateSupplier} />
+               <Route path='/createOrder' component={CreateOrder} />
 
               <Route path='/login' component={Login} />
               <Redirect from='/' to='/login' />
