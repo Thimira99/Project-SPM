@@ -183,6 +183,33 @@
 //                                     width: 150,
             
             
+
+                                }
+                                ,
+                                {
+                                    label: 'ACTION ',
+                                    field: 'action',
+                                    sort: 'asc',
+                                    width: 50
+                                }
+                            ],
+                            rows: userAttributes
+                        }
+                    })
+
+
+                })
+            }
+        })
+
+
+
+ 
+    } 
+    
+
+    componentDidMount() {
+
 //                                 }
 //                                 ,
 //                                 {
@@ -281,6 +308,7 @@
 //     }
         
 //     componentDidMount(){
+
 
 //         this.getAllShops()
 //     }

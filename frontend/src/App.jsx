@@ -49,7 +49,11 @@ import createDistributions from './pages/DistributionManagement/createDistributi
 import ViewEmployee from './pages/admin/ViewEmployee/viewEmployee';
 import AddNotes from './pages/admin/Notes/addNotes';
 import CreateNotes from './pages/admin/Notes/createNotes';
+
+import stockforShop from './pages/SalesManeger/Stock/stockforShop/stockforShop';
+
 import AdminProfile from './pages/admin/AdminProfile/admiProfile';
+
 
 
 
@@ -94,6 +98,7 @@ function App() {
               <Route path='/allShops' component={allShops} />
               <Route path='/serchShop' component={serchShop} />
               <Route path='/updateShop/:id' component={updateShop} />
+              <Route path='/StockForShop/:id' component={stockforShop} />
               
 
  
