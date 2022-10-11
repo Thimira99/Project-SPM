@@ -198,87 +198,14 @@ class allShops extends Component {
 
 
                 })
-
-        const userAttributes = []
-        this.state.testData.forEach(el => {
-            // el.bagageData.map(obj => {
-            //     bagageID = obj.bagageID,
-            //         serialNumber = obj.serialNumber
-            // }
-            // )
-
-            // const data = el.productCategory == 'tvSeries' ? el.productDetails + " EP" : el.productDetails + " Min"
-            userAttributes.push({
-                companyname: el.dateCreated,
-                productname: el.orderCode,
-                detail: el.totalCost,
-                Baggageid: el.supplier,
-
-
-                discription: el.status == 'Received' ? <FcCheckmark style={{ "fontSize": "25px" }} /> : <FcCancel style={{ "fontSize": "25px" }} />,
-
-                age: <><FaEdit style={{ "marginLeft": "15px", "fontSize": "23px" }} /><BsFilterSquareFill style={{ "marginLeft": "15px", "fontSize": "23px" }} /><BsTrashFill style={{ "marginLeft": "15px", "fontSize": "23px" }} /></>
-
-
-            })
-        });
-
-        this.setState({
-            data: {
-                columns: [
-                    {
-                        label: 'CREATED DATE',
-                        field: 'companyname',
-                        sort: 'asc',
-                        width: 200,
-
-                    },
-                    {
-                        label: 'ORDER CODE',
-                        field: 'productname',
-                        sort: 'asc',
-                        width: 250
-                    },
-                    {
-                        label: 'SUPPLIER',
-                        field: 'Baggageid',
-                        sort: 'asc',
-                        width: 150,
-
-                    },
-
-                    {
-                        label: 'TOTAL COST',
-                        field: 'detail',
-                        sort: 'asc',
-                        width: 150
-                    },
-
-                    {
-                        label: 'STATUS',
-                        field: 'discription',
-                        sort: 'asc',
-                        width: 150,
-
-
-                    }
-                    ,
-                    {
-                        label: 'ACTION ',
-                        field: 'age',
-                        sort: 'asc',
-                        width: 120
-                    }
-                ],
-                rows: userAttributes
-
             }
         })
 
 
 
  
-    }
+    } 
+    
 
     componentDidMount() {
 

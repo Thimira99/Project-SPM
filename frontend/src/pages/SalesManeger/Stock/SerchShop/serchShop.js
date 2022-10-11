@@ -52,7 +52,7 @@ class serchShop extends Component {
     }
 
     onSelectRow(id) {
-        console.log("inside select", id);
+        this.props.history.push(`/StockForShop/${id}`);
     }
 
     setDataForTable() {
@@ -73,7 +73,7 @@ class serchShop extends Component {
                 region: <div onClick={() => this.onSelectRow(el._id)}>{el.sh_Region}</div>,
                 adress: <div onClick={() => this.onSelectRow(el._id)}>{el.sh_Address}</div>,
 
-                action: <><FaEdit style={{ "marginLeft": "15px", "fontSize": "23px" }} onClick={this.onSelectRow} /></>
+                action: <><FaEdit style={{ "marginLeft": "15px", "fontSize": "23px" }} onClick={() => this.onSelectRow(el._id)} /></>
 
 
             })
@@ -241,7 +241,7 @@ class serchShop extends Component {
                                 </Col>
 
 
-
+{/* 
                                 <Col style={{ "marginLeft": "25px" }}>
 
                                     <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -250,7 +250,7 @@ class serchShop extends Component {
 
                                     </Form.Group>
 
-                                </Col>
+                                </Col> */}
 
                                 <Col style={{ "marginLeft": "25px" }}>
 
