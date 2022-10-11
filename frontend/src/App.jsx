@@ -5,10 +5,16 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './login/Login';
 import Dashboard from './pages/dashboard/Dashboard';
 import CreateEmployee from './pages/createEmployee/CreateEmployee';
+
 import stockManagement from './pages/StockManagement/stockManagement';
 import createStocks from './pages/StockManagement/createStocks';
 import requestStocks from './pages/StockManagement/requestStocks';
 import createRequestStocks from './pages/StockManagement/createRequestStocks';
+import updateStocks from './pages/StockManagement/updateStocks';
+import stockReport from './pages/StockManagement/stockReport';
+import updateReqStocks from './pages/StockManagement/updateReqStocks';
+import ReqStockReport from './pages/StockManagement/requisitionReport';
+
 import dashboard from './pages/SalesManeger/Dashboard/dashboard';
 import createShop from './pages/SalesManeger/Shops/CreateShop/createShop';
 import allShops from './pages/SalesManeger/Shops/AllShops/allShops';
@@ -22,6 +28,10 @@ import MaterialList from './pages/ProductManager/Materials/MaterialList/Material
 import AddMaterial from './pages/ProductManager/Materials/AddMaterial/AddMaterial';
 import ProductList from './pages/ProductManager/Products/ProductList/ProductList';
 import AddProduct from './pages/ProductManager/Products/AddProduct/AddProduct';
+import UpdateMaterial from './pages/ProductManager/Materials/UpdateMaterial/UpdateMaterial';
+import UpdateProduct from './pages/ProductManager/Products/UpdateProduct/UpdateProduct';
+import UpdateSupplier from './pages/ProductManager/Suppliers/UpdateSupplier/UpdateSupplier';
+import CreateOrder from './pages/ProductManager/Orders/CreateOrder/CreateOrder';
 
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
@@ -39,7 +49,11 @@ import createDistributions from './pages/DistributionManagement/createDistributi
 import ViewEmployee from './pages/admin/ViewEmployee/viewEmployee';
 import AddNotes from './pages/admin/Notes/addNotes';
 import CreateNotes from './pages/admin/Notes/createNotes';
+
 import stockforShop from './pages/SalesManeger/Stock/stockforShop/stockforShop';
+
+import AdminProfile from './pages/admin/AdminProfile/admiProfile';
+
 
 
 
@@ -59,12 +73,17 @@ function App() {
               <Route path='/viewEmployee' component={ViewEmployee} />
               <Route path='/notes' component={AddNotes} />
               <Route path='/createNotes' component={CreateNotes} />
+              <Route path='/profile' component={AdminProfile} />
 
               {/* Stock manager Links */}
               <Route path='/stockManagement' component={stockManagement} />
               <Route path='/reqStocks' component={requestStocks} />
               <Route path='/createStocks' component={createStocks} />
               <Route path='/createRequests' component={createRequestStocks} />
+              <Route path='/update/stock/:id' component={updateStocks} />
+              <Route path='/update/request/stocks/:id' component={updateReqStocks} />
+              <Route path='/stockReport' component={stockReport} />
+              <Route path='/reqStockReport' component={ReqStockReport} />
 
               {/* Distribution manager Link */}
               <Route path='/distributions' component={distributions} />
@@ -91,6 +110,10 @@ function App() {
                <Route path='/addMaterial' component={AddMaterial} />
                <Route path='/productList' component={ProductList} />
                <Route path='/addProduct' component={AddProduct} />
+               <Route path='/updateMaterial/:id' component={UpdateMaterial} />
+               <Route path='/updateProduct/:id' component={UpdateProduct} />
+               <Route path='/updateSupplier/:id' component={UpdateSupplier} />
+               <Route path='/createOrder' component={CreateOrder} />
 
               <Route path='/login' component={Login} />
               <Redirect from='/' to='/login' />

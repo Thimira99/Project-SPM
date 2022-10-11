@@ -1,5 +1,5 @@
 const express= require('express');
-const { createStocks, getStocks, updateStocks, deleteStocks, createReqStocks, getReqStocks, updateReqStocks, deleteReqStocks } = require('../controllers/stockController');
+const { createStocks, getStocks, updateStocks, deleteStocks, createReqStocks, getReqStocks, updateReqStocks, deleteReqStocks, getASpecificReqStock, getASpecificStock } = require('../controllers/stockController');
 const router = express.Router()
 
 const Stocks = require('../models/Stock Management/stock')
@@ -13,8 +13,14 @@ router.post("/request/stocks/create",createReqStocks)
 //get stocks
 router.get("/retrieve/stocks",getStocks)
 
-//get stocks
+//get a specific req stock
+router.get("/retrieve/stock/:id",getASpecificStock)
+
+//get req stocks
 router.get("/retrieve/request/stocks",getReqStocks)
+
+//get a specific req stock
+router.get("/retrieve/request/stock/:id",getASpecificReqStock)
 
 //update stock details
 router.put("/update/stocks/:id",updateStocks)

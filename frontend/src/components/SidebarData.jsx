@@ -30,6 +30,6 @@ export const sidebarData = [
     {
         title: "Profile",
         icon: <FaUserCircle />,
-        link: "/dashboard"
+        link: "/profile"
     },
 ]

@@ -45,7 +45,7 @@ class viewEmployee extends Component {
                         dateOfBirth: el.dateOfBirth,
                         accountType: el.accountType,
 
-                        age: <><FaEdit style={{ "marginLeft": "15px", "fontSize": "23px" }} /><BsFilterSquareFill style={{ "marginLeft": "15px", "fontSize": "23px" }} /><BsTrashFill style={{ "marginLeft": "15px", "fontSize": "23px" }} /></>
+                        age: <><FaEdit style={{ "marginLeft": "15px", "fontSize": "23px" }} /><BsTrashFill style={{ "marginLeft": "15px", "fontSize": "23px" }} /></>
                     })
 
                 });
