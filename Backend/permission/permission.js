@@ -7,7 +7,7 @@ module.exports.permission_list = {
         granted: [admin],
     },
     users_get_by_id: {
-        path: '/:id',
+        path: '/getUserById/:id',
     },
     users_create: {
         path: '/create',
@@ -17,10 +17,10 @@ module.exports.permission_list = {
         path: '/login',
     },
     users_update: {
-        path: '/:id',
+        path: '/updateUser/:id',
     },
     users_remove: {
-        path: '/:id',
+        path: '/deleteUser/:id',
         granted: [admin],
     },
 };

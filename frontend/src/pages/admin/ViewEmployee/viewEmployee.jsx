@@ -45,7 +45,7 @@ class viewEmployee extends Component {
                         dateOfBirth: el.dateOfBirth,
                         accountType: el.accountType,
 
-                        age: <><FaEdit style={{ "marginLeft": "15px", "fontSize": "23px" }} /><BsTrashFill style={{ "marginLeft": "15px", "fontSize": "23px" }} /></>
+                        action: <><FaEdit style={{ "marginLeft": "15px", "fontSize": "23px" }} onClick={() => {console.log("Hey Im here")}} /><BsTrashFill style={{ "marginLeft": "15px", "fontSize": "23px" }} /></>
                     })
 
                 });
@@ -89,7 +89,7 @@ class viewEmployee extends Component {
                             ,
                             {
                                 label: 'ACTION ',
-                                field: 'age',
+                                field: 'action',
                                 sort: 'asc',
                                 width: 120
                             }
