@@ -53,6 +53,7 @@ import CreateNotes from './pages/admin/Notes/createNotes';
 import stockforShop from './pages/SalesManeger/Stock/stockforShop/stockforShop';
 
 import AdminProfile from './pages/admin/AdminProfile/admiProfile';
+import UpdateEmployee from './pages/admin/UpdateEmployee/updateEmployee';
 
 
 
@@ -74,6 +75,7 @@ function App() {
               <Route path='/notes' component={AddNotes} />
               <Route path='/createNotes' component={CreateNotes} />
               <Route path='/profile' component={AdminProfile} />
+              <Route path='/updateUser/:id' component={UpdateEmployee} />
 
               {/* Stock manager Links */}
               <Route path='/stockManagement' component={stockManagement} />

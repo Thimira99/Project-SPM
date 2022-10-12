@@ -29,9 +29,10 @@ function AdminProfile(){
             <img class="card-img-top" src={profileLogo} alt="Card image cap"/>
             <div class="card-body">
               <h5 class="card-title">{result.firstName} {result.lastName}</h5>
-              <h5>Date Of Birth : {result.dateOfBirth}</h5>
-              <h5>Mobile : {result.mobile}</h5>
-              <h5>Account Type : {result.accountType}</h5>
+              <h5>Date Of Birth : <span>{result.dateOfBirth}</span></h5>
+              <h5>Mobile : <span>{result.mobile}</span></h5>
+              <h5>Account Type : <span>{result.accountType}</span></h5>
+              <h5>Account Type : <span>{result.accountType}</span></h5>
               <a href="#" class="btn btn-primary">Go somewhere</a>
             </div>
           </div>

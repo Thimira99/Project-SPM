@@ -184,31 +184,31 @@
             
             
 
-                                }
-                                ,
-                                {
-                                    label: 'ACTION ',
-                                    field: 'action',
-                                    sort: 'asc',
-                                    width: 50
-                                }
-                            ],
-                            rows: userAttributes
-                        }
-                    })
+    //                             }
+    //                             ,
+    //                             {
+    //                                 label: 'ACTION ',
+    //                                 field: 'action',
+    //                                 sort: 'asc',
+    //                                 width: 50
+    //                             }
+    //                         ],
+    //                         rows: userAttributes
+    //                     }
+    //                 })
 
 
-                })
-            }
-        })
+    //             })
+    //         }
+    //     })
 
 
 
  
-    } 
+    // } 
     
 
-    componentDidMount() {
+    // componentDidMount() {
 
 //                                 }
 //                                 ,
