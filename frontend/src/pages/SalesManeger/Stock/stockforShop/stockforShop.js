@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import HashLoader from "react-spinners/HashLoader";
 import Select from 'react-select';
 import { BsTrashFill } from "react-icons/bs";
+import { MDBDataTable } from 'mdbreact';
 
 class stockforShop extends Component {
 
@@ -35,7 +36,9 @@ class stockforShop extends Component {
             totalAmount: '',
             billItemObj: [],
             totAmount: 0,
-            usFormat: 0
+            usFormat: 0,
+            allInvoices: [],
+            data: ''
         }
 
         this.formData = createRef();
@@ -47,28 +50,120 @@ class stockforShop extends Component {
 
     }
 
-    onSaveProduct(){
+    onSaveProduct() {
 
-        if(this.state.billItemObj.length != 0){
+
+        this.setState({
+            loading: true
+        })
+
+        if (this.state.billItemObj.length != 0) {
             const num = (this.state.InvoiceNumber).slice(3)
-            console.log("slice",num)
-    
+            console.log("slice", num)
+
             const data = {
-    
-                "InvoiceNumber":num,
-                "Date":this.state.Date,
-                "Time":this.state.Time,
-                "AgentNumber":this.state.AgentCode,
-                "ShopName":this.state.shopData.sh_Name
+
+                "InvoiceNumber": num,
+                "Date": this.state.Date,
+                "Time": this.state.Time,
+                "AgentNumber": this.state.AgentCode,
+                "ShopName": this.state.shopData.sh_Name,
+                "TotalAmount": this.state.totAmount
             }
-    
+
             const url = 'http://localhost:8000/api/Invoice/post';
-    
-            axios.post(url,data).then((res) => {
-                console.log(res)
+
+            axios.post(url, data).then((res) => {
+                console.log("sukitha", res.data.code)
+                if (res.data.code === '200') {
+
+                    const url = 'http://localhost:8000/api/InvoiceProduct/post';
+
+                    const Postdata = {
+                        "InvoiceNumber": num,
+                        "AgentNumber": this.state.AgentCode,
+                        "ShopName": this.state.shopData.sh_Name,
+                        "TotalAmount": this.state.totAmount,
+                        "productData": this.state.billItemObj
+                    }
+
+                    axios.post(url, Postdata).then((res) => {
+
+                        if (res.data.code === '200') {
+
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: "Data Added successfully",
+                                showConfirmButton: false,
+                                timer: 1500
+                            }, () => {
+                                this.state({
+                                    loading: false
+                                })
+                            })
+                            this.setState({
+                                billItemObj: [],
+                                usFormat: 0,
+
+                            })
+
+                            this.getShopData();
+
+                        } else {
+
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'warning',
+                                title: "Cant Save the product",
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+
+                            const url = 'http://localhost:8000/api/Invoice/get/shop/delete';
+
+                            const data = {
+                                "InvoiceNumber": num,
+                                "ShopName": this.state.shopData.sh_Name,
+                                "AgentNumber": this.state.AgentCode
+                            }
+
+                            axios.post(url, data).then((res) => {
+                                if (res.data.code == "200") {
+
+                                } else {
+
+                                    Swal.fire({
+                                        position: 'top-end',
+                                        icon: 'error',
+                                        title: "delete error",
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    })
+                                }
+                            })
+
+                        }
+                    })
+
+
+
+
+                } else {
+
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: "Cant Save the product",
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+
+
+                }
             })
 
-        }else{
+        } else {
 
             Swal.fire({
                 position: 'top-end',
@@ -80,7 +175,7 @@ class stockforShop extends Component {
 
         }
 
-      
+
     }
 
     ItemDelete = (event) => {
@@ -220,7 +315,7 @@ class stockforShop extends Component {
 
 
         axios.post(url, data).then((res) => {
-            console.log(res)
+            console.log(res.data.data.length)
             if (res.data.code == "200") {
 
                 if (res.data.data.length != 0) {
@@ -236,6 +331,19 @@ class stockforShop extends Component {
                         })
 
                     })
+                } else {
+
+                    // Swal.fire({
+                    //     position: 'top-end',
+                    //     icon: 'warning',
+                    //     title: 'Product Cannot Find',
+                    //     showConfirmButton: false,
+                    //     timer: 1500
+                    // })
+                    // this.setState({
+                    //     selectedOptions:[],
+                    //     loading: false
+                    // })
                 }
 
 
@@ -254,6 +362,97 @@ class stockforShop extends Component {
         }, () => {
             this.getSelectedProductData();
         });
+    }
+
+
+    getAllInvoiceByShopNameAndAgent() {
+
+        if (this.state.shopData.sh_Name && this.state.AgentCode) {
+
+            this.setState({
+                loading: true
+            })
+
+            const url = 'http://localhost:8000/api/Invoice/get/shopByNameAndAgent';
+            const data = {
+                "AgentNumber": this.state.AgentCode,
+                "ShopName": this.state.shopData.sh_Name
+            }
+
+            axios.post(url, data).then((res) => {
+                console.log(res)
+                if (res.data.code == '200') {
+
+
+                    this.setState({
+                        loading: false
+                    })
+
+
+                    this.setState({
+                        allInvoices: res.data.data
+                    }, () => {
+
+
+                        const userAttributes = []
+                        this.state.allInvoices.forEach(el => {
+                            var num = Number(el.TotalAmount)
+
+                            console.log(num.toLocaleString('en-US'))
+
+                            userAttributes.push({
+                                InvoiceNo: "INV" + el.InvoiceNumber,
+                                Amount: <><span style={{ "float": "right", "marginRight": "60px" }}>{num.toLocaleString('en-US') + ".00"}</span></>,
+                                Date: el.Date,
+                                action: "Y"
+
+                            })
+                        });
+
+                        this.setState({
+                            data: {
+                                columns: [
+                                    {
+                                        label: 'InvoiceNo',
+                                        field: 'InvoiceNo',
+                                        sort: 'asc',
+                                        width: 120,
+
+                                    },
+                                    {
+                                        label: 'Amount',
+                                        field: 'Amount',
+                                        sort: 'asc',
+                                        width: 130
+                                    },
+                                    {
+                                        label: 'Date',
+                                        field: 'Date',
+                                        sort: 'asc',
+                                        width: 130,
+
+                                    },
+
+                                    {
+                                        label: 'ACTION ',
+                                        field: 'action',
+                                        sort: 'asc',
+                                        width: 50
+                                    }
+                                ],
+                                rows: userAttributes
+                            }
+                        })
+
+                    })
+
+
+                } else {
+
+                }
+            })
+        }
+
     }
 
     getShopData() {
@@ -287,6 +486,7 @@ class stockforShop extends Component {
 
                     console.log(this.state.shopData)
                     this.getInvoiceNumber();
+                    this.getAllInvoiceByShopNameAndAgent();
                 })
             }
 
@@ -394,9 +594,12 @@ class stockforShop extends Component {
 
     }
 
+
+
     componentDidMount() {
         this.getShopData();
         this.getDate();
+
 
     }
 
@@ -475,7 +678,7 @@ class stockforShop extends Component {
                                         <span style={{ "color": "white", "float": "right", "fontSize": "55px", "marginRight": "30px", "marginTop": "20px" }}>{"Rs : " + this.state.usFormat}</span>
                                     </div>
 
-                                    <div style={{ "float": "right", "marginBottom": "10px","marginTop":"25px" }}>
+                                    <div style={{ "float": "right", "marginBottom": "10px", "marginTop": "25px" }}>
                                         <Button size="sm" style={{ "width": "110px", "fontWeight": "600", "marginleft": "1480px", "fontSize": "small" }} type="submit" onClick={this.onSaveProduct} >SAVE</Button>
                                     </div>
 
@@ -627,6 +830,23 @@ class stockforShop extends Component {
 
                             <Col xs={5}>
 
+                                <div style={{ "marginLeft": "10px" }}>
+
+                                    <MDBDataTable
+
+
+                                        scrollY
+                                        maxHeight="280px"
+                                        loading={false}
+                                        hover
+                                        bordered
+
+
+
+                                        data={this.state.data}
+                                        className={AccountCSS.yourcustomstyles}
+                                    />
+                                </div>
 
                             </Col>
 
@@ -640,9 +860,8 @@ class stockforShop extends Component {
                 {this.state.loading &&
 
                     <>
-                        <div className={AccountCSS.loardercontainer}>
-                        </div>
-                        <div style={{ "marginRight": "850px", "marginTop": "330px" }}>
+                       
+                        <div style={{ "display": "contents" }}>
 
 
                             <HashLoader

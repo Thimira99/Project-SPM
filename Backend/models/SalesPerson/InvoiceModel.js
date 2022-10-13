@@ -23,6 +23,10 @@ const InvoiceSchema = new mongoose.Schema({
         type:String,
         required:true
     },
+    TotalAmount:{
+        type:String,
+        required:true
+    },
     
 },{timestamps:true});
 
