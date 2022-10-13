@@ -17,6 +17,9 @@ module.exports.permission_list = {
 		path: '/login',
 	},
 	users_update: {
+		path: '/:id',
+	},
+	emp_update: {
 		path: '/updateUser/:id',
 	},
 	users_remove: {
