@@ -8,6 +8,7 @@ import { MDBDataTable } from 'mdbreact';
 import { FcCheckmark, FcCancel, FcOk, FcInspection, FcOvertime, FcProcess, FcPicture ,FcFullTrash,FcViewDetails } from "react-icons/fc";
 import { FaEdit } from "react-icons/fa";
 import axios from 'axios';
+import Swal from 'sweetalert2'
 
 class allShops extends Component {
 
@@ -195,12 +196,30 @@ onClickUpdate(id){
 }
 
 delete(id){
-    if (window.confirm("Do you want to remove this stock?")) {
-        axios.delete(`http://localhost:8000/request/stocks/delete/${id}`).then((res) => {
-          alert("Request removed Successfully!");
-          this.getAllReqStocks();
+    Swal.fire({
+        title: 'Do you want to save the changes?',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Delete',
+        denyButtonText: `Don't delete`,
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+            axios.delete(`http://localhost:8000/request/stocks/delete/${id}`).then((res) => {
+            Swal.fire("Request removed Successfully!");
+            this.getAllReqStocks();
         });
-      }
+        //   Swal.fire('Saved!', '', 'success')
+        } else if (result.isDenied) {
+          Swal.fire('Changes are not saved', '', 'info')
+        }
+      })
+    // if (window.confirm("Do you want to remove this stock?")) {
+    //     axios.delete(`http://localhost:8000/request/stocks/delete/${id}`).then((res) => {
+    //       alert("Request removed Successfully!");
+    //       this.getAllReqStocks();
+    //     });
+    //   }
 }
     componentDidMount() {
 

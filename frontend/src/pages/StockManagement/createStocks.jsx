@@ -3,6 +3,8 @@ import StockNavbar from '../../components/Stock Management/StockNavBar';
 import axios from 'axios';
 import stockManagementStyles from './createStocks.module.scss'
 import {FaRegDotCircle} from "react-icons/fa";
+//import toast msg
+import { toastMsg } from '../../toast.js';
 
 export default class createStocks extends Component{
 
@@ -159,7 +161,7 @@ formValidation = () =>{
 
     axios.post("http://localhost:8000/stocks/create",data).then((res)=>{
       if(res.data.success){
-        alert("Stock added Successfully!")
+        toastMsg("Stock added Successfully!",'success')
         window.location.href='/stockManagement';
         this.setState(
           {
@@ -218,7 +220,7 @@ onCancel(){
                 
                 <div className='card' style={{
                     marginTop:'60px',
-                    marginLeft:'-420px',
+                    marginLeft:'-300px',
                     width:'900px',
                     height:'fitContent',
                     border:'none'
@@ -232,22 +234,22 @@ onCancel(){
                             <div class="row">
                             <div class="col-lg-5">
                             <h5 style={{
-                                marginLeft:'20px',
+                                marginLeft:'60px',
                                 marginTop:'50px'
                             }}><FaRegDotCircle/> &nbsp; Product Details</h5>
                             <br/>
                             <div class="mb-3">
                                 <label class="form-label" style={{
                                     fontWeight:'bold',
-                                    marginLeft:'20px'
+                                    marginLeft:'60px'
                                 }}>
-                                PRODUCT ID
+                                SELECT PRODUCT ID
                                 </label>
                                 <br/>
                                 <select id="product_id" onChange={this.handleIdInputSelect} value={this.state.product_id} 
                                     className="btn btn-outline-secondary dropdown-toggle" 
-                                    style={{marginLeft:'30px', width:'auto'}}>
-                                    <option selected> Choose...</option>
+                                    style={{marginLeft:'60px', width:'auto'}}>
+                                    <option selected> Choose Product Id </option>
                                     {
                                         this.state.stocks.map((object) => (
                                         
@@ -257,23 +259,39 @@ onCancel(){
                                     }
 
                                 </select>
-                                
+                                {/* <label class="form-label" style={{
+                                    fontWeight:'bold',
+                                    marginLeft:'60px'
+                                }}>
+                                <br/>
+                                PRODUCT ID
+                                </label>
+                                <input 
+                                    type="text"
+                                    className="form-control"
+                                    name="product_id2"
+                                    value={this.state.product_id.substring(0,5)} 
+                                    // value={this.state.regular_price}
+                                    onChange={this.handleInputChange}
+                                    style={{marginLeft:'60px'}}
+                                    />
+                                 */}
                             </div>
                             </div>
-                            
+                                                        
                             <div class="col-lg-5" style={{
                                 marginLeft:'150px',
                                 
                             }}>
                             <h5 style={{
-                                marginLeft:"-30px",
+                                marginLeft:"-60px",
                                 marginTop:'50px'
                             }}><FaRegDotCircle/> &nbsp; Stock Details</h5>
                             <br/>
                             <div class="mb-3">
                                 <label  class="form-label" style={{
                                     fontWeight:'bold',
-                                    marginLeft:'-30px'
+                                    marginLeft:'-60px'
                                 }}>
                                 REGULAR PRICE
                                 </label>
@@ -281,10 +299,11 @@ onCancel(){
                                     type="text"
                                     className="form-control"
                                     name="regular_price"
-                                    placeholder="Enter regular price"
+                                    placeholder='Enter regular price'
+                                    // ={this.state.product_id.substring(5,20)} 
                                     value={this.state.regular_price}
                                     onChange={this.handleInputChange}
-                                    style={{marginLeft:'-30px'}}
+                                    style={{marginLeft:'-60px'}}
                                     />
                                     {Object.keys(errorPrice).map((key)=>{
                                     return <div style={{color:'red'}} key={key}>{errorPrice[key]}</div>
@@ -300,15 +319,15 @@ onCancel(){
                             <div class="mb-3">
                             <label class="form-label" style={{
                                     fontWeight:'bold',
-                                    marginLeft:'20px'
+                                    marginLeft:'60px'
                                 }}>
                                 PRODUCT TYPE
                                 </label>
                                 <br/>
                                 <select id="product_type" onChange={this.handleTypeInputSelect} value={this.state.product_type} 
                                     className="btn btn-outline-secondary dropdown-toggle" 
-                                    style={{marginLeft:'30px', width:'auto'}}>
-                                    <option selected> Choose...</option>
+                                    style={{marginLeft:'60px', width:'auto'}}>
+                                    <option selected> Choose product type</option>
                                     {
                                         this.state.stocks.map((object) => (
                                         
@@ -326,7 +345,7 @@ onCancel(){
                             <div class="mb-3">
                                 <label class="form-label" style={{
                                     fontWeight:'bold',
-                                    marginLeft:'-30px'
+                                    marginLeft:'-60px'
                                     }}>
                                     STATUS
                                 </label>
@@ -334,7 +353,7 @@ onCancel(){
                                <span 
                                     value={this.state.status}
                                     // onChange={this.handleValueChange}
-                                    style={{marginLeft:'-30px', width:'auto'}}>
+                                    style={{marginLeft:'-60px', width:'auto'}}>
                                     {this.state.stock_count > 0 ? "IN STOCK":"OUT OF STOCK"}
                                </span>
                                 
@@ -348,15 +367,15 @@ onCancel(){
                             <div class="mb-3">
                             <label class="form-label" style={{
                                     fontWeight:'bold',
-                                    marginLeft:'20px'
+                                    marginLeft:'60px'
                                 }}>
                                 PRODUCT NAME
                             </label>
                             <br/>
                             <select id="product_name" onChange={this.handleNameInputSelect} value={this.state.product_name} 
                                     className="btn btn-outline-secondary dropdown-toggle" 
-                                    style={{marginLeft:'30px', width:'auto'}}>
-                                    <option selected> Choose...</option>
+                                    style={{marginLeft:'60px', width:'auto'}}>
+                                    <option selected> Choose product name</option>
                                     {
                                         this.state.stocks.map((object) => (
                                         
@@ -389,7 +408,7 @@ onCancel(){
                             <div class="mb-3">
                                 <label class="form-label" style={{
                                     fontWeight:'bold',
-                                    marginLeft:'-30px'
+                                    marginLeft:'-60px'
                                     }}>
 
                                     STOCK COUNT
@@ -402,7 +421,7 @@ onCancel(){
                                     value={this.state.stock_count}
                                     onChange={this.handleInputChange}
 
-                                    style={{marginLeft:'-30px'}}
+                                    style={{marginLeft:'-60px'}}
                                     />
                                     {Object.keys(errorCount).map((key)=>{
                                     return <div style={{color:'red'}} key={key}>{errorCount[key]}</div>
@@ -419,7 +438,7 @@ onCancel(){
                             <div class="mb-3">
                             <label class="form-label" style={{
                                     fontWeight:'bold',
-                                    marginLeft:'-30px'
+                                    marginLeft:'-60px'
                                 }}>
                                 REGISTERED DATE <br/>
                                 <input 
@@ -446,7 +465,7 @@ onCancel(){
                                 height:'auto',
                                 fontWeight:'600',
                                 marginTop:'-150px',
-                                marginLeft:'20px'
+                                marginLeft:'60px'
                                 }} onClick={this.onSubmit}>
                             
                                 &nbsp; Add &nbsp;

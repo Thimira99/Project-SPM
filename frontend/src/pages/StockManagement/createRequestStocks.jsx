@@ -10,6 +10,7 @@ export default class createRequestStocks extends Component{
         super(props);
 
         this.state={
+            // ReqStockId: this.props.match.params.id,
             product_id:"",
             product_type:"",
             reqNoStocks:"",
@@ -114,6 +115,8 @@ formValidation = () =>{
   onSubmit=(e)=>{
     e.preventDefault();
 
+    // const id = this.props.match.params.id;
+
     /** */
    
     const isValid = this.formValidation();
@@ -154,6 +157,7 @@ formValidation = () =>{
 
 componentDidMount(){
     this.retrieveProducts();
+    
 }
 
 retrieveProducts(){
@@ -166,6 +170,7 @@ retrieveProducts(){
         }
     });
 }
+
 
 onCancel(){
     window.location.reload();
@@ -190,7 +195,7 @@ onCancel(){
 
                 <div className='card' style={{
                     marginTop:'60px',
-                    marginLeft:'-500px',
+                    marginLeft:'-400px',
                     width:'900px',
                     height:'auto',
                     border:'none'
@@ -217,7 +222,7 @@ onCancel(){
                                 <select id="product_id" onChange={this.handleIdInputSelect} value={this.state.product_id} 
                                     className="btn btn-outline-secondary dropdown-toggle" 
                                     style={{marginLeft:'30px', width:'auto'}}>
-                                    <option selected> Choose...</option>
+                                    <option selected> Choose product id</option>
                                     {
                                         this.state.reqStocks.map((object) => (
                                         
@@ -274,7 +279,7 @@ onCancel(){
                                 <select id="product_type" onChange={this.handleTypeInputSelect} value={this.state.product_type} 
                                     className="btn btn-outline-secondary dropdown-toggle" 
                                     style={{marginLeft:'30px', width:'auto'}}>
-                                    <option selected> Choose...</option>
+                                    <option selected> Choose product type</option>
                                     {
                                         this.state.reqStocks.map((object) => (
                                         
@@ -313,7 +318,7 @@ onCancel(){
                                     value={this.state.regPrice}
                                     // onChange={this.handleValueChange}
                                     style={{marginLeft:'-30px', width:'auto'}}>
-                                    {this.handleValueInput}
+                                    {this.getValue()}
                             </span> */}
                             </div>
                             </div>

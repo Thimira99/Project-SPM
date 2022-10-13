@@ -4,7 +4,8 @@ import { withRouter } from "react-router";
 import StockNavbar from '../../components/Stock Management/StockNavBar';
 import stockManagementStyles from './update.module.scss';
 import {FaRegDotCircle} from "react-icons/fa";
-
+//import toast msg
+import { toastMsg } from '../../toast.js';
 
 export default class updateStocks extends Component {
 
@@ -76,7 +77,7 @@ export default class updateStocks extends Component {
 
             axios.put(`http://localhost:8000/update/stocks/${id}`, data).then((res) => {
                 if (res.status==200) {
-                    alert("Stock Details Updated Successfully!")
+                    toastMsg("Stock Details Updated Successfully!",'success')
                     window.location.href='/stockManagement';
                     this.setState(
                         {
