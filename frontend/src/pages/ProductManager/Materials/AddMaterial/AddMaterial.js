@@ -16,7 +16,8 @@ export default class AddMaterial extends Component {
         supplier:"",
         cost:"", 
         weight:"",   
-        status:"",    
+        status:"",  
+        suppliers:[],  
        
          /** */
         errorA:{},
@@ -123,9 +124,24 @@ formValidation = () =>{
 }
 }
 
-  
-  render() {
+componentDidMount(){
+  this.retrieveSuppliers(); 
+}
 
+retrieveSuppliers(){
+  axios.get("http://localhost:8000/supplier/get").then(res=>{
+        if(res.data.success){
+            this.setState({
+                suppliers:res.data.existingSuppliers
+            });
+            console.log(this.state.suppliers)
+        }
+    });
+}
+
+ 
+  render() {
+     
     const{errorA}=this.state;
     const{errorB}=this.state;
     const{errorC}=this.state;
@@ -167,12 +183,23 @@ formValidation = () =>{
 
           <div className='form-group' style={{marginBottom:'15px'}}>
             <label style={{marginBottom:'5px'}}>SUPPLIER</label>
-                  <select id="supplier" value={this.state.supplier} onChange={e=> this.setState({supplier:e.target.value})} className="btn dropdown-toggle" style={{backgroundColor: '#fff', marginLeft:'20px'}}>
+                  {/* <select id="supplier" value={this.state.supplier} onChange={e=> this.setState({supplier:e.target.value})} className="btn dropdown-toggle" style={{backgroundColor: '#fff', marginLeft:'20px'}}>
                     <option selected> Select</option>
                     <option>SUP333</option>
                     <option>SUP336</option>
                     <option>SUP338</option>
-                  </select>
+                  </select> */}
+                  <select id="supplier" value={this.state.supplierId} onChange={e=> this.setState({supplier:e.target.value})}
+                    className="btn dropdown-toggle" style={{backgroundColor: '#fff', marginLeft:'20px'}}>
+                  <option selected> Choose...</option>
+                      {
+                        this.state.suppliers.map((obj)=>(
+                          <option>{obj.supplierId}</option>
+                        ))
+                      }
+                 </select>
+ 
+
           </div>
 
           <div className='form-group' style={{marginBottom:'15px'}}>

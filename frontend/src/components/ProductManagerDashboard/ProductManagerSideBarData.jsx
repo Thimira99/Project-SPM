@@ -16,7 +16,7 @@ export const sidebarData = [
     {
         title: "Purhcase Materials",
         icon: <FaShoppingCart />,
-        link: "/purchaseMaterials"
+        link: "/createOrder"
     },
     {
         title: "Availability",
