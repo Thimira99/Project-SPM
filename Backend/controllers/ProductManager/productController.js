@@ -84,10 +84,41 @@ const deleteProduct = async(req,res)=>{
     });
 };
 
+//get product by name
+const getProductByName = async (req,res) => {
+
+    try{
+
+        const { productName } = req.body;
+        product.find({ "productName": productName },
+    
+            (err, obj) => {
+    
+                if (obj) {
+    
+                    return res.status(200).json({ code: "200", data: obj })
+    
+                } else {
+                    return res.status(200).json({ code: "201", error: "No Data", data: obj })
+                }
+            });
+
+    }catch(err){
+
+        return res.status(500).send({
+            message: err,
+            code: "500"
+        })
+    }
+  
+
+}
+
 module.exports = {
     postProduct,
     getProducts,
     getAProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    getProductByName
 }

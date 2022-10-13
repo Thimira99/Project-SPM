@@ -1,0 +1,134 @@
+.container {
+    /* min-width: 800px; */
+
+    background-color: rgb(255, 255, 255);
+    /* display: fixed; */
+    margin-top: 30px;
+    margin-left: 60px;
+    box-shadow: 0px 3px 2px 0px #dbd6d6;
+    height: 240px;
+    margin-bottom: 20px;
+
+
+    width: 1610px;
+
+    /* margin-left: 200px; */
+}
+
+.tableContainer {
+
+    background-color: rgb(255, 255, 255);
+    /* display: fixed; */
+    margin-top: -200px;
+
+    box-shadow: 0px 3px 2px 0px #dbd6d6;
+    height: fit-content;
+
+
+
+    width: 1610px;
+    margin-top: 290px;
+    margin-left: -1595px;
+    margin-bottom: 25px;
+
+}
+
+.tableContainertwo {
+
+    background-color: rgb(255, 255, 255);
+    /* display: fixed; */
+   
+
+    box-shadow: 0px 3px 2px 0px #dbd6d6;
+    height: fit-content;
+
+
+
+    width: 1610px;
+    margin-top: 490px;
+    margin-left: -1610px;
+    margin-bottom: 25px;
+
+}
+.productContainer{
+    background-color: rgb(0, 0, 0);
+    box-shadow: 0px 3px 2px 0px #dbd6d6;
+    height: 120px;
+    margin-left: 150px;
+  
+    
+
+    width: 500px;
+}
+
+/* .form{
+    margin-left: 40px;
+    margin-right: 80px;
+    padding-right: 30px;
+}
+
+
+
+.yourcustomstyles table thead {
+    font-size: 16px;
+    font-weight: 400;
+    border: none;
+    
+    
+  }
+  .yourcustomstyles tbody tr td {
+    font-size: 16px;
+    font-weight: 400;
+    border: none;
+    border-top: navy;
+  } */
+.yourcustomstyles table thead {
+    font-size: 16px;
+    font-weight: 400;
+    border: none;
+
+
+}
+
+.yourcustomstyles tbody tr td {
+    font-size: 16px;
+    font-weight: 400;
+    border: none;
+    border-top: navy;
+}
+
+.loardercontainer {
+    /* min-width: 800px; */
+
+    
+    /* display: fixed; */
+    margin-top: 30px;
+    margin-left: -500px;
+    box-shadow: 0px 3px 2px 0px #dbd6d6;
+
+    background-color: #e5e5e5;
+    mix-blend-mode: lighten;
+
+
+    height: 900px;
+    width: 5610px;
+    margin-right: -950px;
+
+    /* margin-left: 200px; */
+}
+
+.invoiceConatiner {
+    background-color: rgb(255, 255, 255);
+    /* display: fixed; */
+    margin-top: -200px;
+
+    box-shadow: 0px 3px 2px 0px #dbd6d6;
+    height: fit-content;
+
+
+
+    width: 1610px;
+    margin-top: 290px;
+    margin-left: -1595px;
+    margin-bottom: 25px;
+}
