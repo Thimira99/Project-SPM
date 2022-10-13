@@ -12,107 +12,119 @@ import axios from 'axios';
 import updateNote from './updateNotes.module.scss';
 
 // import toast msg
-import { toastMsg } from '../toast';
+import { toastMsg } from '../../../toast';
+import Navbar from '../../../components/Navbar';
 
 function UpdateNotes() {
+	const history = useHistory();
 
-    const history = useHistory();
+	//get id from params
+	const { id } = useParams();
 
-    //get id from params
-    const { id } = useParams();
+	//loading spinner variable
+	const [loading, setLoading] = useState(true);
 
-    //loading spinner variable
-    const [loading, setLoading] = useState(true);
+	const [title, setTitle] = useState('');
+	const [description, setDescription] = useState('');
 
+	useEffect(() => {
+		//get
+		axios
+			.get(`http://localhost:8000/getById/${id}`)
+			.then((res) => {
+				setLoading(false);
+				setTitle(res.data.data[0].title);
+				setDescription(res.data.data[0].description);
+			})
+			.catch((err) => {
+				alert(err);
+				setLoading(false);
+			});
+	}, []);
 
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
+	//handle onChange
+	function handleTitle(event) {
+		setTitle(event.target.value);
+	}
 
+	function handleDescription(event) {
+		setDescription(event.target.value);
+	}
 
-    useEffect(() => {
-        //get
-        axios.get(`http://localhost:8000/getById/${id}`).then(res => {
-            setLoading(false);
-            setTitle(res.data.data[0].title);
-            setDescription(res.data.data[0].description);
-        }).catch(err => {
-            alert(err)
-            setLoading(false);
-        })
+	//handle submit
+	function handleSubmit(e) {
+		e.preventDefault();
 
+		const data = {
+			title,
+			description,
+		};
 
-    }, [])
+		//put
+		axios
+			.put(`http://localhost:8000/updateById/${id}`, data)
+			.then((res) => {
+				if (res.data.status === true) {
+					history.push('/notes');
+					toastMsg('update successfully.');
+				}
+			})
+			.catch((err) => {
+				toastMsg(err.response.data.msg, 'error');
+			});
+	}
 
-
-    //handle onChange
-    function handleTitle(event) {
-        setTitle(event.target.value);
-    }
-
-    function handleDescription(event) {
-        setDescription(event.target.value);
-
-    }
-
-    //handle submit
-    function handleSubmit(e) {
-        e.preventDefault();
-
-        const data = {
-            title,
-            description
-        }
-
-        //put
-        axios.put(`http://localhost:8000/updateById/${id}`, data).then(res => {
-            if (res.data.status === true) {
-                history.push("/addNote");
-                toastMsg('update successfully.');
-
-            }
-        }).catch(err => {
-            toastMsg(err.response.data.msg, 'error');
-
-        })
-    }
-
-    return (
-        <div>
-            {!loading ? <div className={updateNote.add_container}>
-                <div className={updateNote.addform_container}>
-                    <div className={updateNote.form_container}>
-                        <form className={updateNote.form} onSubmit={handleSubmit}>
-                            <h1>Update Note</h1>
-                            <input
-                                type='text'
-                                placeholder='Title'
-                                name='title'
-                                value={title}
-                                onChange={handleTitle}
-                                required
-                                className={updateNote.input}
-                            />
-                            <label>Description</label>
-                            <textarea
-                                rows="4"
-                                cols="50"
-                                name="comment"
-                                value={description}
-                                onChange={handleDescription}
-                                className={updateNote.input}
-                                placeholder='Description'>
-
-                            </textarea>
-                            <button type='submit' className={updateNote.greenBtn}>Update</button>
-                        </form>
-                    </div>
-                </div>
-            </div > : <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
-                <Spinner animation="border" variant="primary" />
-            </div>}
-
-        </div>
-    )
+	return (
+		<>
+			<Navbar />
+			<div>
+				{!loading ? (
+					<div className={updateNote.add_container}>
+						<div className={updateNote.addform_container}>
+							<div className={updateNote.form_container}>
+								<form className={updateNote.form} onSubmit={handleSubmit}>
+									<h1>Update Note</h1>
+									<input
+										type='text'
+										placeholder='Title'
+										name='title'
+										value={title}
+										onChange={handleTitle}
+										required
+										className={updateNote.input}
+									/>
+									<label>Description</label>
+									<textarea
+										rows='4'
+										cols='50'
+										name='comment'
+										value={description}
+										onChange={handleDescription}
+										className={updateNote.input}
+										placeholder='Description'
+									></textarea>
+									<button type='submit' className={updateNote.greenBtn}>
+										Update
+									</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				) : (
+					<div
+						style={{
+							display: 'flex',
+							justifyContent: 'center',
+							alignItems: 'center',
+							height: '100vh',
+						}}
+					>
+						<Spinner animation='border' variant='primary' />
+					</div>
+				)}
+			</div>
+		</>
+	);
 }
 
 export default UpdateNotes;
