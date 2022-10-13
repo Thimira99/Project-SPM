@@ -101,7 +101,7 @@ function UpdateEmployee() {
 
 			<div className='main'>
 				<form className={createStyles.form} onSubmit={handleSubmit}>
-					<h1>Create Account</h1>
+					<h1>Update Account</h1>
 					<input
 						type='text'
 						placeholder='First Name'
