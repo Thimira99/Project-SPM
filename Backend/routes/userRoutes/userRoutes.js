@@ -16,6 +16,7 @@ const {
 	users_get_by_id,
 	users_login_email,
 	users_remove,
+	emp_update,
 	users_update,
 } = require('../../permission/permission').permission_list;
 
@@ -44,6 +45,11 @@ router
 // update object
 router
 	.route(users_update.path)
+	.put(validator.validateBody(schema.put), controller.put);
+
+// update object
+router
+	.route(emp_update.path)
 	.put(validator.validateBody(schema.put), controller.put);
 
 // delete object
