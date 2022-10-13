@@ -3,7 +3,8 @@ const express= require('express');
 const router = express.Router()
 
 const { addAcountDetails ,getallAccountDetails ,getDataBySearch ,getShopById} = require('../controllers/SalesPerson/shopController');
-const { addInvoiceData,getAllInvoices,getInvoiceNumber } = require('../controllers/SalesPerson/InvvoiceController');
+const { addInvoiceData,getAllInvoices,getInvoiceNumber ,getInvoiceNumberAndDelete, getInvoiceByNameAndAgent } = require('../controllers/SalesPerson/InvvoiceController');
+const { getAllInvoiceProductData,addInvoiceProductData } = require('../controllers/SalesPerson/InvoiceProductController');
 
 
 //Account Routes
@@ -16,6 +17,13 @@ router.post('/account/search/post', getDataBySearch);
 router.post('/Invoice/post', addInvoiceData);
 router.get('/Invoice/get', getAllInvoices);
 router.post('/Invoice/get/shop', getInvoiceNumber);
+router.post('/Invoice/get/shop/delete', getInvoiceNumberAndDelete);
+router.post('/Invoice/get/shopByNameAndAgent', getInvoiceByNameAndAgent);
+
+//InvoiceProduct
+router.post('/InvoiceProduct/post', addInvoiceProductData);
+router.get('/InvoiceProduct/get', getAllInvoiceProductData);
+// router.post('/InvoiceProduct/get/shop', getInvoiceNumber);
 
 
 module.exports = router;
