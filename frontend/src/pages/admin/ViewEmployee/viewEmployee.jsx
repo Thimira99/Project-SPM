@@ -9,6 +9,8 @@ import { createHeader } from '../../../createHeader';
 import UpdateEmployee from '../UpdateEmployee/updateEmployee';
 import { toastMsg } from '../../../toast';
 
+import PDF from 'react-to-pdf';
+
 class viewEmployee extends Component {
 	constructor(props) {
 		super(props);
@@ -123,11 +125,13 @@ class viewEmployee extends Component {
 	}
 
 	render() {
+		const ref = React.createRef();
+
 		return (
 			<>
 				<Navbar />
 
-				<div className={AccountCSS.container}>
+				<div className={AccountCSS.container} ref={ref}>
 					<h1 style={{ marginLeft: '32rem' }}>View Employees</h1>
 					<MDBDataTable
 						style={{ whitespace: 'nowrap' }}
@@ -142,6 +146,17 @@ class viewEmployee extends Component {
 						data={this.state.data}
 						className={AccountCSS.yourcustomstyles}
 					/>
+
+					{/* generate Pdf */}
+					<PDF targetRef={ref} filename='post.pdf' x={0.5} y={0.5} scale={0.7}>
+						{({ toPdf }) => (
+							<div>
+								<button onClick={toPdf} className='btn btn-info'>
+									Report
+								</button>
+							</div>
+						)}
+					</PDF>
 				</div>
 			</>
 		);
