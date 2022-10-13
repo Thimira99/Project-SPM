@@ -148,7 +148,7 @@ class viewEmployee extends Component {
 					/>
 
 					{/* generate Pdf */}
-					<PDF targetRef={ref} filename='post.pdf' x={0.5} y={0.5} scale={0.7}>
+					{/* <PDF targetRef={ref} filename='post.pdf' x={0.5} y={0.5} scale={0.7}>
 						{({ toPdf }) => (
 							<div>
 								<button onClick={toPdf} className='btn btn-info'>
@@ -156,7 +156,16 @@ class viewEmployee extends Component {
 								</button>
 							</div>
 						)}
-					</PDF>
+					</PDF> */}
+
+					<button
+						onClick={() => {
+							this.props.history.push('/report');
+						}}
+						className='btn btn-info'
+					>
+						Report
+					</button>
 				</div>
 			</>
 		);
