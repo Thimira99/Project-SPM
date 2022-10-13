@@ -15,8 +15,6 @@ function TopBar() {
                    
                 }}>Logout</a></button>
 
-
-
             </div>
 
         </div>

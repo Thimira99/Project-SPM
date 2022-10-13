@@ -9,7 +9,7 @@ import { FcCheckmark, FcCancel, FcOk, FcInspection, FcOvertime, FcProcess, FcPic
 import { FaEdit } from "react-icons/fa";
 import axios from 'axios';
 import stockManagementStyles from './stockManagement.module.scss'
-
+import Swal from 'sweetalert2'
 
 class stockManagement extends Component {
 
@@ -101,12 +101,30 @@ class stockManagement extends Component {
     }
 
     onClickDelete(id){
-        if (window.confirm("Do you want to remove this stock?")) {
-            axios.delete(`http://localhost:8000/stocks/delete/${id}`).then((res) => {
-              alert("Stock removed Successfully!");
+        Swal.fire({
+            title: 'Do you want to save the changes?',
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: 'Delete',
+            denyButtonText: `Don't delete`,
+          }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                axios.delete(`http://localhost:8000/stocks/delete/${id}`).then((res) => {
+                Swal.fire("Stock removed Successfully!");
               this.getAllStocks();
             });
-          }
+            //   Swal.fire('Saved!', '', 'success')
+            } else if (result.isDenied) {
+              Swal.fire('Changes are not saved', '', 'info')
+            }
+          })
+        // if (window.confirm("Do you want to remove this stock?")) {
+        //     axios.delete(`http://localhost:8000/stocks/delete/${id}`).then((res) => {
+        //         toastMsg("Stock removed Successfully!",'error');
+        //       this.getAllStocks();
+        //     });
+        //   }
     }
 
     getAllStocks(){
