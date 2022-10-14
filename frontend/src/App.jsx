@@ -64,6 +64,7 @@ import UpdateEmployee from './pages/admin/UpdateEmployee/updateEmployee';
 import UpdateNotes from './pages/admin/Notes/updateNotes';
 
 import Report from './pages/admin/Report/report';
+import ViewInvoice from './pages/SalesManeger/Stock/ViewInvoice/ViewInvoice';
 
 
 function App() {
