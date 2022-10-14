@@ -56,38 +56,39 @@ const getAllInvoiceProductData = async (req, res) => {
 }
 
 
-// //get invoice number
-// const getInvoiceNumber = async (req,res) => {
+//get invoice by shopName and Agent
+const getInvoiceByNameAndAgentAndShopProduct = async (req,res) => {
 
-//     try{
+    try{
 
-//         const { ShopName } = req.body;
-//         Invoice.find({ "ShopName": ShopName },
+        const { ShopName, AgentNumber , InvoiceNumber} = req.body;
+        InvoiceProduct.find({ "ShopName": ShopName ,"AgentNumber": AgentNumber,"InvoiceNumber":InvoiceNumber},
     
-//             (err, obj) => {
+            (err, obj) => {
     
-//                 if (obj) {
+                if (obj) {
     
-//                     return res.status(200).json({ code: "200", data: obj })
+                    return res.status(200).json({ code: "200", data: obj })
     
-//                 } else {
-//                     return res.status(200).json({ code: "201", error: "No Data", data: obj })
-//                 }
-//             });
+                } else {
+                    return res.status(200).json({ code: "201", error: "No Data", data: obj })
+                }
+            });
 
-//     }catch(err){
+    }catch(err){
 
-//         return res.status(500).send({
-//             message: err,
-//             code: "500"
-//         })
-//     }
+        return res.status(500).send({
+            message: err,
+            code: "500"
+        })
+    }
   
 
-// }
+}
  
 module.exports = {
     getAllInvoiceProductData,
     addInvoiceProductData,
+    getInvoiceByNameAndAgentAndShopProduct
     
 }

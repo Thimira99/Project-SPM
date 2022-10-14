@@ -6,7 +6,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import HashLoader from "react-spinners/HashLoader";
 import Select from 'react-select';
-import { BsTrashFill } from "react-icons/bs";
+import { BsTrashFill ,BsJustify } from "react-icons/bs";
 import { MDBDataTable } from 'mdbreact';
 
 class stockforShop extends Component {
@@ -38,7 +38,8 @@ class stockforShop extends Component {
             totAmount: 0,
             usFormat: 0,
             allInvoices: [],
-            data: ''
+            data: '',
+            Agent: ''
         }
 
         this.formData = createRef();
@@ -66,7 +67,7 @@ class stockforShop extends Component {
                 "InvoiceNumber": num,
                 "Date": this.state.Date,
                 "Time": this.state.Time,
-                "AgentNumber": this.state.AgentCode,
+                "AgentNumber": this.state.Agent.firstName,
                 "ShopName": this.state.shopData.sh_Name,
                 "TotalAmount": this.state.totAmount
             }
@@ -81,7 +82,7 @@ class stockforShop extends Component {
 
                     const Postdata = {
                         "InvoiceNumber": num,
-                        "AgentNumber": this.state.AgentCode,
+                        "AgentNumber": this.state.Agent.firstName,
                         "ShopName": this.state.shopData.sh_Name,
                         "TotalAmount": this.state.totAmount,
                         "productData": this.state.billItemObj
@@ -333,17 +334,17 @@ class stockforShop extends Component {
                     })
                 } else {
 
-                    // Swal.fire({
-                    //     position: 'top-end',
-                    //     icon: 'warning',
-                    //     title: 'Product Cannot Find',
-                    //     showConfirmButton: false,
-                    //     timer: 1500
-                    // })
-                    // this.setState({
-                    //     selectedOptions:[],
-                    //     loading: false
-                    // })
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'warning',
+                        title: 'Product Cannot Find',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    this.setState({
+                        selectedOptions: [],
+                        loading: false
+                    })
                 }
 
 
@@ -364,6 +365,13 @@ class stockforShop extends Component {
         });
     }
 
+    onViewInvoice(Obj){
+
+        console.log("obj",Obj)
+
+        this.props.history.push(`/ViewInvoice/${Obj.InvoiceNumber}/${Obj.ShopName}/${this.state.shopData._id}`);   
+    }
+
 
     getAllInvoiceByShopNameAndAgent() {
 
@@ -375,7 +383,7 @@ class stockforShop extends Component {
 
             const url = 'http://localhost:8000/api/Invoice/get/shopByNameAndAgent';
             const data = {
-                "AgentNumber": this.state.AgentCode,
+                "AgentNumber": this.state.Agent.firstName,
                 "ShopName": this.state.shopData.sh_Name
             }
 
@@ -404,7 +412,7 @@ class stockforShop extends Component {
                                 InvoiceNo: "INV" + el.InvoiceNumber,
                                 Amount: <><span style={{ "float": "right", "marginRight": "60px" }}>{num.toLocaleString('en-US') + ".00"}</span></>,
                                 Date: el.Date,
-                                action: "Y"
+                                action: <><span style={{"fontSize":"20px","fontWeight":"600"}}><BsJustify onClick={() => this.onViewInvoice(el)} /></span></>
 
                             })
                         });
@@ -594,11 +602,20 @@ class stockforShop extends Component {
 
     }
 
+    getAgent() {
+
+        const Agent = JSON.parse(localStorage.getItem('user'));
+        this.setState({
+            Agent:Agent
+        })
+      
+    }
 
 
     componentDidMount() {
         this.getShopData();
         this.getDate();
+        this.getAgent();
 
 
     }
@@ -639,8 +656,8 @@ class stockforShop extends Component {
                                         <Col>
 
                                             <Form.Group className="mb-3" controlId="formBasicEmail">
-                                                <Form.Label><span style={{ "fontFamily": "sans-serif", "fontWeight": "500", "fontSize": "18px" }}>Agent Number</span></Form.Label>
-                                                <Form.Control type="text" value={this.state.AgentCode} onChange={this.changeShopName} name="shopName" />
+                                                <Form.Label><span style={{ "fontFamily": "sans-serif", "fontWeight": "500", "fontSize": "18px" }}>Agent Name</span></Form.Label>
+                                                <Form.Control type="text" value={this.state.Agent.firstName} onChange={this.changeShopName} name="shopName" />
                                             </Form.Group>
 
                                         </Col>
@@ -860,7 +877,7 @@ class stockforShop extends Component {
                 {this.state.loading &&
 
                     <>
-                       
+
                         <div style={{ "display": "contents" }}>
 
 

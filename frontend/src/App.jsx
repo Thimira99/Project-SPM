@@ -62,6 +62,7 @@ import stockforShop from './pages/SalesManeger/Stock/stockforShop/stockforShop';
 import AdminProfile from './pages/admin/AdminProfile/admiProfile';
 import UpdateEmployee from './pages/admin/UpdateEmployee/updateEmployee';
 import UpdateNotes from './pages/admin/Notes/updateNotes';
+import ViewInvoice from './pages/SalesManeger/Stock/ViewInvoice/ViewInvoice';
 
 function App() {
 	return (
@@ -91,10 +92,10 @@ function App() {
 							<Route path='/update/request/stocks/:id' component={updateReqStocks} />
 							<Route path='/stockReport' component={stockReport} />
 							<Route path='/reqStockReport' component={ReqStockReport} />
-              
-              {/* Project manager Links */}
-              <Route path='/projectMHome' component={Home} />
-              
+
+							{/* Project manager Links */}
+							<Route path='/projectMHome' component={Home} />
+
 							{/* Distribution manager Link */}
 							<Route path='/distributions' component={distributions} />
 							<Route path='/requestedStocks' component={requestedStocks} />
@@ -108,6 +109,9 @@ function App() {
 							<Route path='/serchShop' component={serchShop} />
 							<Route path='/updateShop/:id' component={updateShop} />
 							<Route path='/StockForShop/:id' component={stockforShop} />
+							<Route path='/ViewInvoice/:id/:name/:shopId' component={ViewInvoice} />
+
+
 							{/* Product Manager Link */}
 							<Route
 								path='/productManager'
