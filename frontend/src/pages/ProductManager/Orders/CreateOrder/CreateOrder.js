@@ -76,53 +76,107 @@ useEffect(() => {
 }, []);
 
 /** */
- 
+// formValidation = () =>{
+//     const{orderCode,supplierEmail}=this.state;
+//     let isValid = true;
+//     // const error1 ={};
+//     // const error2 ={};
+     
+
+//     if(!orderCode){
+//         window.confirm("Order code Field is EMPTY!");
+//         isValid=false;
+//       }
+
+//       if(!orderCode.match(/^[a-z A-Z 1-9]*$/)){
+//         window.confirm("Order code must contain characters only!");
+//         isValid=false;
+//     } 
+    
+//     if(orderCode.trim().length<3){
+//         window.confirm("Order Code must be in length 4 or higher");
+//         isValid=false;
+//     }
+
+//     if(!supplierEmail){
+//         window.confirm("Supplier Email Field is EMPTY!");
+//         isValid=false;
+//       }
+    
+    
+//         if(!supplierEmail.match(/^[. @ a-z A-Z 1-9]*$/)){
+//             window.confirm("Email should be a valid one!");
+//         isValid=false;
+//     }
+    
+  
+     
+//     return isValid;
+//   }
  
 
 function checkLength(){
   
-  if(!orderCode){
-    window.confirm("Order code can not be empty");
-    submitBtn && submitBtn.setDisable(true)
-  }
+//   if(!orderCode){
+//     window.confirm("Order code can not be empty");
+//     submitBtn && submitBtn.setDisable(true)
+//   }
 
-  if(!orderCode.match(/^[a-z A-Z 1-9]*$/)){
-    window.confirm("Order code must contain characters only!");
-    submitBtn && submitBtn.setDisable(true)
-}
+//   if(!orderCode.match(/^[a-z A-Z 1-9]*$/)){
+//     window.confirm("Order code must contain characters only!");
+//     submitBtn && submitBtn.setDisable(true)
+// }
 
-if((orderCode.length<=3)){
-  window.confirm("Order Code must be in length 4 or higher");
-  submitBtn && submitBtn.setDisable(true)
-}
+// if((orderCode.length<=3)){
+//   window.confirm("Order Code must be in length 4 or higher");
+//   submitBtn && submitBtn.setDisable(true)
+// }
    
 
-  if(!supplierEmail){
-    window.confirm("Supplier Email Field is EMPTY!");
-    submitBtn && submitBtn.setDisable(true)
-  }
+//   if(!supplierEmail){
+//     window.confirm("Supplier Email Field is EMPTY!");
+//     submitBtn && submitBtn.setDisable(true)
+//   }
 
-  // if(!weight){
-  //   window.confirm("Weight Field is EMPTY!");
-  //   submitBtn.setDisable(true)
-  // }
-
-  // if(!weight.match(/^[. 1-9]*$/)){
-  //   window.confirm("Weight must contain values only!");
-  //   submitBtn.setDisable(true)
-  // }
-      if(!supplierEmail.match(/^[. @ a-z A-Z 1-9]*$/)){
-        window.confirm("Email should be a valid one!");
-        submitBtn && submitBtn.setDisable(true)
-      }
+   
+//       if(!supplierEmail.match(/^[. @ a-z A-Z 1-9]*$/)){
+//         window.confirm("Email should be a valid one!");
+//         submitBtn && submitBtn.setDisable(true)
+//       }
   
-    // const long = [...materialItem];
-    // if(long.length<4){
-    //   window.confirm("There should be 4 members to a panel");
-    //   submitBtn.setDisable(true)
-    // }
+     
  
       orderCode+small_id;
+
+   
+
+      if(!orderCode){
+        window.confirm("Order code Field is EMPTY!");
+        isValid=false;
+      }
+
+      if(!orderCode.match(/^[a-z A-Z 1-9]*$/)){
+        window.confirm("Order code must contain characters only!");
+        isValid=false;
+    } 
+    
+    if(orderCode.trim().length<3){
+        window.confirm("Order Code must be in length 4 or higher");
+        isValid=false;
+    }
+
+    if(!supplierEmail){
+        window.confirm("Supplier Email Field is EMPTY!");
+        isValid=false;
+      }
+    
+    
+        if(!supplierEmail.match(/^[. @ a-z A-Z 1-9]*$/)){
+            window.confirm("Email should be a valid one!");
+        isValid=false;
+    }
+
+      if(isValid){     
       
       const newOrder= {
         orderCode,
@@ -143,7 +197,7 @@ if((orderCode.length<=3)){
           alert("Unable to add" + err);
       })
     
-    
+}
 
   }
 
