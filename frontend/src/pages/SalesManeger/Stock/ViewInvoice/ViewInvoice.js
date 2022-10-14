@@ -21,7 +21,7 @@ class ViewInvoice extends Component {
             Agent: '',
             loading: false,
             InvoiceData: '',
-            InvoieProductData: '',
+            billItemObj: '',
             shopData: '',
             TotalAmount: ''
         }
@@ -111,10 +111,12 @@ class ViewInvoice extends Component {
 
                 if (res.data.data.length != 0) {
 
+                  
                     this.setState({
-                        InvoieProductData: res.data.data
+                        billItemObj: res.data.data[0].productData
                     }, () => {
 
+                        console.log("bill",this.state.billItemObj)
                         this.setState({
                             loading: false
                         })
@@ -245,7 +247,7 @@ class ViewInvoice extends Component {
                             <Row style={{ "marginTop": "30px" }}>
 
                                 <Col >
-                                <div style={{ "marginLeft": "60px" }}>
+                                    <div style={{ "marginLeft": "60px" }}>
                                         <span style={{ "fontSize": "larger", "fontWeight": "500" }}>Shop Name : </span>
                                     </div>
                                 </Col>
@@ -275,7 +277,7 @@ class ViewInvoice extends Component {
                             <Row style={{ "marginTop": "20px" }}>
 
                                 <Col >
-                                <div style={{ "marginLeft": "60px" }}>
+                                    <div style={{ "marginLeft": "60px" }}>
                                         <span style={{ "fontSize": "larger", "fontWeight": "500" }}>Registration Number : </span>
                                     </div>
                                 </Col>
@@ -304,7 +306,7 @@ class ViewInvoice extends Component {
                             <Row style={{ "marginTop": "20px" }}>
 
                                 <Col >
-                                <div style={{ "marginLeft": "60px" }}>
+                                    <div style={{ "marginLeft": "60px" }}>
                                         <span style={{ "fontSize": "larger", "fontWeight": "500" }}>Shop PhoneNumber : </span>
                                     </div>
                                 </Col>
@@ -359,13 +361,13 @@ class ViewInvoice extends Component {
 
 
                             <Col >
-                                
+
                                 <span style={{ "fontSize": "larger", "fontWeight": "500" }}>Total Amount : </span>
                             </Col>
 
 
                             <Col>
-                                <span style={{ "fontSize": "larger", "fontWeight": "400" }}>{ this.state.TotalAmount+".00"}</span>
+                                <span style={{ "fontSize": "larger", "fontWeight": "400" }}>{this.state.TotalAmount + ".00"}</span>
                             </Col>
                         </Row>
 
@@ -378,7 +380,7 @@ class ViewInvoice extends Component {
                         <Row style={{ "marginTop": "20px" }}>
 
                             <Col >
-                            <div style={{ "marginLeft": "60px" }}>
+                                <div style={{ "marginLeft": "60px" }}>
                                     <span style={{ "fontSize": "larger", "fontWeight": "500" }}>Agent Name : </span>
                                 </div>
                             </Col>
@@ -403,6 +405,70 @@ class ViewInvoice extends Component {
                         {/* ............................... */}
 
                     </div>
+                </div>
+
+                {/* ............................... product table */}
+                <div className={AccountCSS.tableContainertwo}>
+                    <div style={{ "marginTop": "18px", "marginLeft": "25px", "color": "rgba(66, 74, 155, 1)", "fontFamily": "sans-serif" }}>
+
+                        <h5>Product Details<hr style={{ "marginTop": "2px", "width": "1520px", "border": "1px solid rgba(66, 74, 155, 1)" }} /></h5>
+
+                        {this.state.billItemObj && <Table   variant="light" class="table  " >
+
+                            <thead style={{ 'display': 'block' }} >
+                                <tr>
+                                    <th style={{ "width": "25px", "font-size": "20px", "fontWeight": "500" }}></th>
+
+                                    <th style={{ "width": "740px", "font-size": "20px", "fontWeight": "400" }}>Product Name:</th>
+                                    <th style={{ "width": "210px", "font-size": "20px", "fontWeight": "400" }}>Cost Price:</th>
+                                    <th style={{ "width": "390px", "font-size": "20px", "fontWeight": "400" }}>Qty:</th>
+                                    <th style={{ "width": "180px", "font-size": "20px", "fontWeight": "400" }}>Amount:</th>
+                                   
+
+                                </tr>
+                            </thead>
+
+                            <tbody style={{ 'height': "max-content", 'overflow': 'auto', 'display': 'block' }}>
+                                {
+                                    this.state.billItemObj.map((item, index) => {
+                                        return (
+                                            <tr key={index}>
+                                                <td style={{ 'width': '20px', "font-size": "16px", "fontWeight": "400" }}>{index + 1}</td>
+                                                <td style={{ 'width': '740px', "font-size": "16px", "fontWeight": "400" }}>{item.itemname}</td>
+                                                <td style={{ 'width': '210px', "font-size": "16px", "fontWeight": "400" }}>{"Rs." + item.price}</td>
+                                                <td style={{ 'width': '390px', "font-size": "16px", "fontWeight": "400" }}>{item.qty}</td>
+                                                <td style={{ 'width': '180px', "font-size": "16px", "fontWeight": "400" }}>{"Rs." + item.amount}</td>
+                                              
+
+                                            </tr>
+                                        )
+                                    })
+                                }
+
+                            </tbody>
+
+                            <tfoot style={{ 'display': 'block' }}>
+                                {
+                                    <tr>
+                                        <th style={{ "width": "20px", "font-size": "small" }}></th>
+
+                                        <th style={{ "width": "740px", "font-size": "small" }}></th>
+                                        <th style={{ "width": "210px", "font-size": "small" }}></th>
+                                        <th style={{ "width": "380px", "font-size": "small" }}>{this.state.curentqty1}</th>
+                                        <th style={{ "width": "200px", "font-size": "16px", "fontWeight": "400" }}>{"Rs." + this.state.usFormat + ".00"}</th>
+                                     
+
+
+                                    </tr>
+                                }
+                            </tfoot>
+
+                        </Table>}
+
+
+
+                    </div>
+
                 </div>
 
 
