@@ -62,7 +62,9 @@ import stockforShop from './pages/SalesManeger/Stock/stockforShop/stockforShop';
 import AdminProfile from './pages/admin/AdminProfile/admiProfile';
 import UpdateEmployee from './pages/admin/UpdateEmployee/updateEmployee';
 import UpdateNotes from './pages/admin/Notes/updateNotes';
-import ViewInvoice from './pages/SalesManeger/Stock/ViewInvoice/ViewInvoice';
+
+import Report from './pages/admin/Report/report';
+
 
 function App() {
 	return (
@@ -82,6 +84,7 @@ function App() {
 							<Route path='/profile' component={AdminProfile} />
 							<Route path='/updateUser/:id' component={UpdateEmployee} />
 							<Route path='/updateNotes/:id' component={UpdateNotes} />
+							<Route path='/report' component={Report} />
 
 							{/* Stock manager Links */}
 							<Route path='/stockManagement' component={stockManagement} />
