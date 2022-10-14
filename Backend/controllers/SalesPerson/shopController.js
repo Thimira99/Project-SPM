@@ -105,16 +105,20 @@ const getDataBySearch = async (req, res) => {
 
 //get a specific supplier by id
 const getShopById = async (req, res) => {
+    
     let shopId = req.params.id;
     shop.findById(shopId, (err, supplier) => {
         if (err) {
-            return res.status(400).json({ success: false, err });
+            return res.status(400).json({ code:"201",success: false, err });
+        } else {
+            return res.status(200).json({
+                code:"200",
+                success: true,
+                supplier
+            });
         }
 
-        return res.status(200).json({
-            success: true,
-            supplier
-        });
+
     });
 
 }
@@ -136,6 +140,9 @@ const getShopById = async (req, res) => {
 
 //     })
 // }
+
+
+
 
 module.exports = {
     addAcountDetails,

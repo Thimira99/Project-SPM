@@ -162,11 +162,44 @@ const getInvoiceByNameAndAgent = async (req,res) => {
   
 
 }
+
+
+
+//get invoice by shopName and Agent
+const getInvoiceByNameAndAgentAndShop = async (req,res) => {
+
+    try{
+
+        const { ShopName, AgentNumber , InvoiceNumber} = req.body;
+        Invoice.find({ "ShopName": ShopName ,"AgentNumber": AgentNumber,"InvoiceNumber":InvoiceNumber},
+    
+            (err, obj) => {
+    
+                if (obj) {
+    
+                    return res.status(200).json({ code: "200", data: obj })
+    
+                } else {
+                    return res.status(200).json({ code: "201", error: "No Data", data: obj })
+                }
+            });
+
+    }catch(err){
+
+        return res.status(500).send({
+            message: err,
+            code: "500"
+        })
+    }
+  
+
+}
  
 module.exports = {
     addInvoiceData,
     getAllInvoices,
     getInvoiceNumber,
     getInvoiceNumberAndDelete,
-    getInvoiceByNameAndAgent
+    getInvoiceByNameAndAgent,
+    getInvoiceByNameAndAgentAndShop
 }
