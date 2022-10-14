@@ -148,7 +148,7 @@ function checkLength(){
  
       orderCode+small_id;
 
-   
+      let isValid = true;
 
       if(!orderCode){
         window.confirm("Order code Field is EMPTY!");

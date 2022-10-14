@@ -9,36 +9,36 @@
 // import { FaEdit } from "react-icons/fa";
 // import axios from 'axios'
 
-// class MaterialList extends Component {
+// class PastOrdersList extends Component {
 
 //     constructor(props) {
 //         super(props)
 
 //         this.state = {
-//             materials:[] 
+//             orders:[] 
          
 //         }
 
         
-//         this.getMaterialList = this.getMaterialList.bind(this);
+//         this.getOrdersList = this.getOrdersList.bind(this);
 //     }
 
 //     onClickUpdate(id){
-//         this.props.history.push(`/updateMaterial/${id}`);
+//         this.props.history.push(`/updateOrders/${id}`);
 //     }
 
 //     onClickDelete(id){
-//         if (window.confirm("Do you want to remove this material?")) {
-//             axios.delete(`http://localhost:8000/material/delete/${id}`).then((res) => {
-//               alert("Material removed Successfully!");
-//               this.getMaterialList();
+//         if (window.confirm("Do you want to remove this orders?")) {
+//             axios.delete(`http://localhost:8000/orders/delete/${id}`).then((res) => {
+//               alert("Orders removed Successfully!");
+//               this.getOrdersList();
 //             });
 //           }
 //     }
 
-//     getMaterialList(){
+//     getOrdersList(){
 
-//         axios.get("http://localhost:8000/material/get").then(res=>{  
+//         axios.get("http://localhost:8000/orders/get").then(res=>{  
             
 //             if(res.status ==  "200"){   
 //                 this.setState({  
