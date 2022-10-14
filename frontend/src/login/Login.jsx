@@ -57,6 +57,8 @@ function Login() {
                 } else if (accountType === "Stock Manager") {
                     history.push("/stockManagement")
                 } else if (accountType === "Production Manager") {
+                    history.push("/productionManager")
+                } else if (accountType === "Raw Material & Product Manager") {
                     history.push("/productManager")
                 }
             }
