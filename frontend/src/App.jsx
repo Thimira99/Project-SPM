@@ -68,7 +68,10 @@ import ViewInvoice from './pages/SalesManeger/Stock/ViewInvoice/ViewInvoice';
 
 
 function App() {
+	
 	return (
+
+		 
 		<>
 			<Router>
 				<TopBar />
