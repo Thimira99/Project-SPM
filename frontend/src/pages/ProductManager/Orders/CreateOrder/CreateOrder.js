@@ -146,7 +146,7 @@ function CreateOrder() {
 
 
 
-    orderCode + small_id;
+    // orderCode + small_id;
 
     let isValid = true;
 

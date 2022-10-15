@@ -25,6 +25,7 @@
     "mongoose": "^6.5.4",
     "nodemailer": "^6.7.8",
     "nodemon": "^2.0.19",
-    "shortid": "^2.2.16"
+    "shortid": "^2.2.16",
+    "html-pdf": "^2.2.0"
   }
 }
