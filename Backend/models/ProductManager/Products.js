@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+var Float = require('mongoose-float').loadType(mongoose);
 
 const productSchema = new mongoose.Schema({
     dateCreated:{
@@ -26,7 +27,7 @@ const productSchema = new mongoose.Schema({
         required:true
     },
     price:{
-        type:String,
+        type:Float,
         required:true
     },
 },{timestamps:true});

@@ -85,12 +85,12 @@ export default class OrderList extends Component {
                 PURCHASE ORDER 
             </a></Button>
                 </Col>
-
+{/* 
                 <Col>
                     <Button style={{ "width": "200px", "fontWeight": "600" }}><a href='/createOrder' style={{textDecoration:'none',color:'white', fontWeight:'bold'}}>
                 SEND TO SUPPLIER
             </a></Button>
-                </Col>
+                </Col> */}
                 <Col>
                     <Button style={{ "width": "250px", "fontWeight": "600" }}><a href='/orderReport' style={{textDecoration:'none',color:'white', fontWeight:'bold'}}>
                 GENERATE REPORT

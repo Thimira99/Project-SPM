@@ -145,35 +145,49 @@ class ProductList extends Component {
         this.getProductList();
     }
 
-
+ 
 
     render() {
         return (
             <>
                 <ProductManagerDashboard />
+                <Row>  
+        <div className='container'> 
 
                 <div style={{ "marginLeft": "40px", "marginTop": "30px", "flex": "none" }}>
 
                     <Row>
                         <Col>
-                            <Button style={{ "width": "150px", "fontWeight": "600" }}> <a href='/productList' style={{textDecoration:'none',color:'white', fontWeight:'bold'}}>
+                            <Button style={{ "width": "250px", "fontWeight": "600" }}> <a href='/productList' style={{textDecoration:'none',color:'white', fontWeight:'bold'}}>
                         PRODUCT LIST
           </a></Button>
 
                         </Col>
 
                         <Col>
-                            <Button style={{ "width": "150px", "fontWeight": "600" }}><a href='/addProduct' style={{textDecoration:'none',color:'white', fontWeight:'bold'}}>
+                            <Button style={{ "width": "250px", "fontWeight": "600" }}><a href='/addProduct' style={{textDecoration:'none',color:'white', fontWeight:'bold'}}>
                         ADD PRODUCT
           </a></Button>
                         </Col>
+
+                        <Col>
+                            <Button style={{ "width": "250px", "fontWeight": "600" }}><a href='/productChart' style={{textDecoration:'none',color:'white', fontWeight:'bold'}}>
+                        PRODUCT CHART
+          </a></Button>
+                        </Col>
+
+                        {/* <Col>
+                            <Button style={{ "width": "200px", "fontWeight": "600" }}><a href='/productChart' style={{textDecoration:'none',color:'white', fontWeight:'bold'}}>
+                         PRODUCT CHART
+          </a></Button>
+                        </Col> */}
                     </Row>
 
                 </div>
                 
                 <Row>
 
-                    <div className={AccountCSS.container}>
+                    <div style={{ "marginLeft": "40px", "marginTop": "30px", "flex": "none" }}className={AccountCSS.container}>
 
                         <MDBDataTable
 
@@ -197,8 +211,8 @@ class ProductList extends Component {
 
                 </Row>
 
-
-
+</div>
+</Row>
             </>
         );
     }

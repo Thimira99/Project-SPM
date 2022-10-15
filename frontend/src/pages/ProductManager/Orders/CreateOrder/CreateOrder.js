@@ -255,8 +255,8 @@ function CreateOrder() {
                 </Col>
 
                 <Col>
-                    <Button style={{"width": "250px", "fontWeight": "600" }}><a href='/createOrder' style={{textDecoration:'none',color:'white', fontWeight:'bold'}}>
-                SEND ORDER TO SUPPLIER
+                    <Button style={{"width": "250px", "fontWeight": "600" }}><a href='/orderReport' style={{textDecoration:'none',color:'white', fontWeight:'bold'}}>
+                GENERATE REPORT
             </a></Button>
                 </Col>
                 
