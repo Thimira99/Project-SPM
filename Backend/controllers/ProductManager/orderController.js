@@ -53,7 +53,7 @@ const getASpecificOrder=async(req,res)=>{
 
 //delete order from the system
 const deleteOrder = async(req,res)=>{
-    panel.findByIdAndRemove(req.params.id).exec((err,deletedOrder)=>{
+    order.findByIdAndRemove(req.params.id).exec((err,deletedOrder)=>{
         if(err){
             return res.status(400).json({
                 message:"Couldn't delete the order something is wrong!",deletedOrder

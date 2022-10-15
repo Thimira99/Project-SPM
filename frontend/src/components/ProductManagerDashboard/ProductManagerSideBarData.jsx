@@ -14,15 +14,11 @@ export const sidebarData = [
         link: "/productManager"
     },
     {
-        title: "Purhcase Materials",
+        title: "Purchcase Materials",
         icon: <FaShoppingCart />,
-        link: "/createOrder"
+        link: "/orderList"
     },
-    {
-        title: "Availability",
-        icon: <FaElementor />,
-        link: "/"
-    },
+ 
     // {
     //     title: "Maintenance"
     // },
