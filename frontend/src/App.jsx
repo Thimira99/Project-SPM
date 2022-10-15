@@ -15,7 +15,7 @@ import stockReport from './pages/StockManagement/stockReport';
 import updateReqStocks from './pages/StockManagement/updateReqStocks';
 import ReqStockReport from './pages/StockManagement/requisitionReport';
 
-import Home from './pages/projectManager/DashboardPage/Home';
+import ProjectMHome from './pages/projectManager/DashboardPage/MainHome';
 
 import dashboard from './pages/SalesManeger/Dashboard/dashboard';
 import createShop from './pages/SalesManeger/Shops/CreateShop/createShop';
@@ -100,7 +100,7 @@ function App() {
 							<Route path='/reqStockReport' component={ReqStockReport} />
 
 							{/* Project manager Links */}
-							<Route path='/projectMHome' component={Home} />
+							<Route path='/projectMHome' component={ProjectMHome} />
 
 							{/* Distribution manager Link */}
 							<Route path='/distributions' component={distributions} />

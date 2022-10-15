@@ -25,11 +25,7 @@ export const HomeSidebarData = [
     {
         title: "My Notes",
         icon: <FaStickyNote />,
-        link: "/dashboard"
+        link: "/notes"
     },
-    {
-        title: "Profile",
-        icon: <FaUserCircle />,
-        link: "/dashboard"
-    },
+
 ]

@@ -56,11 +56,11 @@ const Home = () => {
 
   return (
     <div className='home'>
-        {/* <Navbar/> */}
+        <Navbar/>
         
 <div className='homeContainer'>
 <div className='widget'>
-        <Widget type='user' />
+        {/* <Widget type='user' /> */}
         <Widget type='stocks' value={allStcoks.length}/>
         <Widget type='orders' value={allOrders.length}/>
         <Widget type='Revenue' value={

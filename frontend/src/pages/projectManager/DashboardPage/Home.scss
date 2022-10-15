@@ -5,11 +5,15 @@
         flex:6;
         margin-left: 40px;
         justify-content: space-between;
-        .widget{
+        .widget, .charts{
             display: flex;
             padding: 2px;
-            gap: 60px;
+            gap: 100px;
             
+        }
+
+        .charts{
+            padding: 5px 20px;
         }
     }
     
