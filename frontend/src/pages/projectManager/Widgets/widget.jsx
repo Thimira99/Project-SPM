@@ -1,4 +1,3 @@
-import React from 'react'
 import './widget.scss'
 import {HiArrowCircleUp} from  "react-icons/hi";
 import {BsPersonCircle} from "react-icons/bs"; 
@@ -6,7 +5,9 @@ import {FaBoxes} from 'react-icons/fa';
 import {BiAddToQueue} from 'react-icons/bi';
 import {MdAttachMoney} from 'react-icons/md';
 
-const widget = ({type}) => {
+
+const widget = ({type,value}) => {
+
 
   let data;
 
@@ -19,17 +20,26 @@ const widget = ({type}) => {
       data={
         title:'USERS',
         isMoney:false,
-        link:"View all users",
-        icon:<BsPersonCircle className='icon'/>,
+        link:"All users",
+        icon:<BsPersonCircle className='icon' style={{
+          // backgroundColor:'rgba(40, 67, 135,0.8)',
+          color:'rgba(40, 67, 135,0.8)'
+        }}
+
+        />,
       }
       break;
 
       case "stocks":
       data={
         title:'STOCKS',
-        isMoney:false,
-        link:"View all stocks",
-        icon:<FaBoxes className='icon'/>,
+        // isMoney:false,
+        link:"All stocks",
+        icon:<FaBoxes className='icon'
+          style={{
+            color:'rgba(40, 67, 135,0.8)'
+          }}
+        />,
       }
       break;
 
@@ -37,17 +47,25 @@ const widget = ({type}) => {
       data={
         title:'ORDERS',
         isMoney:false,
-        link:"View all orders",
-        icon:<BiAddToQueue className='icon'/>,
+        link:"All orders",
+        icon:<BiAddToQueue className='icon'
+          style={{
+            color:'rgba(40, 67, 135,0.8)'
+          }}
+        />,
       }
       break;
 
       case "Revenue":
       data={
-        title:'REVENUE',
-        isMoney:true,
-        link:"View net earnings",
-        icon:<MdAttachMoney className='icon'/>,
+        title:'REVENUE (Rs) ',
+        // isMoney:true,
+        link:"Income",
+        icon:<MdAttachMoney className='icon'
+          style={{
+            color:'rgba(40, 67, 135,0.8)'
+          }}
+        />,
       }
       break;
 
@@ -56,17 +74,20 @@ const widget = ({type}) => {
   }
 
   return (
+    
     <div className='widget'>
         <div className='left'>
             <span className='title'>{data.title}</span>
-            <span className='counter'>{data.isMoney && "$"}{}</span>
-            <span className='link'>View all users</span>
+            <span className='counter'>{value>1000?
+              value.substring(0,5)+'+': value 
+            }</span>
+            <span className='link'>{data.link}</span>
             
         </div>
 
         <div className='right'>
-            <div className='precentage positive'> <HiArrowCircleUp/> 20%</div>
-            <BsPersonCircle className='icon'/>
+            <div className='precentage positive'> <HiArrowCircleUp/> {diff}%</div>
+            {data.icon}
         </div>
     </div>
 
