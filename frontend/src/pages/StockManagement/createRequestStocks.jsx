@@ -3,6 +3,7 @@ import StockNavbar from '../../components/Stock Management/StockNavBar';
 import axios from 'axios';
 import stockManagementStyles from './createStocks.module.scss'
 import {FaRegDotCircle} from "react-icons/fa";
+import { toastMsg } from '../../toast.js';
 
 export default class createRequestStocks extends Component{
 
@@ -136,7 +137,7 @@ formValidation = () =>{
 
     axios.post("http://localhost:8000/request/stocks/create",data).then((res)=>{
       if(res.status==200){
-        alert("Request created Successfully!")
+        toastMsg("Request created Successfully!",'success')
         window.location.href='/reqStocks';
         this.setState(
           {
