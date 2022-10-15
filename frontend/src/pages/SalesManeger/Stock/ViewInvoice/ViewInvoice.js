@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { Form, Button, Table, Row, Col, Container } from "react-bootstrap";
 
 import AccountCSS from './account.module.css';
+import { saveAs } from 'file-saver';
 
 class ViewInvoice extends Component {
 
@@ -23,9 +24,39 @@ class ViewInvoice extends Component {
             InvoiceData: '',
             billItemObj: '',
             shopData: '',
-            TotalAmount: ''
+            TotalAmount: '',
+
+            name: '',
+            receiptId: 0,
+            price1: 0,
+            price2: 0,
         }
+
+        this.onPdfSave = this.onPdfSave.bind(this);
     }
+
+    onPdfSave(){
+
+        const posturl = 'http://localhost:8000/api/InvoiceProduct/post/reports';
+        const geturl = 'http://localhost:8000/api/InvoiceProduct/get/reports';
+
+        const data = {
+         
+            "InvoiceObject": this.state.InvoiceData,
+            "ProductObject": this.state.billItemObj,
+            "ShopObject": this.state.shopData
+        }
+
+        axios.post(posturl, data)
+        .then(() => axios.get(geturl, { responseType: 'blob' }))
+        .then((res) => {
+          const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
+  
+          saveAs(pdfBlob, this.state.shopName +" - " +"INVOICE" + this.state.invoiceId);
+        })
+
+    }
+
 
     getInvoiceData() {
 
@@ -111,12 +142,12 @@ class ViewInvoice extends Component {
 
                 if (res.data.data.length != 0) {
 
-                  
+
                     this.setState({
                         billItemObj: res.data.data[0].productData
                     }, () => {
 
-                        console.log("bill",this.state.billItemObj)
+                        console.log("bill", this.state.billItemObj)
                         this.setState({
                             loading: false
                         })
@@ -413,22 +444,22 @@ class ViewInvoice extends Component {
 
                         <h5>Product Details<hr style={{ "marginTop": "2px", "width": "1520px", "border": "1px solid rgba(66, 74, 155, 1)" }} /></h5>
 
-                        {this.state.billItemObj && <Table   variant="light" class="table  " >
+                        {this.state.billItemObj && <Table variant="light" class="table  " >
 
-                            <thead style={{ 'display': 'block' }} >
+                            <thead style={{ 'display': 'block', "marginRight": "30px" }} >
                                 <tr>
                                     <th style={{ "width": "25px", "font-size": "20px", "fontWeight": "500" }}></th>
 
                                     <th style={{ "width": "740px", "font-size": "20px", "fontWeight": "400" }}>Product Name:</th>
                                     <th style={{ "width": "210px", "font-size": "20px", "fontWeight": "400" }}>Cost Price:</th>
                                     <th style={{ "width": "390px", "font-size": "20px", "fontWeight": "400" }}>Qty:</th>
-                                    <th style={{ "width": "180px", "font-size": "20px", "fontWeight": "400" }}>Amount:</th>
-                                   
+                                    <th style={{ "width": "189px", "font-size": "20px", "fontWeight": "400" }}><span style={{ "float": "right", "marginRight": "40px" }}>Amount:</span></th>
+
 
                                 </tr>
                             </thead>
 
-                            <tbody style={{ 'height': "max-content", 'overflow': 'auto', 'display': 'block' }}>
+                            <tbody style={{ 'height': "max-content", 'overflow': 'auto', 'display': 'block', "borderTop": "ridge", "marginRight": "30px" }}>
                                 {
                                     this.state.billItemObj.map((item, index) => {
                                         return (
@@ -437,8 +468,8 @@ class ViewInvoice extends Component {
                                                 <td style={{ 'width': '740px', "font-size": "16px", "fontWeight": "400" }}>{item.itemname}</td>
                                                 <td style={{ 'width': '210px', "font-size": "16px", "fontWeight": "400" }}>{"Rs." + item.price}</td>
                                                 <td style={{ 'width': '390px', "font-size": "16px", "fontWeight": "400" }}>{item.qty}</td>
-                                                <td style={{ 'width': '180px', "font-size": "16px", "fontWeight": "400" }}>{"Rs." + item.amount}</td>
-                                              
+                                                <td style={{ 'width': '180px', "font-size": "16px", "fontWeight": "200" }}><span style={{ "float": "right", "marginRight": "40px" }}>{(Number(item.amount)).toLocaleString('en-US') + ".00"}</span></td>
+
 
                                             </tr>
                                         )
@@ -447,7 +478,7 @@ class ViewInvoice extends Component {
 
                             </tbody>
 
-                            <tfoot style={{ 'display': 'block' }}>
+                            <tfoot style={{ 'display': 'block', "borderTop": "ridge", "marginRight": "30px" }}>
                                 {
                                     <tr>
                                         <th style={{ "width": "20px", "font-size": "small" }}></th>
@@ -455,8 +486,8 @@ class ViewInvoice extends Component {
                                         <th style={{ "width": "740px", "font-size": "small" }}></th>
                                         <th style={{ "width": "210px", "font-size": "small" }}></th>
                                         <th style={{ "width": "380px", "font-size": "small" }}>{this.state.curentqty1}</th>
-                                        <th style={{ "width": "200px", "font-size": "16px", "fontWeight": "400" }}>{"Rs." + this.state.usFormat + ".00"}</th>
-                                     
+                                        <th style={{ "width": "200px", "font-size": "16px", "fontWeight": "bolder" }}><span style={{ "float": "right", "marginRight": "40px", "borderBottomStyle": "double" }}>{"Rs." + this.state.TotalAmount + ".00"}</span></th>
+
 
 
                                     </tr>
@@ -469,7 +500,27 @@ class ViewInvoice extends Component {
 
                     </div>
 
+
+                    <div style={{ "marginLeft": "40px", "marginTop": "30px", "flex": "none" }}>
+
+
+                        <Row>
+
+                            <Col>
+
+                                <Button style={{ "width": "110px", "fontWeight": "600" }} onClick={this.onPdfSave}>PDF</Button>
+
+
+                            </Col>
+
+                        </Row>
+
+                    </div>
+
+
                 </div>
+
+
 
 
                 {this.state.loading &&
