@@ -36,7 +36,7 @@ class serchShop extends Component {
                 margin: "0 auto",
                 borderColor: "red",
             },
-            dataSet:false
+            dataSet: false
 
         }
 
@@ -60,131 +60,148 @@ class serchShop extends Component {
 
         const userAttributes = []
 
-        if(this.state.allShops){
-
-     
-        this.state.allShops.forEach(el => {
-
-            userAttributes.push({
-                shopname: <div onClick={() => this.onSelectRow(el._id)}>{el.sh_Name}</div>,
-                ownername: <div onClick={() => this.onSelectRow(el._id)}>{el.name}</div>,
-                regnumber: <div onClick={() => this.onSelectRow(el._id)}>{el.sh_RegistrationNumber}</div>,
-                phonenumber: <div onClick={() => this.onSelectRow(el._id)}>{el.sh_phoneNumber}</div>,
-                region: <div onClick={() => this.onSelectRow(el._id)}>{el.sh_Region}</div>,
-                adress: <div onClick={() => this.onSelectRow(el._id)}>{el.sh_Address}</div>,
-
-                action: <><FaEdit style={{ "marginLeft": "15px", "fontSize": "23px" }} onClick={() => this.onSelectRow(el._id)} /></>
+        if (this.state.allShops) {
 
 
-            })
-        });
+            this.state.allShops.forEach(el => {
 
-        this.setState({
-            data: {
-                columns: [
-                    {
-                        label: 'SHOP NAME',
-                        field: 'shopname',
-                        sort: 'asc',
-                        width: 200,
+                userAttributes.push({
+                    shopname: <div onClick={() => this.onSelectRow(el._id)}>{el.sh_Name}</div>,
+                    ownername: <div onClick={() => this.onSelectRow(el._id)}>{el.name}</div>,
+                    regnumber: <div onClick={() => this.onSelectRow(el._id)}>{el.sh_RegistrationNumber}</div>,
+                    phonenumber: <div onClick={() => this.onSelectRow(el._id)}>{el.sh_phoneNumber}</div>,
+                    region: <div onClick={() => this.onSelectRow(el._id)}>{el.sh_Region}</div>,
+                    adress: <div onClick={() => this.onSelectRow(el._id)}>{el.sh_Address}</div>,
 
-                    },
-                    {
-                        label: 'OWNER NAME',
-                        field: 'ownername',
-                        sort: 'asc',
-                        width: 200
-                    },
-                    {
-                        label: 'REG NUMBER',
-                        field: 'regnumber',
-                        sort: 'asc',
-                        width: 100,
-
-                    },
-
-                    {
-                        label: 'PHONE NUMBER',
-                        field: 'phonenumber',
-                        sort: 'asc',
-                        width: 100
-                    },
-
-                    {
-                        label: 'REGION',
-                        field: 'region',
-                        sort: 'asc',
-                        width: 100,
+                    action: <><FaEdit style={{ "marginLeft": "15px", "fontSize": "23px" }} onClick={() => this.onSelectRow(el._id)} /></>
 
 
-                    },
-                    {
-                        label: 'ADDRESS',
-                        field: 'adress',
-                        sort: 'asc',
-                        width: 150,
+                })
+            });
 
-
-                    }
-                    ,
-                    {
-                        label: 'ACTION ',
-                        field: 'action',
-                        sort: 'asc',
-                        width: 50
-                    }
-                ],
-                rows: userAttributes
-            }
-        },() => {
             this.setState({
-                loading:false
+                data: {
+                    columns: [
+                        {
+                            label: 'SHOP NAME',
+                            field: 'shopname',
+                            sort: 'asc',
+                            width: 200,
+
+                        },
+                        {
+                            label: 'OWNER NAME',
+                            field: 'ownername',
+                            sort: 'asc',
+                            width: 200
+                        },
+                        {
+                            label: 'REG NUMBER',
+                            field: 'regnumber',
+                            sort: 'asc',
+                            width: 100,
+
+                        },
+
+                        {
+                            label: 'PHONE NUMBER',
+                            field: 'phonenumber',
+                            sort: 'asc',
+                            width: 100
+                        },
+
+                        {
+                            label: 'REGION',
+                            field: 'region',
+                            sort: 'asc',
+                            width: 100,
+
+
+                        },
+                        {
+                            label: 'ADDRESS',
+                            field: 'adress',
+                            sort: 'asc',
+                            width: 150,
+
+
+                        }
+                        ,
+                        {
+                            label: 'ACTION ',
+                            field: 'action',
+                            sort: 'asc',
+                            width: 50
+                        }
+                    ],
+                    rows: userAttributes
+                }
+            }, () => {
+                this.setState({
+                    loading: false
+                })
             })
-        })
-    }
-        
+        }
+
 
     }
 
     onSearch() {
 
-        this.setState({
-            loading:true
-        })
 
-        const data = {
-            "sh_Name": this.state.shopName,
-            "name": this.state.ownerName,
-            "sh_RegistrationNumber": this.state.shopRegNumber,
-            "sh_Region": this.state.shopRegion
+        if (this.state.shopRegion) {
+
+            this.setState({
+                loading: true
+            })
+
+            const data = {
+                "sh_Name": this.state.shopName,
+                "name": this.state.ownerName,
+                "sh_RegistrationNumber": this.state.shopRegNumber,
+                "sh_Region": this.state.shopRegion
+            }
+
+            const url = 'http://localhost:8000/api/account/search/post';
+
+            axios.post(url, data).then((res) => {
+                console.log(res.data)
+                if (res.data.code == "200") {
+                    this.setState({
+                        allShops: res.data.data,
+                        dataSet: true
+                    }, () => {
+                        this.setDataForTable();
+                    })
+                } else {
+                    console.log("inside else")
+                    this.setState({
+                        loading: false
+                    }, () => {
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'warning',
+                            title: 'Network Error',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    })
+                }
+            })
+
+        } else {
+
+            Swal.fire({
+                position: 'top-end',
+                icon: 'warning',
+                title: 'Region Cant be Empty',
+                showConfirmButton: false,
+                timer: 1500
+            })
+
         }
 
-        const url = 'http://localhost:8000/api/account/search/post';
 
-        axios.post(url, data).then((res) => {
-            console.log(res.data)
-            if (res.data.code == "200") {
-                this.setState({
-                    allShops: res.data.data,
-                    dataSet:true
-                }, () => {
-                    this.setDataForTable();
-                })
-            }else{
-                console.log("inside else")
-                this.setState({
-                    loading:false
-                },()=>{
-                    Swal.fire({
-                        position: 'top-end',
-                        icon: 'warning',
-                        title: 'Network Error',
-                        showConfirmButton: false,
-                        timer: 1500
-                    })
-                })
-            }
-        })
 
     }
 
@@ -241,7 +258,7 @@ class serchShop extends Component {
                                 </Col>
 
 
-{/* 
+                                {/* 
                                 <Col style={{ "marginLeft": "25px" }}>
 
                                     <Form.Group className="mb-3" controlId="formBasicEmail">

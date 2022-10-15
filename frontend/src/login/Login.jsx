@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+
+import React, { Component, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
 //import jwt decorder
@@ -19,6 +20,7 @@ function Login() {
     //initializing variables
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [status, setStatus] = useState(true);
 
     //handle submit
     function handleSubmit(e) {
@@ -42,7 +44,7 @@ function Login() {
             //store user token in localstorage
             localStorage.setItem('user', JSON.stringify(jwt(token)));
             localStorage.setItem('Token', token);
-
+         
 
             const { status, accountType } = jwt(token);
 
@@ -80,6 +82,14 @@ function Login() {
     function handlePassword(event) {
         setPassword(event.target.value);
     }
+
+    useEffect(() => {
+ 
+    localStorage.setItem('user', JSON.stringify(""));
+    
+   
+       
+	}, []);
 
 
     return (

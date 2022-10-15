@@ -4,9 +4,10 @@ import SalesRepDashboard from '../../../../components/SalesRepDashboard';
 import HashLoader from "react-spinners/HashLoader";
 import Swal from 'sweetalert2';
 import { Form, Button, Table, Row, Col, Container } from "react-bootstrap";
-
+import { BsTrashFill ,BsFileEarmarkPdf } from "react-icons/bs";
 import AccountCSS from './account.module.css';
 import { saveAs } from 'file-saver';
+
 
 class ViewInvoice extends Component {
 
@@ -37,6 +38,10 @@ class ViewInvoice extends Component {
 
     onPdfSave(){
 
+        this.setState({
+            loading: true
+        })
+
         const posturl = 'http://localhost:8000/api/InvoiceProduct/post/reports';
         const geturl = 'http://localhost:8000/api/InvoiceProduct/get/reports';
 
@@ -52,6 +57,11 @@ class ViewInvoice extends Component {
         .then((res) => {
           const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
   
+          if(pdfBlob){
+            this.setState({
+                loading: false
+            })
+          }
           saveAs(pdfBlob, this.state.shopName +" - " +"INVOICE" + this.state.invoiceId);
         })
 
@@ -508,7 +518,7 @@ class ViewInvoice extends Component {
 
                             <Col>
 
-                                <Button style={{ "width": "110px", "fontWeight": "600" }} onClick={this.onPdfSave}>PDF</Button>
+                                <Button style={{ "width": "110px", "fontWeight": "600" ,"marginBottom":"20px"}} onClick={this.onPdfSave}>Print<span style={{"fontSize":"22px","marginLeft":"8px"}}><BsFileEarmarkPdf/></span></Button>
 
 
                             </Col>

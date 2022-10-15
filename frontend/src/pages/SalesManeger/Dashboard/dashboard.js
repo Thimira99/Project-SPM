@@ -10,6 +10,12 @@ class dashboard extends Component {
 
         }
     }
+
+    componentDidMount() {
+
+     
+    }
+    
     render() {
         return (
             <>
