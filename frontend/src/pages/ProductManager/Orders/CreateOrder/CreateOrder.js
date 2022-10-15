@@ -20,7 +20,9 @@ function CreateOrder() {
   const small_id = unique_id.slice(0, 4)
   const [supplierGrp, setSupplierGrp] = useState('');
   const [materialId, setMaterialId] = useState([]);
+  // const [userResponse, setUserResponse] = useState(false);
 
+  // userResponse: false,
 
   //const [pidError, SetPidError] = useState(false);
 
@@ -50,7 +52,7 @@ function CreateOrder() {
         .get("http://localhost:8000/supplier/get")
         .then((res) => {
           setSupplierGrp(res.data.existingSuppliers)
-
+         
         })
         .catch((err) => {
           alert(err.message);
@@ -114,6 +116,28 @@ function CreateOrder() {
   //     return isValid;
   //   }
 
+//   function SendMail(e) {
+    
+
+//     const form = {
+//         "orderId": e.id,
+//         "orderCode": orderCode,
+//         "orderDate": orderDate,
+//         "message": "*This is an automated message. Please do not reply to this email address.",
+         
+
+//     }
+
+//     console.log("form", form)
+
+//     emailjs.send('service_5dcwjqj', 'template_kxzwprd', form, '5cBXRbMJXvJdnDsz1').then(res => {
+//         console.log("res", res)
+//     }).catch((err) => {
+//         console.log(err)
+//     })
+
+// }
+
 
   function checkLength() {
 
@@ -155,28 +179,28 @@ function CreateOrder() {
       isValid = false;
     }
 
-    if (!orderCode.match(/^[a-z A-Z 1-9]*$/)) {
+    else if (!orderCode.match(/^[a-z A-Z 1-9]*$/)) {
       window.confirm("Order code must contain characters only!");
       isValid = false;
     }
 
-    if (orderCode.trim().length < 3) {
+    else if (orderCode.trim().length < 3) {
       window.confirm("Order Code must be in length 4 or higher");
       isValid = false;
     }
 
-    if (!supplierEmail) {
+    else if (!supplierEmail) {
       window.confirm("Supplier Email Field is EMPTY!");
       isValid = false;
     }
 
 
-    if (!supplierEmail.match(/^[. @ a-z A-Z 1-9]*$/)) {
+    else if (!supplierEmail.match(/^[. @ a-z A-Z 1-9]*$/)) {
       window.confirm("Email should be a valid one!");
       isValid = false;
     }
 
-    if (isValid) {
+    else if (isValid) {
 
       const newOrder = {
         orderCode,
@@ -188,11 +212,12 @@ function CreateOrder() {
         weight,
 
       }
-      console.log("memberrrrname", materialId)
+      
       axios.post("http://localhost:8000/order/post", newOrder).then(() => {
 
         alert("Order created successfully");
-        //window.location.href='/viewPanels';
+        // setUserResponse(true)
+        window.location.href='/orderList';
       }).catch((err) => {
         alert("Unable to add" + err);
       })
@@ -207,18 +232,42 @@ function CreateOrder() {
       <ProductManagerDashboard />
 
 
-      <Row>
+       
+      {/* <div style={{ "marginLeft": "40px", "marginTop": "30px", "flex": "none" }}> */}
+         
+      
+            {/* </div> */}
+            <Row>  
         <div className='container'>
-          <div className='card' style={{ marginLeft: '140px', marginTop: '20px', background: "#D3D3D3", height: 'auto', width: '900px', marginRight: '100px' }}>
+        <div className='card' style={{ marginLeft: '90px', marginTop: '20px',  height: 'auto', width: '900px', marginRight: '100px' }}>
+        <Row>   
+                <Col>
+                    <Button style={{ "width": "250px", "fontWeight": "400" }}> <a href='/orderList' style={{textDecoration:'none',color:'white', fontWeight:'bold'}}>
+                PURCHASED MATERIALS
+            </a></Button>
+
+                </Col>
+
+                <Col>
+                    <Button style={{ "width": "250px", "fontWeight": "600" }}><a href='/createOrder' style={{textDecoration:'none',color:'white', fontWeight:'bold'}}>
+                PURCHASE ORDER 
+            </a></Button>
+                </Col>
+
+                <Col>
+                    <Button style={{"width": "250px", "fontWeight": "600" }}><a href='/createOrder' style={{textDecoration:'none',color:'white', fontWeight:'bold'}}>
+                SEND ORDER TO SUPPLIER
+            </a></Button>
+                </Col>
+                
+            </Row>
+            </div>
+          <div className='card' style={{ marginLeft: '90px', marginTop: '20px', background: "#D3D3D3", height: 'auto', width: '900px', marginRight: '100px' }}>
+          
+            
             <div className='col-md-8 mt-4 mx-auto'>
-
-
-
               <h3 style={{ color: 'rgba(6, 21, 117)', fontWeight: 'bold' }}> CREATE ORDER </h3>
-              <button className="btn btn-primary" style={{ "width": "360px", "fontWeight": "600" }}>
-                <a href="/productList" style={{ textDecoration: 'none', color: 'white', fontWeight: 'bold', }}>
-                  VIEW PAST ORDERS
-                </a></button><br />
+              <br />
               <form className='needs-validation' noValidate onSubmit={checkLength} > <br />
                 <label style={{ marginBottom: '5px', fontsize: '15pt', fontWeight: 'bold' }}>ORDER DETAILS</label>
                 <Row>
@@ -228,7 +277,7 @@ function CreateOrder() {
                       <input
                         type="text"
                         onChange={(e) => {
-                          setOrderCode(e.target.value + (small_id));
+                          setOrderCode(e.target.value);
                         }}
                         className="form-control"
 
@@ -244,7 +293,7 @@ function CreateOrder() {
                       <input
                         type="datetime-local"
                         onChange={(e) => {
-                          setOrderDate(e.target.value + (small_id));
+                          setOrderDate(e.target.value);
                         }}
                         className="form-control"
 
@@ -301,7 +350,7 @@ function CreateOrder() {
                   <input
                     type="text"
                     onChange={(e) => {
-                      setSupplierEmail(e.target.value + (small_id));
+                      setSupplierEmail(e.target.value);
                     }}
                     className="form-control"
                     style={{ width: '300px' }}
@@ -384,13 +433,22 @@ function CreateOrder() {
                     </button>
                   </Col>
                   <Col>
-                    <button className="btn" type="submit" style={{ marginTop: '15px', marginBottom: '150px', marginLeft: '-70px', backgroundColor: 'rgba(6, 21, 117)', color: "#ffffff", fontWeight: 'bold' }} ><a href='/MaterialList' style={{ textDecoration: 'none', color: 'white' }}>
+                    <button className="btn" type="submit" style={{ marginTop: '15px', marginBottom: '150px', marginLeft: '-70px', backgroundColor: 'rgba(6, 21, 117)', color: "#ffffff", fontWeight: 'bold' }} ><a href='/OrderList' style={{ textDecoration: 'none', color: 'white' }}>
                       <i className="far fa-check-square"></i>
 
                       &nbsp;Cancel
                     </a>
                     </button>
                   </Col>
+                 
+                  {/* <Col>
+                    { setUserResponse && <button  onClick={SendMail} className="btn" type="submit" style={{ marginTop: '15px', marginBottom: '150px', marginLeft: '-70px', backgroundColor: 'rgba(6, 21, 117)', color: "#ffffff", fontWeight: 'bold' }} > 
+                      <i className="far fa-check-square"></i>
+
+                      &nbsp;Email
+                    
+                    </button>}
+                  </Col> */}
                 </Row>
 
                 {/* <Button variant="success" type="submit" id="submitBtn" className='submitBtnForm'>
@@ -406,8 +464,8 @@ function CreateOrder() {
           <br />
 
         </div>
-      </Row>
-
+        </Row>  
+       
 
     </>
   )

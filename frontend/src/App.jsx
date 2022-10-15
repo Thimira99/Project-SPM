@@ -34,6 +34,8 @@ import UpdateMaterial from './pages/ProductManager/Materials/UpdateMaterial/Upda
 import UpdateProduct from './pages/ProductManager/Products/UpdateProduct/UpdateProduct';
 import UpdateSupplier from './pages/ProductManager/Suppliers/UpdateSupplier/UpdateSupplier';
 import CreateOrder from './pages/ProductManager/Orders/CreateOrder/CreateOrder';
+import OrderList from './pages/ProductManager/Orders/PastOrders/PastOrdersList';
+import OrderReport from './pages/ProductManager/Orders/OrderReport/OrderReport';
 
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
@@ -131,6 +133,9 @@ function App() {
 							<Route path='/updateProduct/:id' component={UpdateProduct} />
 							<Route path='/updateSupplier/:id' component={UpdateSupplier} />
 							<Route path='/createOrder' component={CreateOrder} />
+							<Route path='/orderList' component={OrderList} />
+							<Route path='/orderReport' component={OrderReport} />
+
 							<Route path='/login' component={Login} />
 							<Redirect from='/' to='/login' />
 						</Switch>
