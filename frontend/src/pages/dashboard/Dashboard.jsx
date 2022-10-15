@@ -3,19 +3,15 @@ import Navbar from '../../components/Navbar';
 
 import dashboardStyles from './Dashboard.module.scss';
 
-function Dashboard() {
-    return (
-        <>
-            <Navbar />
-            <div>
-                <h1>Dashboard</h1>
-                <div className={dashboardStyles.main}>
-                    <input type="text" placeholder='Enter' />
-                </div>
-            </div>
+import Home from '../projectManager/DashboardPage/Home';
 
-        </>
-    )
+function Dashboard() {
+	return (
+		<>
+			<Navbar />
+			<Home />
+		</>
+	);
 }
 
 export default Dashboard;
